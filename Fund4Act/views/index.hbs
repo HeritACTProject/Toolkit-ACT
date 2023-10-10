@@ -1,0 +1,12 @@
+<h1>Fund4Act</h1>
+
+{{#unless user}}<a href="/login">login</a>{{/unless}}
+{{#if user}}
+  <p>My account: {{user.name}}</p>
+  <a href=/organisation/{{user.id}}/>Start a project</a>
+{{/if}}
+<style>
+#map { height: 180px; }
+</style>
+<div id="map"></div>
+<script src="/scripts/map.js"></script>
