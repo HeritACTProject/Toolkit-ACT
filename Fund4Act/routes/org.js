@@ -8,4 +8,12 @@ router.get('/', async (req, res) => {
   res.render('index', {user: req.user});
 });
 
+router.route('/register')
+  .get(async (req, res) => {
+    res.render('org-form')
+  })
+  .post(async (req, res) => {
+    console.log(req.body);
+  });
+
 module.exports = router;
