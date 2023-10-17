@@ -1,12 +1,38 @@
-<h1>Fund4Act</h1>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
 
-{{#unless user}}<a href="/login">login</a>{{/unless}}
-{{#if user}}
-  <p>My account: {{user.name}}</p>
-  <a href=/organisation/{{user.id}}/>Start a project</a>
-{{/if}}
 <style>
-#map { height: 180px; }
+  body { padding: 0; }
+  header { display: flex; justify-content:space-between; align-items:center; height: 4rem; padding: 0 1rem; }
+  header h1 { border-bottom: none; }
+  header img { width: 2rem; margin: 0; }
+  .right { display: flex; }
+  .right a { margin: 1rem; }
+  h2, p { margin: 1rem; }
+  hr { margin: 0; }
+  #map { height: 70vh; margin: 0; }
 </style>
-<div id="map"></div>
-<script src="/scripts/map.js"></script>
+
+<header>
+  <h1>Fund4Act</h1>
+
+  <div class="right">
+  {{#unless user}}<a href="/login">login</a>{{/unless}}
+  {{#if user}}
+    <a href=/organisation/>Start a project</a>
+    <img src="/images/user.svg" arialabel="user profile"></img>
+  {{/if}}
+  </div>
+</header>
+<hr>
+
+<main class="wide">
+  <h2>Donate to local heritage projects</h2>
+  <p>Showcase your businesses commitment to your local community</p>
+  <div id="map"></div>
+  <script src="/scripts/map.js"></script>
+</main>

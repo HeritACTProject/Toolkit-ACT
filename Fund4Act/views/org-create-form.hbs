@@ -1,0 +1,33 @@
+<main>
+  <link rel="stylesheet" href="/styles/normform.min.css"/>
+
+  <h1>Register your organisation</h1>
+
+  <form class="normform">
+    <label for="name">Organisation Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Contact Email (publically viewable)</label>
+    <input type="email" id="email" name="email">
+
+    <label for="logo-url">Logo URL</label>
+    <input type="url" id="logo-url" name="logo-url">
+
+    <label for="website-url">Website URL</label>
+    <input type="url" id="website-url" name="wesite-url">
+
+    <label for="mission">Organisation Mission (<a href='/resources/mission-statement'>Writing a good mission statement</a>)</label>
+    <textarea rows="5" id="mission" name="mission" required></textarea>
+
+    <label for="prev-projects">What projects have you previously delivered?</label>
+    <textarea rows="5" id="prev-projects" name="prev-projects"></textarea>
+
+    <label for="prev-grants">What grants have you previously recieved?
+    <textarea rows="5" id="prev-grants" name="prev-grants"></textarea>
+
+    <label for="partnerships">What existing partnerships or collaborations do you have?</label>
+    <textarea rows="5" id="partnerships" name="partnerships"></textarea>
+
+    <input type="submit" formmethod="post" value="Submit">
+  </form>
+</main>
