@@ -4,8 +4,9 @@ const createOrganisation = require('../controllers/org-create.js')
 const organisation = require('../models/organisations.js');
 
 router.get('/', async (req, res) => {
-  console.log(await organisation.get());
-  res.render('org', {});
+  const user = req.user;
+  const org = await organisation.get(user.id);
+  res.render('org', {user: user, org});
 });
 
 router.route('/create')
@@ -29,7 +30,7 @@ router.route('/verify')
 
 router.route('/:uid')
   .get(async (req, res) => {
-    res.render('org-public');
+    res.render('org-public', {user: req.user});
   })
 
 module.exports = router;

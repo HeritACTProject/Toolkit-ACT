@@ -38,6 +38,7 @@ exports.post = [
     const formData = {
       id: req.user.id,
       name: req.body.name,
+      email: req.body.email,
       logoUrl: req.body['logo-url'],
       websiteUrl: req.body['website-url'],
       mission: req.body.mission,

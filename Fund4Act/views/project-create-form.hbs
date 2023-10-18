@@ -1,0 +1,74 @@
+<main>
+  <link rel="stylesheet" href="/styles/normform.min.css"/>
+
+  <h1>Create your project page</h1>
+
+  <form class="normform">
+    <label for="name">Project Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <fieldset>
+      <legend>Funding</legend>
+
+      <label for="target">Fundraising Target (€)</label>
+      <input type="number" id="target" name="target" min="1" step=".01" required>
+
+      <label for="deadline">Deadline</label>
+      <input type="date" id="deadline" name="deadline" required>
+    </fieldset>
+
+    <label for="image-url">Image URL</label>
+    <input type="url" id="iamge-url" name="image-url" placeholder="https://example.com">
+
+    <label for="overview">Project Overview</label>
+    <textarea rows="5" id="overview" name="overview"></textarea>
+
+    <label for="start-date">Start Date</label>
+    <input type="date" id="start-date" name="start-date" required>
+
+    <label for="end-date">End Date</label>
+    <input type="date" id="end-date" name="end-date" required>
+
+    <label>Project Categoty</label>
+
+    <input type="checkbox" id="category-community" name="category" value="Community Celebrations and Festivals">
+    <label for="category-community">Community Celebrations and Festivals</label>
+
+    <input type="checkbox" id="category-historical" name="category" value="Historical Preservation and Restoration">
+    <label for="category-historical">Historical Preservation and Restoration</label>
+
+    <input type="checkbox" id="category-cultural" name="category" value="Cultural Workshops and Events">
+    <label for="category-cultural">Cultural Workshops and Events</label>
+
+    <input type="checkbox" id="category-environmental" name="category" value="Environmental Conservation and Restoration">
+    <label for="category-environmental">Environmental Conservation and Restoration</label>
+
+    <input type="checkbox" id="category-educational" name="category" value="Educational Initiatives">
+    <label for="category-educational">Educational Initiatives</label>
+
+    <input type="checkbox" id="category-digital" name="category" value="Digital and Media Projects">
+    <label for="category-digital">Digital and Media Projects</label>
+
+    <input type="checkbox" id="category-indigenous" name="category" value="Indigenous Knowledge and Language Revival">
+    <label for="category-indigenous">Indigenous Knowledge and Language Revival</label>
+
+    <input type="checkbox" id="category-natural" name="category" value="Natural Site Enhancement and Cleanup">
+    <label for="category-natural">Natural Site Enhancement and Cleanup</label>
+
+    <label>Target Audience</label>
+
+    <input type="checkbox" id="audience-children" name="audience" value="children">
+    <label for="audience-children">Children</label>
+
+    <input type="checkbox" id="audience-youth" name="audience" value="youth">
+    <label for="audience-youth">Youth</label>
+
+    <input type="checkbox" id="audience-adults" name="audience" value="adults">
+    <label for="audience-adults">Adults</label>
+
+    <input type="checkbox" id="audience-marginalised" name="audience" value="marginalised">
+    <label for="audience-marginalised">Marginalised</label>
+
+    <input type="submit" formmethod="post" value="Submit">
+  </form>
+</main>

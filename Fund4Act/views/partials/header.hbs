@@ -1,0 +1,23 @@
+<style>
+  body { padding: 0; }
+  header { display: flex; justify-content:space-between; align-items:center; height: 4rem; padding: 0 1rem; }
+  header h1 { border-bottom: none; }
+  header img { width: 2rem; margin: 0; max-width: inherit; }
+  .right { display: flex; }
+  .right a { margin: 1rem; }
+  h2, p { margin: 1rem; }
+  hr { margin: 0; }
+  #map { height: 70vh; margin: 0; }
+</style>
+
+<header>
+  <h1>Fund4Act</h1>
+
+  <div class="right">
+  {{#unless user}}<a href="/login">login</a>{{/unless}}
+  {{#if user}}
+    <img src="/images/user.svg" arialabel="user profile"></img>
+  {{/if}}
+  </div>
+</header>
+<hr>

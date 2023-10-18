@@ -1,1 +1,28 @@
-<a href="/organisation/create">Create an Organisation</a>
+{{> header}}
+
+{{#if org}}
+  <style>
+    #org-header, #org-header div { display: flex; flex-wrap:wrap; justify-content: space-between; align-items: center; }
+    #org-header img, #org-header div, #org-projects { margin: 1rem; }
+    #org-header div a { display: block; }
+    #org-header img { width: 3rem; }
+  </style>
+
+  <div id="org-header">
+    <img src="{{#if org.logo_url}}{{org.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="organisation logo"></img>
+    <p>{{org.name}}</p>
+    <div>
+      <a href="/organisation/{{org.id}}">Preview Profile</a>
+      <a href="/organisation/create">Edit Profile</a>
+    </div>
+  </div>
+  <div id="org-projects">
+    <a href="/project/create">Create a Project</a>
+    {{#if org.projects}}
+      {{> org-projects}}
+    {{/if}}
+  </div>
+{{else}}
+  <a href="/organisation/create">Create an Organisation</a>
+{{/if}}
+

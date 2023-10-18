@@ -15,6 +15,7 @@ const ensureLoggedIn = ensureLogIn();
 
 const appRouter = require('./routes/app.js');
 const orgRouter = require('./routes/org.js');
+const projectRouter = require('./routes/project.js');
 
 const app = express();
 
@@ -105,6 +106,7 @@ passport.use(new OidcStrategy({
 // setup routers
 app.use('/', appRouter);
 app.use('/organisation', ensureLoggedIn, orgRouter);
+app.use('/project', ensureLoggedIn, projectRouter);
 app.use('/login', passport.authenticate('openidconnect'));
 app.use('/callback',
   passport.authenticate('openidconnect', {
