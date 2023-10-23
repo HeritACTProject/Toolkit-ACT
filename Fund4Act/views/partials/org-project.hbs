@@ -1,0 +1,25 @@
+<style>
+  .project-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+  }
+
+  .project-row a {
+    margin: 1rem;
+  }
+
+  .project-links{
+    display: flex;
+  }
+</style>
+
+<div class="project-row">
+  <p>{{this.name}}</p>
+  <div class="project-links">
+    <a href="/{{this.id}}">view</a>
+    <a href="/{{this.id}}/edit">edit</a>
+    <a href="/{{this.id}}/delete">delete</a>
+  </div>
+</div>

@@ -19,8 +19,10 @@ const projectRouter = require('./routes/project.js');
 
 const app = express();
 
-const db = require('./models/organisations.js')
-db.init();
+const orgDb = require('./models/organisations.js')
+orgDb.init();
+const projDb = require('./models/projects.js')
+projDb.init();
 
 // view engine setup
 app.engine('hbs', engine({

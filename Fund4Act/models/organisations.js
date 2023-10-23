@@ -2,7 +2,7 @@ const { Database } = require("bun:sqlite");
 const db = new Database("fund4act.sqlite");
 
 module.exports.init = () => {
-  db.run(`CREATE TABLE IF NOT EXISTS organisation (
+  db.run(`CREATE TABLE IF NOT EXISTS organisations (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT,
@@ -16,7 +16,7 @@ module.exports.init = () => {
 };
 
 module.exports.save = ({id, name, email, logoUrl, websiteUrl, mission, prevProjects, prevGrants, partnerships}) => {
-  return db.run(`INSERT INTO organisation
+  return db.run(`INSERT INTO organisations
     (id, name, email, logo_url, website_url, mission, previous_projects, previous_grants, partnerships)
     VALUES ("${id}", "${name}", "${email}", "${logoUrl}", "${websiteUrl}", "${mission}", "${prevProjects}", "${prevGrants}", "${partnerships}")
     ON CONFLICT(id) DO UPDATE SET
@@ -27,6 +27,6 @@ module.exports.save = ({id, name, email, logoUrl, websiteUrl, mission, prevProje
 };
 
 module.exports.get = (id) => {
-  const query = db.query('SELECT * FROM organisation WHERE id = $id;');
+  const query = db.query('SELECT * FROM organisations WHERE id = $id;');
   return query.get({ $id: id });
 }

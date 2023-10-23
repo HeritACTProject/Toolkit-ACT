@@ -8,20 +8,24 @@
     #org-header img { width: 3rem; }
   </style>
 
-  <div id="org-header">
+  <section id="org-header" aria-label="organisation">
     <img src="{{#if org.logo_url}}{{org.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="organisation logo"></img>
     <p>{{org.name}}</p>
     <div>
       <a href="/organisation/{{org.id}}">Preview Profile</a>
       <a href="/organisation/create">Edit Profile</a>
-    </div>
+    </section>
   </div>
-  <div id="org-projects">
+  <section id="org-projects" aria-label="projects">
     <a href="/project/create">Create a Project</a>
-    {{#if org.projects}}
-      {{> org-projects}}
+    {{#if projects}}
+      <div id="projects-list">
+        {{#each projects}}
+          {{> org-project}}
+        {{/each}}
+      </div>
     {{/if}}
-  </div>
+  </section>
 {{else}}
   <a href="/organisation/create">Create an Organisation</a>
 {{/if}}
