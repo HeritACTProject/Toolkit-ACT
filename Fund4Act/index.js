@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { engine } = require('express-handlebars');
-const helmet = require('helmet');
 const createHttpError = require('http-errors');
 
 const passport = require('passport');
@@ -12,6 +11,7 @@ const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 const ensureLoggedIn = ensureLogIn();
 
 const auth = require('./middleware/auth.js');
+const security = require('./middleware/security.js');
 const appRouter = require('./routes/app.js');
 const orgRouter = require('./routes/org.js');
 const projectRouter = require('./routes/project.js');
@@ -44,29 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // security
-app.use(helmet({
-  contentSecurityPolicy: {
-    useDefaults: true,
-    directives: {
-      'style-src': [
-        "'self'",
-        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-        "'unsafe-inline'",
-      ],
-      'script-src': [
-        "'self'",
-        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
-      ],
-      'img-src': [
-        "'self'",
-        "https://unpkg.com/leaflet@1.9.4/dist/images/",
-        "http://a.tile.openstreetmap.org",
-        "http://b.tile.openstreetmap.org",
-        "http://c.tile.openstreetmap.org",
-      ],
-    },
-  },
-}));
+security.init(app);
 
 // auth middleware
 auth.init(app, passport);
