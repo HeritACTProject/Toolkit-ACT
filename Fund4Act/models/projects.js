@@ -48,7 +48,6 @@ module.exports.update = ({id, name, target, deadline, imageUrl, overview, startD
 module.exports.get = (oid) => {
   const query = db.query('SELECT * FROM projects WHERE org_id = $oid;');
   const results = query.all({ $oid: oid });
-  console.log(results);
   return results;
 }
 

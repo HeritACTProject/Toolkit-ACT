@@ -11,18 +11,20 @@ module.exports.init = () => {
     mission TEXT NOT NULL,
     previous_projects TEXT,
     previous_grants TEXT,
-    partnerships TEXT
+    partnerships TEXT,
+    verified INTEGER
   )`);
 };
 
 module.exports.save = ({id, name, email, logoUrl, websiteUrl, mission, prevProjects, prevGrants, partnerships}) => {
   return db.run(`INSERT INTO organisations
-    (id, name, email, logo_url, website_url, mission, previous_projects, previous_grants, partnerships)
-    VALUES ("${id}", "${name}", "${email}", "${logoUrl}", "${websiteUrl}", "${mission}", "${prevProjects}", "${prevGrants}", "${partnerships}")
+      (id, name, email, logo_url, website_url, mission, previous_projects, previous_grants, partnerships, verified)
+    VALUES ("${id}", "${name}", "${email}", "${logoUrl}", "${websiteUrl}", "${mission}", "${prevProjects}",
+      "${prevGrants}", "${partnerships}", 0)
     ON CONFLICT(id) DO UPDATE SET
-    name = excluded.name, email = excluded.email, logo_url = excluded.logo_url, website_url = excluded.website_url,
-    mission = excluded.mission, previous_projects = excluded.previous_projects, previous_grants = excluded.previous_grants,
-    partnerships = excluded.partnerships;
+      name = excluded.name, email = excluded.email, logo_url = excluded.logo_url, website_url = excluded.website_url,
+      mission = excluded.mission, previous_projects = excluded.previous_projects, previous_grants = excluded.previous_grants,
+      partnerships = excluded.partnerships;
   `);
 };
 

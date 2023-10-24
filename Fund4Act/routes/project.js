@@ -13,10 +13,11 @@ router.route('/create')
     }
   );
 
-router.route('/:pid')
-  .get(async (req, res) => {
-    // const project = project.get(req.param.pid);
-    res.render('project-public', {user: req.user, project});
-  })
+// router.route('/:pid')
+//   .get(async (req, res, next) => {
+//     const project = project.get(req.param.pid);
+//     res.render('project-public', {user: req.user, project});
+//     next();
+//   })
 
 module.exports = router;

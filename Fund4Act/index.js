@@ -115,7 +115,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.use((err, req, res, next) => {
+app.use((req, res, next) => {
   res.status(404);
   res.render('error', { layout: false, error: { message: 'Sorry we can\'t find that page' } });
 });

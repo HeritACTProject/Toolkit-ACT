@@ -1,30 +1,6 @@
 const { param, body, validationResult } = require('express-validator');
 const organisation = require('../models/organisations.js');
 
-exports.get = [
-  [
-    param('organisation').notEmpty().trim().escape(),
-  ], async ({ params, query, ...req }, res) => {
-    validationResult(req).throw();
-    if (!hasActionPemissions(req.decodedClaims)) res.redirect('/pricing');
-    let existingData;
-
-    if (query.edit === 'true') {
-      const action = await getAction(params.organisation, params.action);
-      // eslint-disable-next-line no-underscore-dangle
-      existingData = { ...action._doc };
-    }
-
-    res.render('actionInfo', {
-      layout: 'layout',
-      countries,
-      domain: process.env.DOMAIN,
-      csrfToken: req.csrfToken(),
-      edit: query.edit,
-      existingData,
-    });
-  }];
-
 exports.post = [
   [
     body('name').notEmpty().trim().escape(),

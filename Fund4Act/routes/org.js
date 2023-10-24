@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
   const user = req.user;
   const org = await organisation.get(user.id);
   const projects = await project.get(user.id);
+  console.log(org);
   res.render('org', {user: user, org, projects});
 });
 
@@ -24,7 +25,7 @@ router.route('/create')
 
 router.route('/verify')
   .get(async (req, res) => {
-    res.render('org--verify-form')
+    res.render('org-verify', {user: req.user})
   })
   .post(async (req, res) => {
     console.log(req.body);

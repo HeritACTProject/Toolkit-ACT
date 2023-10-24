@@ -10,7 +10,7 @@
 
   <section id="org-header" aria-label="organisation">
     <img src="{{#if org.logo_url}}{{org.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="organisation logo"></img>
-    <p>{{org.name}}</p>
+    <p>{{org.name}}{{#unless org.verified}} (<a href="/organisation/verify">Unverified</a>){{/unless}}</p>
     <div>
       <a href="/organisation/{{org.id}}">Preview Profile</a>
       <a href="/organisation/create">Edit Profile</a>
