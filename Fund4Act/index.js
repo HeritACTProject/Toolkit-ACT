@@ -6,13 +6,12 @@ const { engine } = require('express-handlebars');
 const helmet = require('helmet');
 const createHttpError = require('http-errors');
 
-const session = require('express-session');
 const passport = require('passport');
-const OidcStrategy = require('passport-openidconnect').Strategy;
 const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 
 const ensureLoggedIn = ensureLogIn();
 
+const auth = require('./middleware/auth.js');
 const appRouter = require('./routes/app.js');
 const orgRouter = require('./routes/org.js');
 const projectRouter = require('./routes/project.js');
@@ -70,40 +69,7 @@ app.use(helmet({
 }));
 
 // auth middleware
-app.use(session({
-  secret: 'my-super-secret',
-  resave: false,
-  saveUninitialized: true
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser((user, next) => {
-  next(null, {id: user.id, name: user.displayName});
-});
-
-passport.deserializeUser((obj, next) => {
-  next(null, obj);
-});
-
-// config SimpleLogin OIDC (OpenID Connect) provider
-passport.use(new OidcStrategy({
-  // SimpleLogin OIDC Settings
-  issuer: 'https://app.simplelogin.io',
-  authorizationURL: 'https://app.simplelogin.io/oauth2/authorize',
-  tokenURL: 'https://app.simplelogin.io/oauth2/token',
-  userInfoURL: 'https://app.simplelogin.io/oauth2/userinfo',
-  // SimpleLogin App Credential from env
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  // you might need to change the callbackURL when deploying on production
-  callbackURL: 'http://localhost:3000/callback',
-  // openid needs to be in scope
-  scope: 'openid'
-}, (issuer, profile, done) => {
-  return done(null, profile);
-}));
+auth.init(app, passport);
 
 // setup routers
 app.use('/', appRouter);
