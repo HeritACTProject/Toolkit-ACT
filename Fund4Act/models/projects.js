@@ -13,7 +13,8 @@ module.exports.init = () => {
     start_date TEXT,
     end_date TEXT,
     category TEXT,
-    target_audience TEXT
+    target_audience TEXT,
+    slug TEXT NOT_NULL
   )`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_project_id
@@ -25,12 +26,12 @@ module.exports.init = () => {
 };
 
 module.exports.create = ({orgId, name, target, deadline, imageUrl, overview, startDate, endDate,
-                        category, audience}) => {
+                        category, audience, slug}) => {
   return db.run(`INSERT INTO projects
     (org_id, name, fundraising_target, fundraising_deadline, image_url, overview, start_date, end_date,
-      category, target_audience)
+      category, target_audience, slug)
     VALUES ("${orgId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${overview}",
-      "${startDate}", "${endDate}", "${category}", "${audience}")
+      "${startDate}", "${endDate}", "${category}", "${audience}", "${slug}")
   `);
 };
 
@@ -45,13 +46,20 @@ module.exports.update = ({id, name, target, deadline, imageUrl, overview, startD
   `);
 };
 
-module.exports.get = (oid) => {
+module.exports.getByProfileId = (oid) => {
   const query = db.query('SELECT * FROM projects WHERE org_id = $oid;');
   const results = query.all({ $oid: oid });
   return results;
 }
 
-module.exports.getByProjectId = (pid) => {
-  const query = db.query('SELECT * FROM projects WHERE id = $pid;');
-  return query.all({ $pid: pid });
+module.exports.getByProjectSlug = (slug) => {
+  const query = db.query('SELECT * FROM projects WHERE slug = $slug;');
+  return query.get({ $slug: slug });
+}
+
+module.exports.getXMostUrgent = (x) => {
+  const query = db.query(`SELECT * FROM projects WHERE fundraising_deadline >= date('now')
+    ORDER BY fundraising_deadline DESC LIMIT $limit;`);
+  const results = query.all({ $limit: x });
+  return results;
 }

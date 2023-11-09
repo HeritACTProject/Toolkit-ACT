@@ -1,4 +1,6 @@
 const { param, body, validationResult } = require('express-validator');
+const slug = require('slug');
+const { nanoid } = require('nanoid');
 const project = require('../models/projects.js');
 
 exports.post = [
@@ -13,7 +15,7 @@ exports.post = [
     body('category').trim().escape(),
     body('audience').trim().escape(),
   ], async (req, res, next) => {
-    const formData = {
+    const data = {
       orgId: req.user.id,
       name: req.body.name,
       target: req.body.target,
@@ -33,7 +35,8 @@ exports.post = [
       next(err);
     }
     try {
-      await project.create(formData);
+      data.slug = slug(`${data.name}-${nanoid(6)}`);
+      await project.create(data);
     } catch (err) {
       res.status(500).json({ errors: err.array });
       next(err);

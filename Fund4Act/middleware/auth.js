@@ -30,7 +30,7 @@ module.exports.init = (app, passport) => {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // you might need to change the callbackURL when deploying on production
-    callbackURL: 'http://localhost:3000/callback',
+    callbackURL: 'http://localhost:3000/login',
     // openid needs to be in scope
     scope: 'openid'
   }, (issuer, profile, done) => {

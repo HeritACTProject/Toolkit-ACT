@@ -23,7 +23,7 @@
   <div class="right">
   {{#unless user}}<a href="/login">login</a>{{/unless}}
   {{#if user}}
-    <a href=/organisation/>Start a project</a>
+    <a href=/profile/>Start a project</a>
     <img src="/images/user.svg" arialabel="user profile"></img>
   {{/if}}
   </div>
@@ -31,8 +31,20 @@
 <hr>
 
 <main class="wide">
-  <h2>Donate to local heritage projects</h2>
-  <p>Showcase your businesses commitment to your local community</p>
-  <div id="map"></div>
-  <script src="/scripts/map.js"></script>
+  <section aria-label="projects map view">
+    <h2>Donate to local heritage projects</h2>
+    <p>Showcase your businesses commitment to your local community</p>
+    <div id="map"></div>
+    <script src="/scripts/map.js"></script>
+  </section>
+
+  <section aria-label="projects closest to deadline">
+    {{#each data.mostUrgent}}
+      <h3>{{name}}</h3>
+      <a href="/project/{{slug}}">view</a>
+      {{#unless @last}}
+        <hr>
+      {{/unless}}
+    {{/each}}
+  </section>
 </main>

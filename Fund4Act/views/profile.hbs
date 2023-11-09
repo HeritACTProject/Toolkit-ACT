@@ -1,0 +1,32 @@
+{{> header}}
+
+{{#if profile}}
+  <style>
+    #profile-header, #profile-header div { display: flex; flex-wrap:wrap; justify-content: space-between; align-items: center; }
+    #profile-header img, #profile-header div, #profile-projects { margin: 1rem; }
+    #profile-header div a { display: block; }
+    #profile-header img { width: 3rem; }
+  </style>
+
+  <section id="profile-header" aria-label="profile">
+    <img src="{{#if org.logo_url}}{{org.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
+    <p>{{org.name}}{{#unless org.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</p>
+    <div>
+      <a href="/profile/{{org.id}}">Preview Profile</a>
+      <a href="/profile/create">Edit Profile</a>
+    </section>
+  </div>
+  <section id="profile-projects" aria-label="projects">
+    <a href="/project/create">Create a Project</a>
+    {{#if projects}}
+      <div id="projects-list">
+        {{#each projects}}
+          {{> profile-project}}
+        {{/each}}
+      </div>
+    {{/if}}
+  </section>
+{{else}}
+  <a href="/profile/create">Create an Organisation</a>
+{{/if}}
+

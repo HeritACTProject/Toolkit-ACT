@@ -6,22 +6,21 @@ const { engine } = require('express-handlebars');
 const createHttpError = require('http-errors');
 
 const passport = require('passport');
-const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
-
-const ensureLoggedIn = ensureLogIn();
 
 const auth = require('./middleware/auth.js');
 const security = require('./middleware/security.js');
 const appRouter = require('./routes/app.js');
-const orgRouter = require('./routes/org.js');
+const profileRouter = require('./routes/profile.js');
 const projectRouter = require('./routes/project.js');
 
 const app = express();
 
-const orgDb = require('./models/organisations.js')
-orgDb.init();
+const profileDb = require('./models/profiles.js')
+profileDb.init();
 const projDb = require('./models/projects.js')
 projDb.init();
+const pledgeDb = require('./models/pledges.js')
+pledgeDb.init();
 
 // view engine setup
 app.engine('hbs', engine({
@@ -51,15 +50,12 @@ auth.init(app, passport);
 
 // setup routers
 app.use('/', appRouter);
-app.use('/organisation', ensureLoggedIn, orgRouter);
-app.use('/project', ensureLoggedIn, projectRouter);
-app.use('/login', passport.authenticate('openidconnect'));
-app.use('/callback',
-  passport.authenticate('openidconnect', {
-    successReturnToOrRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
+app.use('/profile', profileRouter);
+app.use('/project', projectRouter);
+app.use('/login', passport.authenticate('openidconnect', {
+  successReturnToOrRedirect: '/',
+  failureRedirect: '/login'
+}));
 
 app.listen(3000, () => {
   console.log('Server up')
