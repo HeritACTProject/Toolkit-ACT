@@ -1,0 +1,29 @@
+<img src="{{profile.logo_url}}">
+<h1>{{profile.name}}</h1>
+<h2>Contact Us:</h2>
+<p>{{profile.email}}</p>
+<p>{{profile.website_url}}</p>
+{{#if projects}}
+    <h2>Our Projects:</h2>
+    {{#each projects}}
+        <p><a href="/project/{{this.slug}}">{{this.name}}</a></p>
+        <br>
+    {{/each}}
+{{/if}}
+{{#if pledges}}
+    <h2>Our Pledges:</h2>
+    {{#each pledges}}
+        <p><a href="/project/{{this.proj_slug}}">{{this.project_name}}</a></p>
+        <p>€{{this.amount}}</p>
+        <p>{{this.date}}</p>
+        <br>
+    {{/each}}
+{{/if}}
+<h2>Our Mission:</h2>
+<p>{{profile.mission}}</p>
+<h2>Our Previous Projects:</h2>
+<p>{{profile.previous_projects}}</p>
+<h2>Our Previous Funding:</h2>
+<p>{{profile.previous_grants}}</p>
+<h2>Our Partnerships:</h2>
+<p>{{profile.partnerships}}</p>

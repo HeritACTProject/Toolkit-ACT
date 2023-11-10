@@ -52,10 +52,12 @@ auth.init(app, passport);
 app.use('/', appRouter);
 app.use('/profile', profileRouter);
 app.use('/project', projectRouter);
-app.use('/login', passport.authenticate('openidconnect', {
-  successReturnToOrRedirect: '/',
-  failureRedirect: '/login'
-}));
+app.get('/login', passport.authenticate('SimpleLogin'));
+app.use('/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}), 
+(req, res) => {
+  res.redirect(req.session.returnTo ||'/');
+  delete req.session.returnTo;
+});
 
 app.listen(3000, () => {
   console.log('Server up')

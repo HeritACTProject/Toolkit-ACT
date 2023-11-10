@@ -8,8 +8,9 @@
   <section aria-label="pledges">
     <h2>Pledges</h2>
     {{#each projectData.pledges}}
-      <p>{{this.amount}}</p>
+      <p>€{{this.amount}}</p>
       <p>{{this.date}}<p>
+      <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
       <hr>
     {{/each}}
   </section>

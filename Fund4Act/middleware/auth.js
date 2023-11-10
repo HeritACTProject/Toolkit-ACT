@@ -20,7 +20,7 @@ module.exports.init = (app, passport) => {
   });
 
   // config SimpleLogin OIDC (OpenID Connect) provider
-  passport.use(new OidcStrategy({
+  passport.use('SimpleLogin', new OidcStrategy({
     // SimpleLogin OIDC Settings
     issuer: 'https://app.simplelogin.io',
     authorizationURL: 'https://app.simplelogin.io/oauth2/authorize',
@@ -30,7 +30,7 @@ module.exports.init = (app, passport) => {
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     // you might need to change the callbackURL when deploying on production
-    callbackURL: 'http://localhost:3000/login',
+    callbackURL: 'http://localhost:3000/callback',
     // openid needs to be in scope
     scope: 'openid'
   }, (issuer, profile, done) => {

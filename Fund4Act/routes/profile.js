@@ -3,6 +3,7 @@ const router = express.Router();
 const updateProjectCreator = require('../controllers/project-creator-update.js')
 const Profile = require('../models/profiles.js');
 const Project = require('../models/projects.js');
+const Pledge = require('../models/pledges.js');
 const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 
 const ensureLoggedIn = ensureLogIn();
@@ -37,7 +38,10 @@ router.route('/verify')
 
 router.route('/:uid')
   .get(async (req, res) => {
-    res.render('org-public', {user: req.user});
+    const profile = await Profile.get(req.params.uid);
+    const projects = await Project.getByProfileId(req.params.uid);
+    const pledges = await Pledge.getByDonorId(req.params.uid);
+    res.render('public-profile', {user: req.user, profile, projects, pledges});
   })
 
 module.exports = router;
