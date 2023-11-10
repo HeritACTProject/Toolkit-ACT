@@ -9,6 +9,9 @@ module.exports.init = () => {
     fundraising_target DECIMAL NOT NULL,
     fundraising_deadline TEXT NOT NULL,
     image_url TEXT,
+    address TEXT,
+    latitude TEXT,
+    longitude TEXT,
     overview TEXT,
     start_date TEXT,
     end_date TEXT,
@@ -25,12 +28,12 @@ module.exports.init = () => {
   `);
 };
 
-module.exports.create = ({orgId, name, target, deadline, imageUrl, overview, startDate, endDate,
+module.exports.create = ({orgId, name, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
                         category, audience, slug}) => {
   return db.run(`INSERT INTO projects
-    (org_id, name, fundraising_target, fundraising_deadline, image_url, overview, start_date, end_date,
+    (org_id, name, fundraising_target, fundraising_deadline, image_url, address, latitude, longitude, overview, start_date, end_date,
       category, target_audience, slug)
-    VALUES ("${orgId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${overview}",
+    VALUES ("${orgId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
       "${startDate}", "${endDate}", "${category}", "${audience}", "${slug}")
   `);
 };
@@ -62,4 +65,10 @@ module.exports.getXMostUrgent = (x) => {
     ORDER BY fundraising_deadline DESC LIMIT $limit;`);
   const results = query.all({ $limit: x });
   return results;
+}
+
+module.exports.getAllCoordinatesAndSlugs = () => {
+  const query = db.query(`SELECT latitude, longitude, slug FROM projects`);
+const results = query.all();
+return results;
 }

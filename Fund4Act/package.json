@@ -20,6 +20,7 @@
     "passport-oauth2": "^1.7.0",
     "passport-openidconnect": "^0.1.1",
     "path": "^0.12.7",
+    "request-promise": "^4.2.6",
     "slug": "^8.2.3"
   }
 }

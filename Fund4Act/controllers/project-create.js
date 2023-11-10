@@ -2,6 +2,7 @@ const { param, body, validationResult } = require('express-validator');
 const slug = require('slug');
 const { nanoid } = require('nanoid');
 const project = require('../models/projects.js');
+const request = require('request-promise');
 
 exports.post = [
   [
@@ -9,6 +10,7 @@ exports.post = [
     body('target').notEmpty().isNumeric().toFloat(),
     body('deadline').notEmpty().isISO8601(),
     body('image-url').trim().escape(),
+    body('address').trim().escape(),
     body('overview').trim().escape(),
     body('start-date').notEmpty().isISO8601(),
     body('end-date').notEmpty().isISO8601(),
@@ -21,6 +23,7 @@ exports.post = [
       target: req.body.target,
       deadline: req.body.deadline,
       imageUrl: req.body["image-url"],
+      address: req.body.address,
       overview: req.body.overview,
       startDate: req.body["start-date"],
       endDate: req.body["end-date"],
@@ -36,6 +39,10 @@ exports.post = [
     }
     try {
       data.slug = slug(`${data.name}-${nanoid(6)}`);
+      const nominatimResponse = await request(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=json`);
+      const geocode = JSON.parse(nominatimResponse)[0];
+      data.lat = geocode.lat;
+      data.lon = geocode.lon;
       await project.create(data);
     } catch (err) {
       res.status(500).json({ errors: err.array });
