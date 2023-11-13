@@ -37,10 +37,20 @@ exports.post = [
       res.status(400).json({ errors: err.array });
       next(err);
     }
+
+    let nominatimResponse, geocode;
+
+    try {
+      nominatimResponse = await request(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=json`);
+      geocode = await JSON.parse(nominatimResponse)[0];
+      if (!geocode.lat) throw Error();
+    } catch (err) {
+      res.render('project-create-form', {locationError: true});
+      return;
+    }
+
     try {
       data.slug = slug(`${data.name}-${nanoid(6)}`);
-      const nominatimResponse = await request(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=json`);
-      const geocode = JSON.parse(nominatimResponse)[0];
       data.lat = geocode.lat;
       data.lon = geocode.lon;
       await project.create(data);
@@ -49,5 +59,6 @@ exports.post = [
       next(err);
     }
 
+    res.redirect('/profile');
     return next();
   }];

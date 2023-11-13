@@ -1,6 +1,12 @@
 <main>
   <link rel="stylesheet" href="/styles/normform.min.css"/>
 
+  {{#if this.locationError}}
+    <style>#error-msg {: 1rem; color: red;}</style>
+    <span><p id="error-msg">There was a problem finding the address, please try again</p></span>
+  {{/if}}
+
+
   <h1>Create your project page</h1>
 
   <form class="normform">

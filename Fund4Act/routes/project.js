@@ -18,9 +18,6 @@ router.route('/create')
   .post(
     ensureLoggedIn,
     createProject.post,
-    async (req, res) => {
-      res.redirect('/profile');
-    }
   );
 
 router.route('/:slug')
