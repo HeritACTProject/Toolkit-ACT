@@ -1,25 +1,25 @@
 <style>
-  .project-row{
+  .action-row{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid #000;
   }
 
-  .project-row a {
+  .action-row a {
     margin: 1rem;
   }
 
-  .project-links{
+  .action-links{
     display: flex;
   }
 </style>
 
-<div class="project-row">
+<div class="action-row">
   <p>{{this.name}}</p>
-  <div class="project-links">
-    <a href="/project/{{this.slug}}">view</a>
-    <a href="/project/{{this.slug}}/edit">edit</a>
-    <a href="/project/{{this.slug}}/delete">delete</a>
+  <div class="action-links">
+    <a href="/action/{{this.slug}}">view</a>
+    <a href="/action/{{this.slug}}/edit">edit</a>
+    <a href="/action/{{this.slug}}/delete">delete</a>
   </div>
 </div>

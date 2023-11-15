@@ -49,7 +49,7 @@ module.exports.update = ({id, name, target, deadline, imageUrl, overview, startD
 
 module.exports.getByProfileId = (pid) => {
   const query = db.query('SELECT * FROM actions WHERE profile_id = $pid;');
-  const results = query.all({ $pid: oid });
+  const results = query.all({ $pid: pid});
   return results;
 }
 

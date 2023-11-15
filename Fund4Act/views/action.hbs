@@ -1,22 +1,21 @@
-<<<<<<< HEAD:Fund4Act/views/project.hbs
 {{> header}}
 
 <main>
   <section aria-label="title">
-    <h1>{{projectData.name}}</h1>
+    <h1>{{actionData.name}}</h1>
   </section>
   
 
   <section aria-label="make a pledge">
     <label for="fundraising">Total Pledged</label>
-    <progress id="fundraising" max="{{projectData.fundraising_target}}" value="{{projectData.pledgeTotal}}">{{projectData.fundraising_target}}</progress>
-    <a href="/project/{{projectData.slug}}/pledge">Pledge Now</a>
+    <progress id="fundraising" max="{{actionData.fundraising_target}}" value="{{actionData.pledgeTotal}}">{{actionData.fundraising_target}}</progress>
+    <a href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
   </section>
 
   <section aria-label="pledges">
     <h2>Pledges</h2>
-    {{#if projectData.pledges}}
-      {{#each projectData.pledges}}
+    {{#if actionData.pledges}}
+      {{#each actionData.pledges}}
         <p>€{{this.amount}}</p>
         <p>{{this.date}}<p>
         <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
@@ -25,23 +24,6 @@
       {{else}}
       <p>No pledges yet</p>
     {{/if}}
-=======
-<main>
-  <h1>{{actionData.name}}</h1>
-
-  <label for="fundraising">Total Pledged
-  <progress id="fundraising" max="{{actionData.fundraising_target}}" value="{{actionData.pledgeTotal}}">{{actionData.fundraising_target}}</progress>
-  <a href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
-
-  <section aria-label="pledges">
-    <h2>Pledges</h2>
-    {{#each actionData.pledges}}
-      <p>€{{this.amount}}</p>
-      <p>{{this.date}}<p>
-      <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
-      <hr>
-    {{/each}}
->>>>>>> 24b56c1 (renames projects to actions):Fund4Act/views/action.hbs
   </section>
 
 </main>
