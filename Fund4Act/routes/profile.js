@@ -16,6 +16,11 @@ router.route('/')
     res.render('profile', {user: user, profile, actions});
   });
 
+router.route('/action-creator-prereq')
+  .get(ensureLoggedIn, async (req, res) => {
+    res.render('action-creator-prereq');
+  })
+
 router.route('/update-action-creator')
   .get(ensureLoggedIn, async (req, res) => {
     res.render('action-creator-form');
