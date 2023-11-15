@@ -176,3 +176,6 @@ dist
 
 # Database
 *.sqlite
+
+# Bun
+*.lockb

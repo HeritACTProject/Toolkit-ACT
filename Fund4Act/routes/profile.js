@@ -21,8 +21,8 @@ router.route('/update-project-creator')
     res.render('project-creator-form');
   })
   .post(
+    ensureLoggedIn,
     updateProjectCreator.post,
-    ensureLogIn,
     async (req, res) => {
       res.redirect('/profile');
     }
@@ -35,6 +35,11 @@ router.route('/verify')
   .post(ensureLoggedIn, async (req, res) => {
     console.log(req.body);
   });
+
+router.route('/edit')
+  .get(ensureLoggedIn, async (req, res) => {
+    res.send('Edit Profile Coming Soon');
+  })
 
 router.route('/:uid')
   .get(async (req, res) => {

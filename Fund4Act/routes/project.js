@@ -41,4 +41,14 @@ router.route('/:slug/pledge')
       res.render('pledge-confirmation', {slug: req.params.slug})
     })
 
+router.route('/:slug/edit')
+  .get(ensureLoggedIn, async (req, res) => {
+    res.send('Edit Project Coming Soon');
+  })
+
+router.route('/:slug/delete')
+  .get(ensureLoggedIn, async (req, res) => {
+    res.send('Delete Project Coming Soon');
+  })
+
 module.exports = router;

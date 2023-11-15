@@ -1,5 +1,6 @@
 <style>
   body { padding: 0; }
+  #title-link { text-decoration: none; color: inherit; }
   header { display: flex; justify-content:space-between; align-items:center; height: 4rem; padding: 0 1rem; }
   header h1 { border-bottom: none; }
   header img { width: 2rem; margin: 0; max-width: inherit; }
@@ -11,12 +12,12 @@
 </style>
 
 <header>
-  <h1>Fund4Act</h1>
+  <a id="title-link" href="/"><h1>Fund4Act</h1></a>
 
   <div class="right">
   {{#unless user}}<a href="/login">login</a>{{/unless}}
   {{#if user}}
-    <img src="/images/user.svg" arialabel="user profile"></img>
+    <a href="/profile"><img src="/images/user.svg" arialabel="user profile"></img></a>
   {{/if}}
   </div>
 </header>

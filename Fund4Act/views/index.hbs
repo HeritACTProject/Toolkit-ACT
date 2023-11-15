@@ -11,7 +11,8 @@
   header h1 { border-bottom: none; }
   header img { width: 2rem; margin: 0; }
   .right { display: flex; }
-  .right a { margin: 1rem; }
+  #start-project { margin: 1rem; }
+  #profile-image { align-self: center; }
   h2, p { margin: 1rem; }
   hr { margin: 0; }
   #map { height: 70vh; margin: 0; }
@@ -23,8 +24,8 @@
   <div class="right">
   {{#unless user}}<a href="/login">login</a>{{/unless}}
   {{#if user}}
-    <a href=/profile/>Start a project</a>
-    <img src="/images/user.svg" arialabel="user profile"></img>
+    <a id="start-project" href="/profile">Start a project</a>
+    <a id="profile-image" href="/profile"><img src="/images/user.svg" arialabel="user profile"></a>
   {{/if}}
   </div>
 </header>

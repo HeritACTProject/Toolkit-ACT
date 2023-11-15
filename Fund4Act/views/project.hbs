@@ -1,18 +1,29 @@
-<main>
-  <h1>{{projectData.name}}</h1>
+{{> header}}
 
-  <label for="fundraising">Total Pledged
-  <progress id="fundraising" max="{{projectData.fundraising_target}}" value="{{projectData.pledgeTotal}}">{{projectData.fundraising_target}}</progress>
-  <a href="/project/{{projectData.slug}}/pledge">Pledge Now</a>
+<main>
+  <section aria-label="title">
+    <h1>{{projectData.name}}</h1>
+  </section>
+  
+
+  <section aria-label="make a pledge">
+    <label for="fundraising">Total Pledged</label>
+    <progress id="fundraising" max="{{projectData.fundraising_target}}" value="{{projectData.pledgeTotal}}">{{projectData.fundraising_target}}</progress>
+    <a href="/project/{{projectData.slug}}/pledge">Pledge Now</a>
+  </section>
 
   <section aria-label="pledges">
     <h2>Pledges</h2>
-    {{#each projectData.pledges}}
-      <p>€{{this.amount}}</p>
-      <p>{{this.date}}<p>
-      <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
-      <hr>
-    {{/each}}
+    {{#if projectData.pledges}}
+      {{#each projectData.pledges}}
+        <p>€{{this.amount}}</p>
+        <p>{{this.date}}<p>
+        <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
+        <hr>
+      {{/each}}
+      {{else}}
+      <p>No pledges yet</p>
+    {{/if}}
   </section>
 
 </main>

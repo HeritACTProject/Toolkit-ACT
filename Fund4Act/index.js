@@ -52,12 +52,19 @@ auth.init(app, passport);
 app.use('/', appRouter);
 app.use('/profile', profileRouter);
 app.use('/project', projectRouter);
-app.get('/login', passport.authenticate('SimpleLogin'));
+app.use('/login', passport.authenticate('SimpleLogin'));
 app.use('/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}), 
 (req, res) => {
   res.redirect(req.session.returnTo ||'/');
   delete req.session.returnTo;
 });
+app.use('/logout', function(req, res, next) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
+
 
 app.listen(3000, () => {
   console.log('Server up')

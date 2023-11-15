@@ -2,21 +2,25 @@
 
 {{#if profile}}
   <style>
-    #profile-header, #profile-header div { display: flex; flex-wrap:wrap; justify-content: space-between; align-items: center; }
+    #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; }
     #profile-header img, #profile-header div, #profile-projects { margin: 1rem; }
-    #profile-header div a { display: block; }
+    #profile-header div a { display: block; padding-right: 1rem; }
     #profile-header img { width: 3rem; }
   </style>
 
+  <h2>Your Profile</h2>
+
   <section id="profile-header" aria-label="profile">
-    <img src="{{#if org.logo_url}}{{org.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
-    <p>{{org.name}}{{#unless org.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</p>
+    <img src="{{#if profile.logo_url}}{{profile.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
+    <h3>{{profile.name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
     <div>
-      <a href="/profile/{{org.id}}">Preview Profile</a>
-      <a href="/profile/create">Edit Profile</a>
+      <a href="/profile/{{profile.id}}">View Public Profile</a>
+      <a href="/profile/edit">Edit Profile</a>
+      <a href="/logout">Log Out</a>
     </section>
   </div>
   <section id="profile-projects" aria-label="projects">
+    <h3>Your Projects</h3>
     <a href="/project/create">Create a Project</a>
     {{#if projects}}
       <div id="projects-list">
@@ -27,6 +31,8 @@
     {{/if}}
   </section>
 {{else}}
-  <a href="/profile/update-project-creator">Create an Organisation</a>
+  <section>
+    <a href="/profile/update-project-creator">Register as a Project Creator</a>
+  </section>
 {{/if}}
 
