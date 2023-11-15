@@ -4,7 +4,7 @@ const db = new Database("fund4act.sqlite");
 module.exports.init = () => {
   db.run(`CREATE TABLE IF NOT EXISTS actions(
     id INTEGER PRIMARY KEY NOT NULL,
-    org_id TEXT NOT NULL,
+    profile_id TEXT NOT NULL,
     name TEXT NOT NULL,
     fundraising_target DECIMAL NOT NULL,
     fundraising_deadline TEXT NOT NULL,
@@ -16,42 +16,40 @@ module.exports.init = () => {
     start_date TEXT,
     end_date TEXT,
     category TEXT,
-    target_audience TEXT,
     slug TEXT NOT_NULL
   )`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_action_id
     ON actions (id);
   `);
-  db.run(`CREATE INDEX IF NOT EXISTS idx_action_org_id
-    ON actions (org_id);
+  db.run(`CREATE INDEX IF NOT EXISTS idx_action_profile_id
+    ON actions (profile_id);
   `);
 };
 
-module.exports.create = ({orgId, name, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
-                        category, audience, slug}) => {
+module.exports.create = ({profileId, name, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
+                        category, slug}) => {
   return db.run(`INSERT INTO actions
-    (org_id, name, fundraising_target, fundraising_deadline, image_url, address, latitude, longitude, overview, start_date, end_date,
-      category, target_audience, slug)
-    VALUES ("${orgId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
-      "${startDate}", "${endDate}", "${category}", "${audience}", "${slug}")
+    (profile_id, name, fundraising_target, fundraising_deadline, image_url, address, latitude, longitude, overview, start_date, end_date,
+      category, slug)
+    VALUES ("${profileId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
+      "${startDate}", "${endDate}", "${category}", "${slug}")
   `);
 };
 
 module.exports.update = ({id, name, target, deadline, imageUrl, overview, startDate, endDate,
-                        category, audience}) => {
+                        category}) => {
   return db.run(`UPDATE actions SET
     name = "${name}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}", image_url = "${imageUrl}", overview = "${overview}",
-      start_date = "${startDate}", end_date = "${endDate}", category = "${category}",
-      target_audience = "${audience}"
+      start_date = "${startDate}", end_date = "${endDate}", category = "${category}"
     WHERE id = "${id}"
   `);
 };
 
-module.exports.getByProfileId = (oid) => {
-  const query = db.query('SELECT * FROM actions WHERE org_id = $oid;');
-  const results = query.all({ $oid: oid });
+module.exports.getByProfileId = (pid) => {
+  const query = db.query('SELECT * FROM actions WHERE profile_id = $pid;');
+  const results = query.all({ $pid: oid });
   return results;
 }
 

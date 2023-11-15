@@ -15,10 +15,9 @@ exports.post = [
     body('start-date').notEmpty().isISO8601(),
     body('end-date').notEmpty().isISO8601(),
     body('category').trim().escape(),
-    body('audience').trim().escape(),
   ], async (req, res, next) => {
     const data = {
-      orgId: req.user.id,
+      profileId: req.user.id,
       name: req.body.name,
       target: req.body.target,
       deadline: req.body.deadline,
@@ -28,7 +27,6 @@ exports.post = [
       startDate: req.body["start-date"],
       endDate: req.body["end-date"],
       category: req.body.category,
-      audience: req.body.audience,
     };
 
     try {
