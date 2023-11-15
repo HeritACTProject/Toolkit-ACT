@@ -11,7 +11,7 @@
   header h1 { border-bottom: none; }
   header img { width: 2rem; margin: 0; }
   .right { display: flex; }
-  #start-project { margin: 1rem; }
+  #start-action{ margin: 1rem; }
   #profile-image { align-self: center; }
   h2, p { margin: 1rem; }
   hr { margin: 0; }
@@ -24,7 +24,7 @@
   <div class="right">
   {{#unless user}}<a href="/login">login</a>{{/unless}}
   {{#if user}}
-    <a id="start-project" href="/profile">Start a project</a>
+    <a id="start-action" href="/profile">Start an action</a>
     <a id="profile-image" href="/profile"><img src="/images/user.svg" arialabel="user profile"></a>
   {{/if}}
   </div>
@@ -32,8 +32,8 @@
 <hr>
 
 <main class="wide">
-  <section aria-label="projects map view">
-    <h2>Donate to local heritage projects</h2>
+  <section aria-label="actions map view">
+    <h2>Donate to local heritage actions</h2>
     <p>Showcase your businesses commitment to your local community</p>
     <div id="map"></div>
     <script type='text/javascript'>
@@ -49,18 +49,18 @@
           maxZoom: 18
         }).addTo(map);
 
-      {{#each projects}}
+      {{#each actions}}
         {{#if this.latitude}}{{#if this.longitude}}
-        L.marker([{{this.latitude}}, {{this.longitude}}]).addTo(map).bindPopup("<a href=\"/project/{{this.slug}}\">View Project</a>");;
+        L.marker([{{this.latitude}}, {{this.longitude}}]).addTo(map).bindPopup("<a href=\"/action/{{this.slug}}\">View action</a>");;
         {{/if}}{{/if}}
       {{/each}}
     </script>
   </section>
 
-  <section aria-label="projects closest to deadline">
+  <section aria-label="actions closest to deadline">
     {{#each data.mostUrgent}}
       <h3>{{name}}</h3>
-      <a href="/project/{{slug}}">view</a>
+      <a href="/action/{{slug}}">view</a>
       {{#unless @last}}
         <hr>
       {{/unless}}

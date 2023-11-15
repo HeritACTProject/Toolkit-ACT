@@ -7,9 +7,11 @@ exports.post = [
     body('logo-url').trim().escape(),
     body('website-url').trim().escape(),
     body('mission').notEmpty().trim().escape(),
-    body('prev-projects').trim().escape(),
+    body('prev-actions').trim().escape(),
     body('prev-grants').trim().escape(),
     body('partnerships').notEmpty().escape(),
+    body('constitution-url').notEmpty().trim().escape(),
+    body('cap-url').notEmpty().trim().escape(),
   ], async (req, res, next) => {
     const formData = {
       id: req.user.id,
@@ -18,9 +20,11 @@ exports.post = [
       logoUrl: req.body['logo-url'],
       websiteUrl: req.body['website-url'],
       mission: req.body.mission,
-      prevProjects: req.body['prev-projects'],
+      prevActions: req.body['prev-actions'],
       prevGrants: req.body['prev-grants'],
       partnerships: req.body.partnerships,
+      constitutionUrl: req.body['constitution-url'],
+      climateActionPlanUrl: req.body['cap-url'],
     };
 
     try {
@@ -36,5 +40,5 @@ exports.post = [
       next(err);
     }
 
-    return next();
+    next();
   }];

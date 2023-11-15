@@ -1,7 +1,7 @@
 const { param, body, validationResult } = require('express-validator');
 const slug = require('slug');
 const { nanoid } = require('nanoid');
-const project = require('../models/projects.js');
+const action = require('../models/actions.js');
 const request = require('request-promise');
 
 exports.post = [
@@ -45,7 +45,7 @@ exports.post = [
       geocode = await JSON.parse(nominatimResponse)[0];
       if (!geocode.lat) throw Error();
     } catch (err) {
-      res.render('project-create-form', {locationError: true});
+      res.render('action-create-form', {locationError: true});
       return;
     }
 
@@ -53,12 +53,11 @@ exports.post = [
       data.slug = slug(`${data.name}-${nanoid(6)}`);
       data.lat = geocode.lat;
       data.lon = geocode.lon;
-      await project.create(data);
+      await action.create(data);
     } catch (err) {
       res.status(500).json({ errors: err.array });
       next(err);
     }
 
-    res.redirect('/profile');
-    return next();
+    return res.redirect('/profile');
   }];

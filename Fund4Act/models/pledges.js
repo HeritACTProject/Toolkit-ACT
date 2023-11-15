@@ -23,21 +23,22 @@ module.exports.create = ({proj_slug, donor_id, amount}) => {
   `);
 };
 
-module.exports.getByProjectSlug = (slug) => {
+module.exports.getByActionSlug = (slug) => {
   const query = db.query(`SELECT * FROM pledges WHERE proj_slug = $slug
     ORDER BY date DESC, amount DESC;`);
   const results = query.all({ $slug: slug });
   return results;
 }
 
-module.exports.getByProjectSlugWithDonorInfo = (slug) => {
-  const query = db.query(`SELECT amount, date, organisations.name AS donor_name, donor_id FROM pledges INNER JOIN organisations ON pledges.donor_id = organisations.id WHERE proj_slug = $slug
+module.exports.getByActionSlugWithDonorInfo = (slug) => {
+  const query = db.query(`SELECT amount, date, organisations.name AS donor_name,
+    donor_id FROM pledges INNER JOIN organisations ON pledges.donor_id = organisations.id WHERE proj_slug = $slug
     ORDER BY date DESC, amount DESC;`);
   const results = query.all({ $slug: slug });
   return results;
 }
 
-module.exports.getXMostRecentByProjectSlug = (slug, x) => {
+module.exports.getXMostRecentByActionSlug = (slug, x) => {
   const query = db.query(`SELECT * FROM pledges WHERE proj_slug = $slug
     ORDER BY date DESC LIMIT $limit;`);
   const results = query.all({ $slug: slug, $limit: x });
@@ -45,7 +46,8 @@ module.exports.getXMostRecentByProjectSlug = (slug, x) => {
 }
 
 module.exports.getByDonorId = (donor_id) => {
-  const query = db.query(`SELECT amount, date, projects.name AS project_name, proj_slug FROM pledges INNER JOIN projects ON pledges.proj_slug = projects.slug WHERE donor_id = $donor_id
+  const query = db.query(`SELECT amount, date, actions.name AS action_name,
+    proj_slug FROM pledges INNER JOIN actions ON pledges.proj_slug = actions.slug WHERE donor_id = $donor_id
     ORDER BY date DESC, amount DESC;`);
   const results = query.all({ $donor_id: donor_id });
   return results;

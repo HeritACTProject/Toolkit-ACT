@@ -11,13 +11,13 @@ const auth = require('./middleware/auth.js');
 const security = require('./middleware/security.js');
 const appRouter = require('./routes/app.js');
 const profileRouter = require('./routes/profile.js');
-const projectRouter = require('./routes/project.js');
+const actionRouter = require('./routes/action.js');
 
 const app = express();
 
 const profileDb = require('./models/profiles.js')
 profileDb.init();
-const projDb = require('./models/projects.js')
+const projDb = require('./models/actions.js')
 projDb.init();
 const pledgeDb = require('./models/pledges.js')
 pledgeDb.init();
@@ -51,8 +51,8 @@ auth.init(app, passport);
 // setup routers
 app.use('/', appRouter);
 app.use('/profile', profileRouter);
-app.use('/project', projectRouter);
 app.use('/login', passport.authenticate('SimpleLogin'));
+app.use('/action', actionRouter);
 app.use('/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}), 
 (req, res) => {
   res.redirect(req.session.returnTo ||'/');

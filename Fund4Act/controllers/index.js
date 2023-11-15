@@ -1,8 +1,8 @@
-const project = require('../models/projects.js');
+const action = require('../models/actions.js');
 
 exports.get = async (req, res, next) => {
   try {
-    const mostUrgent = project.getXMostUrgent(3);
+    const mostUrgent = action.getXMostUrgent(3);
 
     return {
       mostUrgent,

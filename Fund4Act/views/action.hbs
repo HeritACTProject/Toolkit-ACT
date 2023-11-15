@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Fund4Act/views/project.hbs
 {{> header}}
 
 <main>
@@ -24,6 +25,23 @@
       {{else}}
       <p>No pledges yet</p>
     {{/if}}
+=======
+<main>
+  <h1>{{actionData.name}}</h1>
+
+  <label for="fundraising">Total Pledged
+  <progress id="fundraising" max="{{actionData.fundraising_target}}" value="{{actionData.pledgeTotal}}">{{actionData.fundraising_target}}</progress>
+  <a href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
+
+  <section aria-label="pledges">
+    <h2>Pledges</h2>
+    {{#each actionData.pledges}}
+      <p>€{{this.amount}}</p>
+      <p>{{this.date}}<p>
+      <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
+      <hr>
+    {{/each}}
+>>>>>>> 24b56c1 (renames projects to actions):Fund4Act/views/action.hbs
   </section>
 
 </main>

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const updateProjectCreator = require('../controllers/project-creator-update.js')
+const updateActionCreator = require('../controllers/action-creator-update.js')
 const Profile = require('../models/profiles.js');
-const Project = require('../models/projects.js');
+const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
 const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 
@@ -12,17 +12,17 @@ router.route('/')
   .get(ensureLoggedIn, async (req, res) => {
     const user = req.user;
     const profile = await Profile.get(user.id);
-    const projects = await Project.getByProfileId(user.id);
-    res.render('profile', {user: user, profile, projects});
+    const actions = await Action.getByProfileId(user.id);
+    res.render('profile', {user: user, profile, actions});
   });
 
-router.route('/update-project-creator')
+router.route('/update-action-creator')
   .get(ensureLoggedIn, async (req, res) => {
-    res.render('project-creator-form');
+    res.render('action-creator-form');
   })
   .post(
     ensureLoggedIn,
-    updateProjectCreator.post,
+    updateActionCreator.post,
     async (req, res) => {
       res.redirect('/profile');
     }
@@ -30,7 +30,7 @@ router.route('/update-project-creator')
 
 router.route('/verify')
   .get(ensureLoggedIn, async (req, res) => {
-    res.render('project-creator-verify', {user: req.user})
+    res.render('action-creator-verify', {user: req.user})
   })
   .post(ensureLoggedIn, async (req, res) => {
     console.log(req.body);
@@ -44,9 +44,9 @@ router.route('/edit')
 router.route('/:uid')
   .get(async (req, res) => {
     const profile = await Profile.get(req.params.uid);
-    const projects = await Project.getByProfileId(req.params.uid);
+    const actions = await Action.getByProfileId(req.params.uid);
     const pledges = await Pledge.getByDonorId(req.params.uid);
-    res.render('public-profile', {user: req.user, profile, projects, pledges});
+    res.render('public-profile', {user: req.user, profile, actions, pledges});
   })
 
 module.exports = router;

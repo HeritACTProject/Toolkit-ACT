@@ -3,8 +3,8 @@
 {{#if profile}}
   <style>
     #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; }
-    #profile-header img, #profile-header div, #profile-projects { margin: 1rem; }
     #profile-header div a { display: block; padding-right: 1rem; }
+    #profile-header img, #profile-header div, #profile-actions { margin: 1rem; }
     #profile-header img { width: 3rem; }
   </style>
 
@@ -19,20 +19,20 @@
       <a href="/logout">Log Out</a>
     </section>
   </div>
-  <section id="profile-projects" aria-label="projects">
-    <h3>Your Projects</h3>
-    <a href="/project/create">Create a Project</a>
-    {{#if projects}}
-      <div id="projects-list">
-        {{#each projects}}
-          {{> profile-project}}
+  <section id="profile-actions" aria-label="actions">
+    <h3>Your Actions</h3>
+    <a href="/action/create">Create an Action</a>
+    {{#if actions}}
+      <div id="actions-list">
+        {{#each actions}}
+          {{> profile-action}}
         {{/each}}
       </div>
     {{/if}}
   </section>
 {{else}}
   <section>
-    <a href="/profile/update-project-creator">Register as a Project Creator</a>
+    <a href="/profile/update-action-creator">Register as an action creator</a>
   </section>
 {{/if}}
 

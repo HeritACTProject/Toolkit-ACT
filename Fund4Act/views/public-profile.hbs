@@ -5,17 +5,17 @@
 <h2>Contact Us:</h2>
 <p>{{profile.email}}</p>
 <p>{{profile.website_url}}</p>
-{{#if projects}}
-    <h2>Our Projects:</h2>
-    {{#each projects}}
-        <p><a href="/project/{{this.slug}}">{{this.name}}</a></p>
+{{#if actions}}
+    <h2>Our Actions:</h2>
+    {{#each actions}}
+        <p><a href="/action/{{this.slug}}">{{this.name}}</a></p>
         <br>
     {{/each}}
 {{/if}}
 {{#if pledges}}
     <h2>Our Pledges:</h2>
     {{#each pledges}}
-        <p><a href="/project/{{this.proj_slug}}">{{this.project_name}}</a></p>
+        <p><a href="/action/{{this.proj_slug}}">{{this.action_name}}</a></p>
         <p>€{{this.amount}}</p>
         <p>{{this.date}}</p>
         <br>
@@ -23,8 +23,8 @@
 {{/if}}
 <h2>Our Mission:</h2>
 <p>{{profile.mission}}</p>
-<h2>Our Previous Projects:</h2>
-<p>{{profile.previous_projects}}</p>
+<h2>Our Previous Actions:</h2>
+<p>{{profile.previous_actions}}</p>
 <h2>Our Previous Funding:</h2>
 <p>{{profile.previous_grants}}</p>
 <h2>Our Partnerships:</h2>
