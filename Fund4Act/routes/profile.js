@@ -11,7 +11,7 @@ const ensureLoggedIn = ensureLogIn();
 router.route('/')
   .get(ensureLoggedIn, async (req, res) => {
     const user = req.user;
-    const profile = await Profile.get(user.id);
+    const profile = await Profile.getProfileInfo(user.id);
     const actions = await Action.getByProfileId(user.id);
     res.render('profile', {user: user, profile, actions});
   });

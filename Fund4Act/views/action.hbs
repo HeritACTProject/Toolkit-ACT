@@ -4,7 +4,6 @@
   <section aria-label="title">
     <h1>{{actionData.name}}</h1>
   </section>
-  
 
   <section aria-label="make a pledge">
     <label for="fundraising">Total Pledged</label>
@@ -16,9 +15,10 @@
     <h2>Pledges</h2>
     {{#if actionData.pledges}}
       {{#each actionData.pledges}}
-        <p>€{{this.amount}}</p>
-        <p>{{this.date}}<p>
-        <p><a href="/profile/{{this.donor_id}}">{{this.donor_name}}</a></p>
+        <p>{{this.donor_name}}
+        <p>€{{this.amount}}
+        <p>{{this.date}}
+        <p><a href="/profile/{{this.donor_id}}">view profile</a>
         <hr>
       {{/each}}
       {{else}}

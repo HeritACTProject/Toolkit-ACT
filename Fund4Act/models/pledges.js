@@ -30,7 +30,7 @@ module.exports.getByActionSlug = (slug) => {
 }
 
 module.exports.getByActionSlugWithDonorInfo = (slug) => {
-  const query = db.query(`SELECT amount, date, profiles.name AS donor_name,
+  const query = db.query(`SELECT amount, date, profiles.display_name AS donor_name,
     donor_id FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id WHERE proj_slug = $slug
     ORDER BY date DESC, amount DESC;`);
   const results = query.all({ $slug: slug });

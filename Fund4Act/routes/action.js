@@ -30,7 +30,7 @@ router.route('/:slug')
 
 router.route('/:slug/pledge')
   .get(ensureLoggedIn, async (req, res) => {
-    const profile = await Profile.get(req.user.id);
+    const profile = await Profile.getProfileInfo(req.user.id);
     const action = await Action.getByActionSlug(req.params.slug);
     res.render('pledge-form', {user: req.user, profile, action});
   })

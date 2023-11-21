@@ -15,7 +15,7 @@ exports.post = [
   ], async (req, res, next) => {
     const formData = {
       id: req.user.id,
-      name: req.body.name,
+      organisationNme: req.body.name,
       email: req.body.email,
       logoUrl: req.body['logo-url'],
       websiteUrl: req.body['website-url'],
@@ -34,7 +34,7 @@ exports.post = [
       next(err);
     }
     try {
-      await profile.save(formData);
+      await profile.saveOrgInfo(formData);
     } catch (err) {
       res.status(500).json({ errors: err.array });
       next(err);
