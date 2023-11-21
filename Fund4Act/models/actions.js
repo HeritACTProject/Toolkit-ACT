@@ -16,7 +16,13 @@ module.exports.init = () => {
     start_date TEXT,
     end_date TEXT,
     category TEXT,
-    slug TEXT NOT_NULL
+    slug TEXT NOT_NULL,
+    beauty_ambition INTEGER,
+    sustain_ambition INTEGER,
+    together_ambition INTEGER,
+    participatory_process_ambition INTEGER,
+    multi_level_engagement_ambition INTEGER,
+    transdiciplinary_ambition INTEGER
   )`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_action_id
@@ -28,12 +34,15 @@ module.exports.init = () => {
 };
 
 module.exports.create = ({profileId, name, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
-                        category, slug}) => {
+                        category, slug, beautyAmbition, sustainAmbition, togetherAmbition, participProcessAmbition, 
+                        multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
   return db.run(`INSERT INTO actions
     (profile_id, name, fundraising_target, fundraising_deadline, image_url, address, latitude, longitude, overview, start_date, end_date,
-      category, slug)
+      category, slug, beauty_ambition, sustain_ambition, together_ambition, participatory_process_ambition,
+      multi_level_engagement_ambition, transdiciplinary_ambition)
     VALUES ("${profileId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
-      "${startDate}", "${endDate}", "${category}", "${slug}")
+      "${startDate}", "${endDate}", "${category}", "${slug}", "${beautyAmbition}", "${sustainAmbition}", "${togetherAmbition}", 
+      "${participProcessAmbition}", "${multiLevelEngagementAmbition}", "${transdiciplinaryAmbition}")
   `);
 };
 
@@ -42,7 +51,12 @@ module.exports.update = ({id, name, target, deadline, imageUrl, overview, startD
   return db.run(`UPDATE actions SET
     name = "${name}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}", image_url = "${imageUrl}", overview = "${overview}",
-      start_date = "${startDate}", end_date = "${endDate}", category = "${category}"
+      start_date = "${startDate}", end_date = "${endDate}", category = "${category}", 
+      beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}", 
+      together_ambition = "${togetherAmbition}", 
+      participatory_process_ambition = "${participProcessAmbition}", 
+      multi_level_engagement_ambition = "${multiLevelEngagementAmbition}", 
+      transdiciplinary_ambition = "${transdiciplinaryAmbition}"
     WHERE id = "${id}"
   `);
 };

@@ -16,7 +16,6 @@ module.exports.init = () => {
 };
 
 module.exports.create = ({proj_slug, donor_id, amount}) => {
-  console.log("hello");
   return db.run(`INSERT INTO pledges
     ( proj_slug, donor_id, amount, date)
     VALUES ("${proj_slug}", "${donor_id}", "${amount}", date('now'))
