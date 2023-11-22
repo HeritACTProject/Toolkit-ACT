@@ -3,7 +3,6 @@ const profile = require('../models/profiles.js');
 
 exports.post = [
   [
-    body('name').notEmpty().trim().escape(),
     body('logo-url').trim().escape(),
     body('website-url').trim().escape(),
     body('mission').notEmpty().trim().escape(),
@@ -15,7 +14,6 @@ exports.post = [
   ], async (req, res, next) => {
     const formData = {
       id: req.user.id,
-      organisationNme: req.body.name,
       email: req.body.email,
       logoUrl: req.body['logo-url'],
       websiteUrl: req.body['website-url'],

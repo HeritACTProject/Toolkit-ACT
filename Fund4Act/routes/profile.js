@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const updateActionCreator = require('../controllers/action-creator-update.js')
+const updateActionCreator = require('../controllers/action-creator-update.js');
+const createProfile = require('../controllers/profile-create.js');
 const Profile = require('../models/profiles.js');
 const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
@@ -11,10 +12,16 @@ const ensureLoggedIn = ensureLogIn();
 router.route('/')
   .get(ensureLoggedIn, async (req, res) => {
     const user = req.user;
-    const profile = await Profile.getProfileInfo(user.id);
+    const profile = await Profile.get(user.id);
     const actions = await Action.getByProfileId(user.id);
     res.render('profile', {user: user, profile, actions});
-  });
+  })
+  .post(
+    ensureLoggedIn,
+    createProfile.post,
+    async (req, res) => {
+      res.redirect('/profile');
+    });
 
 router.route('/action-creator-prereq')
   .get(ensureLoggedIn, async (req, res) => {

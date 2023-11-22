@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const createAction = require('../controllers/action-create.js');
 const createPledge = require('../controllers/pledge-create.js');
+const createProfile = require('../controllers/profile-create.js');
 const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
 const Profile = require('../models/profiles')
@@ -36,6 +37,7 @@ router.route('/:slug/pledge')
   })
   .post(
     ensureLoggedIn,
+    createProfile.post,
     createPledge.post,
     async (req, res, next) => {
       res.render('pledge-confirmation', {slug: req.params.slug})

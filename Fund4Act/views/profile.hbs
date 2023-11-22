@@ -1,38 +1,49 @@
 {{> header}}
 
-{{#if profile}}
-  <style>
-    #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; }
-    #profile-header div a { display: block; padding-right: 1rem; }
-    #profile-header img, #profile-header div, #profile-actions { margin: 1rem; }
-    #profile-header img { width: 3rem; }
-  </style>
+{{#if profile.display_name}}
+  {{#if profile.email}}
+    <style>
+      #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; }
+      #profile-header div a { display: block; padding-right: 1rem; }
+      #profile-header img, #profile-header div, #profile-actions { margin: 1rem; }
+      #profile-header img { width: 3rem; }
+    </style>
 
-  <h2>Your Profile</h2>
+    <h2>Your Profile</h2>
 
-  <section id="profile-header" aria-label="profile">
-    <img src="{{#if profile.logo_url}}{{profile.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
-    <h3>{{profile.name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
-    <div>
-      <a href="/profile/{{profile.id}}">View Public Profile</a>
-      <a href="/profile/edit">Edit Profile</a>
-      <a href="/logout">Log Out</a>
+    <section id="profile-header" aria-label="profile">
+      <img src="{{#if profile.logo_url}}{{profile.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
+      <h3>{{profile.name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
+      <div>
+        <a href="/profile/{{profile.id}}">View Public Profile</a>
+        <a href="/profile/edit">Edit Profile</a>
+        <a href="/logout">Log Out</a>
+      </section>
+    </div>
+    <section id="profile-actions" aria-label="actions">
+      <h3>Your Actions</h3>
+      <a href="/action/create">Create an Action</a>
+      {{#if actions}}
+        <div id="actions-list">
+          {{#each actions}}
+            {{> profile-action}}
+          {{/each}}
+        </div>
+      {{/if}}
     </section>
-  </div>
-  <section id="profile-actions" aria-label="actions">
-    <h3>Your Actions</h3>
-    <a href="/action/create">Create an Action</a>
-    {{#if actions}}
-      <div id="actions-list">
-        {{#each actions}}
-          {{> profile-action}}
-        {{/each}}
-      </div>
-    {{/if}}
-  </section>
+  {{else}}
+    <section>
+      <a href="/profile/action-creator-prereq/">Register as an action creator</a>
+    </section>
+  {{/if}}
 {{else}}
-  <section>
-    <a href="/profile/action-creator-prereq/">Register as an action creator</a>
-  </section>
+  <link rel="stylesheet" href="/styles/normform.min.css"/>
+  <style>form,input[type="submit"]{margin:1rem;}</style>
+  <form method="post">
+    <label for="name">Enter your display name</label>
+    <input type="text" id="name" name="name" required>
+
+    <input type="submit">
+  </form>
 {{/if}}
 
