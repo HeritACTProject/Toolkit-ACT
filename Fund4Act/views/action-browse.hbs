@@ -1,0 +1,16 @@
+{{> header}}
+
+<h1>View All Actions</h1>
+
+{{#each actions}}
+  <h3>{{name}}</h3>
+  <a href="/action/{{slug}}">view</a>
+  <hr>
+{{/each}}
+
+<form>
+
+<form>
+  <input type="hidden" name="offset" value="{{lastValue}}">
+  <input type="submit" formmethod="post" value="Load More" {{#unless lastValue}}disabled{{/unless}}>
+</form>

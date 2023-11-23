@@ -53,11 +53,11 @@ module.exports.updateBySlug = (slug, {name, total, target, deadline, imageUrl, a
   return db.run(`UPDATE actions SET
     name = "${name}", fundraising_total = "${total}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}", image_url = "${imageUrl}", overview = "${overview}",
-      start_date = "${startDate}", end_date = "${endDate}", category = "${category}", 
-      beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}", 
-      together_ambition = "${togetherAmbition}", 
-      participatory_process_ambition = "${participProcessAmbition}", 
-      multi_level_engagement_ambition = "${multiLevelEngagementAmbition}", 
+      start_date = "${startDate}", end_date = "${endDate}", category = "${category}",
+      beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}",
+      together_ambition = "${togetherAmbition}",
+      participatory_process_ambition = "${participProcessAmbition}",
+      multi_level_engagement_ambition = "${multiLevelEngagementAmbition}",
       transdiciplinary_ambition = "${transdiciplinaryAmbition}"
     WHERE slug  = "${slug}"
   `);
@@ -83,7 +83,21 @@ module.exports.getXMostUrgent = (x) => {
 }
 
 module.exports.getAllCoordinatesAndSlugs = () => {
-  const query = db.query(`SELECT latitude, longitude, slug FROM actions`);
-const results = query.all();
-return results;
+  const query = db.query(`SELECT latitude, longitude, slug FROM actions WHERE fundraising_deadline >= date('now')`);
+  const results = query.all();
+  return results;
+}
+
+
+module.exports.getPage = (offset) => {
+  const query = db.query(`SELECT id, name, slug, fundraising_deadline FROM actions
+    WHERE id > "${offset}" AND fundraising_deadline >= date('now')
+    ORDER BY name
+    LIMIT 11;
+  `);
+  const results = query.all();
+
+  const lastValue = results?.at(-1)?.id
+
+  return {results, lastValue};
 }

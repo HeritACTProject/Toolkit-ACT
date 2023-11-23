@@ -11,6 +11,22 @@ const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 
 const ensureLoggedIn = ensureLogIn();
 
+router.route('/')
+  .get(
+    async (req, res) => {
+      const { results, lastValue } = Action.getPage(0);
+      const actions = results.slice(0, 9);
+
+      res.render('action-browse.hbs', {actions, lastValue});
+    })
+  .post(
+    async (req, res) => {
+      const {results, lastValue} = Action.getPage(req.body.offset);
+      const actions = results.slice(0, 9);
+
+      res.render('action-browse.hbs', {actions, lastValue});
+    });
+
 router.route('/create')
   .get(
     ensureLoggedIn,
