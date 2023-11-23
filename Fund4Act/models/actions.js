@@ -6,6 +6,7 @@ module.exports.init = () => {
     id INTEGER PRIMARY KEY NOT NULL,
     profile_id TEXT NOT NULL,
     name TEXT NOT NULL,
+    fundraising_total DECIMAL,
     fundraising_target DECIMAL NOT NULL,
     fundraising_deadline TEXT NOT NULL,
     image_url TEXT,
@@ -33,23 +34,24 @@ module.exports.init = () => {
   `);
 };
 
-module.exports.create = ({profileId, name, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
-                        category, slug, beautyAmbition, sustainAmbition, togetherAmbition, participProcessAmbition, 
+module.exports.create = ({profileId, name, total, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
+                        category, slug, beautyAmbition, sustainAmbition, togetherAmbition, participProcessAmbition,
                         multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
   return db.run(`INSERT INTO actions
-    (profile_id, name, fundraising_target, fundraising_deadline, image_url, address, latitude, longitude, overview, start_date, end_date,
+    (profile_id, name, fundraising_total, fundraising_target, fundraising_deadline, image_url, address, latitude, longitude, overview, start_date, end_date,
       category, slug, beauty_ambition, sustain_ambition, together_ambition, participatory_process_ambition,
       multi_level_engagement_ambition, transdiciplinary_ambition)
-    VALUES ("${profileId}", "${name}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
+    VALUES ("${profileId}", "${name}", "${total}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
       "${startDate}", "${endDate}", "${category}", "${slug}", "${beautyAmbition}", "${sustainAmbition}", "${togetherAmbition}", 
       "${participProcessAmbition}", "${multiLevelEngagementAmbition}", "${transdiciplinaryAmbition}")
   `);
 };
 
-module.exports.update = ({id, name, target, deadline, imageUrl, overview, startDate, endDate,
-                        category}) => {
+module.exports.updateBySlug = (slug, {name, total, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
+                        category, beautyAmbition, sustainAmbition, togetherAmbition, participProcessAmbition,
+                        multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
   return db.run(`UPDATE actions SET
-    name = "${name}", fundraising_target = "${target}",
+    name = "${name}", fundraising_total = "${total}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}", image_url = "${imageUrl}", overview = "${overview}",
       start_date = "${startDate}", end_date = "${endDate}", category = "${category}", 
       beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}", 
@@ -57,7 +59,7 @@ module.exports.update = ({id, name, target, deadline, imageUrl, overview, startD
       participatory_process_ambition = "${participProcessAmbition}", 
       multi_level_engagement_ambition = "${multiLevelEngagementAmbition}", 
       transdiciplinary_ambition = "${transdiciplinaryAmbition}"
-    WHERE id = "${id}"
+    WHERE slug  = "${slug}"
   `);
 };
 

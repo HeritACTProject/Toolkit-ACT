@@ -3,6 +3,7 @@ const router = express.Router();
 const createAction = require('../controllers/action-create.js');
 const createPledge = require('../controllers/pledge-create.js');
 const createProfile = require('../controllers/profile-create.js');
+const updateAction = require('../controllers/action-update.js');
 const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
 const Profile = require('../models/profiles')
@@ -44,9 +45,22 @@ router.route('/:slug/pledge')
     })
 
 router.route('/:slug/edit')
-  .get(ensureLoggedIn, async (req, res) => {
-    res.send('Edit Project Coming Soon');
+  .get(ensureLoggedIn, async (req, res, next) => {
+    try {
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      if (!action) { throw Error('404'); }
+
+      res.render('action-create-form', {action});
+    } catch (e) {
+      next();
+      return;
+    }
   })
+  .post(
+    ensureLoggedIn,
+    updateAction.post,
+  );
 
 router.route('/:slug/delete')
   .get(ensureLoggedIn, async (req, res) => {

@@ -1,6 +1,4 @@
 const { param, body, validationResult } = require('express-validator');
-const slug = require('slug');
-const { nanoid } = require('nanoid');
 const action = require('../models/actions.js');
 const { getAmbitionLevels }= require('../services/new-european-bauhaus.js');
 const request = require('request-promise');
@@ -48,9 +46,6 @@ exports.post = [
       transdiciplinaryAmbitionInput: req.body.transdiciplinary,
     };
 
-    console.log(ambitionInputs);
-    console.log(req.body);
-
     const nebData = await getAmbitionLevels(ambitionInputs);
 
     data.beautyAmbition = nebData.beautyAmbition;
@@ -72,10 +67,9 @@ exports.post = [
     }
 
     try {
-      data.slug = slug(`${data.name}-${nanoid(6)}`);
       data.lat = geocode.lat;
       data.lon = geocode.lon;
-      await action.create(data);
+      await action.updateBySlug(req.params.slug, data);
     } catch (err) {
       res.status(500).json({ errors: err.array });
       next(err);
