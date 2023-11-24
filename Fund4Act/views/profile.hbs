@@ -12,11 +12,9 @@
     <h2>Your Profile</h2>
 
     <section id="profile-header" aria-label="profile">
-      <img src="{{#if profile.logo_url}}{{profile.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
-      <h3>{{profile.name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
+      <h3>{{profile.display_name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
       <div>
         <a href="/profile/{{profile.slug}}">View Public Profile</a>
-        <a href="/profile/edit">Edit Profile</a>
         <a href="/logout">Log Out</a>
       </section>
     </div>
@@ -38,12 +36,14 @@
   {{/if}}
 {{else}}
   <link rel="stylesheet" href="/styles/normform.min.css"/>
-  <style>form,input[type="submit"]{margin:1rem;}</style>
-  <form method="post">
-    <label for="name">Enter your display name</label>
-    <input type="text" id="name" name="name" required>
+  <main>
+    <h1>Profile Set Up</h1>
+    <form method="post" class="normform">
+      <label for="name">Set your display name (You may use your organisation name)</label>
+      <input type="text" id="name" name="name" required>
 
-    <input type="submit">
-  </form>
+      <input type="submit" value="Save">
+    </form>
+  </main>
 {{/if}}
 

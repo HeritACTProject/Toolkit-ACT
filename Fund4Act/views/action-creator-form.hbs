@@ -3,35 +3,38 @@
 <main>
   <link rel="stylesheet" href="/styles/normform.min.css"/>
 
-  <h1>Register as a Project Creator</h1>
+  <h1>Register as an Action Creator</h1>
+
+  <label>Watch our video explainer of registering as an action creator <a>here</a></label>
 
   <form class="normform" method="post">
-    <label for="email">Contact Email (publically viewable)</label>
+    <br>
+    <label for="email">Contact Email* (publically viewable)</label>
     <input type="email" id="email" name="email">
 
-    <label for="logo-url">Logo URL</label>
-    <input type="url" id="logo-url" name="logo-url" placeholder="https://example.com">
-
-    <label for="website-url">Website URL</label>
+    <label for="website-url">Website</label>
     <input type="url" id="website-url" name="wesite-url" placeholder="https://example.com">
 
-    <label for="mission">Organisation Mission (<a href='/resources/mission-statement'>Writing a good mission statement</a>)</label>
+    <label for="mission">Organisation Mission* (<a href='/resources/mission-statement'>Writing a good mission statement</a>)</label>
     <textarea rows="5" id="mission" name="mission" required></textarea>
 
-    <label for="prev-actions">What actions have you previously delivered?</label>
+    <label for="prev-actions">Has your organisation delivered any previous actions?</label>
     <textarea rows="5" id="prev-actions" name="prev-actions"></textarea>
 
-    <label for="prev-grants">What grants have you previously recieved?
+    <label for="prev-grants">Has your organisation recieved previous grants?</label>
     <textarea rows="5" id="prev-grants" name="prev-grants"></textarea>
 
-    <label for="partnerships">What existing partnerships or collaborations do you have?</label>
+    <label for="partnerships">Does your organisation have any existing partnerships or collaborations?</label>
     <textarea rows="5" id="partnerships" name="partnerships"></textarea>
 
-    <label for="constitution-url">constitution URL</label>
+    <label for="constitution-url">Link to your organisation constitution e.g. google drive link* (<a href='/resources/constitution'>Writing an organisation constitution</a>)</label>
     <input type="url" id="constitution-url" name="constitution-url" placeholder="https://example.com" required>
 
-    <label for="cap-url">Climate Action Plan URL</label>
-    <input type="url" id="cap-url" name="cap-url" placeholder="https://example.com" required>
+    <label for="cap-url">Link to your Climate Action Plan e.g. google drive link (<a href='/resources/cap'>Writing a climate action plan</a>)</label>
+    <input type="url" id="cap-url" name="cap-url" placeholder="https://example.com">
+
+    <input type="checkbox" id="terms-conditions" name="terms-conditions" value="terms-conditions" required>
+    <label for="terms-conditions">Do you agree to our <a>terms and conditions</a>?</label>
 
     <input type="submit" value="Submit">
   </form>

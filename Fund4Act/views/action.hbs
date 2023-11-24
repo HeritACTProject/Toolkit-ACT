@@ -8,6 +8,7 @@
   <section aria-label="make a pledge">
     <label for="fundraising">Total Pledged</label>
     <progress id="fundraising" max="{{actionData.fundraising_target}}" value="{{actionData.pledgeTotal}}">{{actionData.fundraising_target}}</progress>
+    <p>Deadline: {{actionData.fundraising_deadline}}</p>
     <a href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
   </section>
 
@@ -18,13 +19,27 @@
         <p>{{this.donor_name}}
         <p>€{{this.amount}}
         <p>{{this.date}}
-        <p><a href="/profile/{{this.donor_id}}">view profile</a>
+        <p><a href="/profile/{{this.donor_slug}}">view profile</a>
         <hr>
       {{/each}}
       {{else}}
       <p>No pledges yet</p>
     {{/if}}
   </section>
+  <section>
+    <h2>Overview</h2>
+    <p>{{actionData.overview}}</p>
+  </section>
+  <section>
+    <h2>Timeline</h2>
+    <p>Start Date: {{actionData.start_date}}</p>
+    <p>End Date: {{actionData.end_date}}</p>
+  </section>
+  <section>
+    <h2>Location</h2>
+    <p>{{actionData.address}}</p>
+  </section>
+  <section>
     <h2>Impact</h2>
     <p>Beauty: NEB Ambition {{actionData.beauty_ambition}}</p>
     <p>Sustainable: NEB Ambition {{actionData.sustain_ambition}}</p>
@@ -32,8 +47,6 @@
     <p>Participatory: NEB Ambition {{actionData.participatory_process_ambition}}</p>
     <p>Multi-Level Enagement: NEB Ambition {{actionData.multi_level_engagement_ambition}}</p>
     <p>transdiciplinary: NEB Ambition {{actionData.transdiciplinary_ambition}}</p>
-  <section>
-
   </section>
 
 </main>

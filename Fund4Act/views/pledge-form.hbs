@@ -4,9 +4,9 @@
 
 <main>
   <h1>Pledge Donation</h1>
-  <p>From {{profile.name}}</p>
+  <p>From {{profile.display_name}}</p>
   <p>To {{action.name}}</p>
-  <form id="pledge-form" method="post">
+  <form id="pledge-form" class="normform" method="post">
 
     {{#unless profile.display_name}}
       <label for="name">Enter your display name</label>
