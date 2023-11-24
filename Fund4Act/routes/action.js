@@ -17,14 +17,18 @@ router.route('/')
       const { results, lastValue } = Action.getPage(0);
       const actions = results.slice(0, 9);
 
-      res.render('action-browse.hbs', {actions, lastValue});
+      const isLastPage = !results[10];
+
+      res.render('action-browse.hbs', {actions, lastValue, isLastPage});
     })
   .post(
     async (req, res) => {
       const {results, lastValue} = Action.getPage(req.body.offset);
       const actions = results.slice(0, 9);
 
-      res.render('action-browse.hbs', {actions, lastValue});
+      const isLastPage = !results[10];
+
+      res.render('action-browse.hbs', {actions, lastValue, isLastPage});
     });
 
 router.route('/create')

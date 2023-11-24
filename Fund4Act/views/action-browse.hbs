@@ -12,5 +12,5 @@
 
 <form>
   <input type="hidden" name="offset" value="{{lastValue}}">
-  <input type="submit" formmethod="post" value="Load More" {{#unless lastValue}}disabled{{/unless}}>
+  <input type="submit" formmethod="post" value="Load More" {{#if isLastPage}}disabled{{/if}}>
 </form>
