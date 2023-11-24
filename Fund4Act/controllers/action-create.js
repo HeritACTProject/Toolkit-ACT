@@ -48,9 +48,6 @@ exports.post = [
       transdiciplinaryAmbitionInput: req.body.transdiciplinary,
     };
 
-    console.log(ambitionInputs);
-    console.log(req.body);
-
     const nebData = await getAmbitionLevels(ambitionInputs);
 
     data.beautyAmbition = nebData.beautyAmbition;

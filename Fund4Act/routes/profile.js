@@ -53,12 +53,17 @@ router.route('/edit')
     res.send('Edit Profile Coming Soon');
   })
 
-router.route('/:uid')
+router.route('/:slug')
   .get(async (req, res) => {
-    const profile = await Profile.get(req.params.uid);
-    const actions = await Action.getByProfileId(req.params.uid);
-    const pledges = await Pledge.getByDonorId(req.params.uid);
-    res.render('public-profile', {user: req.user, profile, actions, pledges});
+    try {
+      const profile = await Profile.getBySlug(req.params.slug);
+      const actions = await Action.getByProfileId(profile.id);
+      const pledges = await Pledge.getByDonorId(profile.id);
+      res.render('public-profile', {user: req.user, profile, actions, pledges});
+    } catch (err) {
+      res.status(404);
+      res.render('error', { layout: false, error: { message: 'Sorry we can\'t find that page' } });
+    }
   })
 
 module.exports = router;

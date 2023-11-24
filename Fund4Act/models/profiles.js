@@ -14,14 +14,15 @@ module.exports.init = () => {
     partnerships TEXT,
     constitution_url TEXT,
     climate_action_plan_url TEXT,
-    verified INTEGER DEFAULT 0
+    verified INTEGER DEFAULT 0,
+    slug TEXT NOT_NULL
   )`);
 };
 
-module.exports.saveProfileInfo = ({id, displayName}) => {
+module.exports.saveProfileInfo = ({id, displayName, slug}) => {
   return db.run(`INSERT INTO profiles
-      (id, display_name)
-    VALUES ("${id}", "${displayName}")
+      (id, display_name, slug)
+    VALUES ("${id}", "${displayName}", "${slug}")
     ON CONFLICT(id) DO UPDATE SET
       display_name = excluded.display_name;
   `);
@@ -50,4 +51,9 @@ module.exports.saveOrgInfo = ({id, email, logoUrl, websiteUrl, mission, prevActi
 module.exports.get = (id) => {
   const query = db.query('SELECT * FROM profiles WHERE id = $id;');
   return query.get({ $id: id });
+}
+
+module.exports.getBySlug = (slug) => {
+  const query = db.query('SELECT * FROM profiles WHERE slug = $slug;');
+  return query.get({ $slug: slug });
 }

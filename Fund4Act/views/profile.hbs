@@ -15,7 +15,7 @@
       <img src="{{#if profile.logo_url}}{{profile.logo_url}}{{else}}/images/default_logo.svg{{/if}}" alt="profile logo"></img>
       <h3>{{profile.name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
       <div>
-        <a href="/profile/{{profile.id}}">View Public Profile</a>
+        <a href="/profile/{{profile.slug}}">View Public Profile</a>
         <a href="/profile/edit">Edit Profile</a>
         <a href="/logout">Log Out</a>
       </section>
