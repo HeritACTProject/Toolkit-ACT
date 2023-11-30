@@ -1,0 +1,6 @@
+{{#if @first}}
+    <li ><a id="tab-{{this.groupId}}" href="#{{this.groupId}}" class="tab active">{{this.groupName}}</a></li>
+{{/if}}
+{{#unless @first}}
+    <li ><a id="tab-{{this.groupId}}" href="#{{this.groupId}}" class="tab">{{this.groupName}}</a></li>
+{{/unless}}

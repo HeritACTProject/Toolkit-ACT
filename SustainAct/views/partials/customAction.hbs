@@ -1,0 +1,17 @@
+<div class="target-action-container custom-action-container" {{#unless this.indicators}}hidden{{/unless}}>
+  <p>Add your own Action</p>
+  <button class="delete-custom-action btn btn-danger">Delete</button>
+  <hr>
+  <label for="actionTitle">Title</label>
+  <input type="text" id="actionTitle" {{#if @root.isEdit}}{{#if this.indicators}}value="{{this.title}}"{{/if}}{{/if}}
+      name="customActions.{{parent.id}}.title" class="input-singleline" {{#unless this.indicators}}disabled{{/unless}}></input>
+  <label for="actionDescription">Description</label>
+  <textarea type="text" id="actionDescription" name="customActions.{{parent.id}}.description"
+      class="input-multiline" {{#unless this.indicators}}disabled{{/unless}}
+      >{{#if @root.isEdit}}{{#if this.indicators}}{{this.description}}{{/if}}{{/if}}</textarea>
+  <label for="actionIndicator1">Indicators</label>
+  <input type="text" id="actionIndicator1" {{#if @root.isEdit}}value="{{this.indicators.[0]}}"{{/if}}
+      name="customActions.{{parent.id}}.indicator1" class="input-singleline" {{#unless this.indicators}}disabled{{/unless}}/>
+  <input type="text" id="actionIndicator2" {{#if @root.isEdit}}value="{{this.indicators.[1]}}"{{/if}}
+      name="customActions.{{parent.id}}.indicator2" class="input-singleline" {{#unless this.indicators}}disabled{{/unless}}/>
+</div>

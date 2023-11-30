@@ -1,0 +1,49 @@
+<form id="tags-form" method="post">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+	<header class="assessment-header assessment-header--tags">
+		<div class="assessment-header__flex-container">
+			<div class="navigation-container">
+				<div class="navigation-flex-container">
+					<div>
+					</div>
+
+					<div>
+						<h1>Tags</h1>
+					</div>
+
+					<div>
+            <button class="btn primary-button next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="tabs-container">
+				<nav>
+					<div class="nav-container">
+						<ul class="tab-container">
+							{{#each tagGroups}}
+								{{> tagTabs}}
+							{{/each}}
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<section id="tags-section" class="assessment-body assessment-body--tags">
+    <div class="guidance">
+      <p class="guidance-text">
+        Now choose the Tags that you think are most relevant to your assessment. Tags are themes and 
+        topics that are directly mentioned in the Sustainable Development Goals so don't worry if 
+        these Tags don't seem totally relevant!
+      </p>
+      <img class="guidance-image" src="/images/Header_Tags.svg">
+    </div>
+		<div class="tags-container">
+			{{#each tagGroups}}
+				{{> tagGroup}}
+			{{/each}}
+		</div>
+    <button class="btn primary-button next-button bottom-next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+	</section>
+</form>

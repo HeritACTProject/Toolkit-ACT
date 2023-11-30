@@ -1,0 +1,20 @@
+body {
+  width: 80ch;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+ol li {
+  list-style-type: lower-alpha;
+}
+
+ol ol li {
+  list-style-type: lower-roman;
+}
+
+th:empty {
+  display: none;
+}

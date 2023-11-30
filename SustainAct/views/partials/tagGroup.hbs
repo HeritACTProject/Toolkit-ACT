@@ -1,0 +1,16 @@
+<div class="tag-group" data="{{this.groupId}}">
+	<a class="tag-group-anchor" id="{{this.groupId}}"></a>
+	<div>
+		<h2 class="tag-group-title">{{this.groupName}}</h2>
+	</div>
+	{{#if tags}}
+		<ul class="tag-checkbox">
+			{{#each this.tags}}
+				{{> tag}}
+			{{/each}}
+		</ul>
+	{{/if}}
+	{{#each this.subGroups}}
+		{{> tagSubgroup}}
+	{{/each}}
+</div>

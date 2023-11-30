@@ -1,0 +1,132 @@
+@page {
+  margin: 0px;
+  size: A3;
+}
+
+@media print {
+  html, body {
+  	margin: 0 0 0 0 !important;
+  	padding: 0 0 0 0 !important;
+  	border: 0;
+  }.assessment-body, .assessment-body--action-profile {
+  	margin: 0 0 0 0 !important;
+  	padding: 0 0 0 0 !important;
+    height: 100% !important;
+  }
+  
+  html, body {
+    height: 100% !important;
+  }
+  
+  body {
+    -webkit-print-color-adjust: exact !important;
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+  	display: none !important;
+  }
+  
+  .only-print {
+    display: block;
+  }
+  
+  .no-break-after {
+  break-after: avoid;
+  }
+  
+  .action-profile-section {
+    display: block;
+    break-inside: avoid;
+    padding: 5% !important;
+  }
+  
+  .profile-target-container {
+    padding-top: 20px;
+    break-inside: avoid;
+    overflow: auto;
+  }
+  
+  .profile-target-image {
+    float: left;
+  }
+  
+  p {
+    max-width: 80ch !important;
+  }
+  
+  .cover-header, .cover-footer {
+    background: var(--secondary-background-color);
+  }
+  
+  .cover-page {
+    min-height: 100% !important;
+    height: 100%;
+    padding-top: 15%;
+    display: block;
+    position: relative;
+    width: 100% !important; 
+    background-color: var(--primary-background-color);
+    color: var(--primary-font-color);
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .sdg-wheel-container path:not(.goal path, .selectedTarget path) {
+    stroke: none !important;
+    fill: none !important;
+  }
+
+  .cover-title, .cover-subtitle {
+    margin: 2% auto;
+  }
+  
+  .cover-page tr, tbody, td {
+    width: 100%;
+    display: block;
+  }
+  
+  .cover-text {
+    width: 100% !important;
+    text-align: center;
+    display: block;
+  }
+  
+  .footer {
+    margin-top: 30%;
+    text-align: right;
+    margin-left: auto;
+    width: 100%;
+    position: relative;
+    margin-bottom: 0 !important; 
+    page-break-inside: avoid !important;
+    page-break-before: auto !important;
+  }
+  
+  .footer .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: 5%;
+    width: 10%;
+    height: 10%;
+    margin-top: -15%;
+  }
+  
+  @supports (-moz-appearance:none) {
+    .cover-page{
+    }
+    .footer .logo {
+      margin-right: 12%;
+    }
+  }
+
+  .selected-tag-container {
+	  padding:6px;
+	  margin: 5px;
+	  background: #ffd685;
+	  color: #000;
+	  border-radius: 20px;
+  }
+
+}

@@ -1,0 +1,12 @@
+<!doctype html>
+<link href="/stylesheets/error.css" rel="stylesheet" type="text/css" media="all" />
+<html>
+<body>
+  <h1>{{error.message}}</h1>
+  {{#if error.secondaryMsg}}
+    <h2>{{error.secondaryMsg}}</h2>
+  {{/if}}
+  <h2>{{error.status}}</h2>
+  <pre>{{error.stack}}</pre>
+</body>
+</html>

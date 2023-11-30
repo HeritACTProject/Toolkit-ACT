@@ -1,0 +1,21 @@
+<label for="actionCountry" class="action-info-label action-info-label--singleline">Where is this located?</label><span style="display: inline; float: none;"> *</span> 
+
+<select id="actionLocation" name="assessmentLocation" class="form-control selectpicker action-info-input action-info-multiselect"
+  multiple required data-live-search="true"
+  {{#if edit}} data-values="{{existingData.location}}"{{/if}}/>
+    <option value="Not Applicable">Not Applicable</option>
+    <optgroup label="Regions">
+      <option value="Central and Southern Asia">Central and Southern Asia</option>
+      <option value="Eastern and South-Eastern Asia">Eastern and South-Eastern Asia</option>
+      <option value="Europe and Northern America">Europe and Northern America</option>
+      <option value="Latin America and the Caribbean">Latin America and the Caribbean</option>
+      <option value="Northern Africa and Western Asia">Northern Africa and Western Asia</option>
+      <option value="Oceania">Oceania</option>
+      <option value="Sub-Saharan Africa">Sub-Saharan Africa</option>
+    </optgroup>
+    <optgroup label="Countries">
+      {{#each countries}}
+      	<option value="{{this}}">{{this}}</option>
+      {{/each}}
+    </optgroup>
+</select>

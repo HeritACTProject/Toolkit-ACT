@@ -1,0 +1,44 @@
+<form id="targets-form" method="post"> 
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+  <input type="hidden" name="isEdit" value="{{isEdit}}">
+    <header class="assessment-header assessment-header--new-action">
+        <div class="assessment-header__flex-container">
+            <div class="navigation-container">
+                <div class="navigation-flex-container">
+                    <div>
+                    </div>
+
+                    <div>
+                        <h1>Targets</h1>
+                    </div>
+
+                    <div>
+                      <button class="btn primary-button next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+	<section id="targets-section" class="assessment-body assessment-body--targets">
+    <div class="guidance">
+      <p class="guidance-text">
+        This is a shortlist of SDG Targets based on the Tags you selected. Now select the Targets 
+        that you think are most relevant and you want to contribute to. You can also select actions 
+        that could help improve your impact.
+      </p>
+      <img class="guidance-image" src="/images/Header_Targets.svg">
+    </div>
+        <div class="targets-container">
+            {{#if isEdit}}
+              {{#each existingData}}
+                {{> target}}
+              {{/each}}
+              <hr class="target-separator">
+            {{/if}}
+            {{#each targets}}
+                {{> target}}
+            {{/each}}
+        </div>
+      <button class="btn primary-button next-button bottom-next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+    </section>
+</form>

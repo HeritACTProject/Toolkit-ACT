@@ -1,0 +1,166 @@
+<div class="assessment-body assessment-body--action-profile">
+  <div class="guidance no-print">
+    <p class="guidance-text">
+      Nicely done! You have successfully completed your assessment. You can now go ahead and download your report as a PDF.
+    </p>
+    <img class="guidance-image" src="/images/Header_Action_profile.svg">
+  </div>
+  <table class="cover-page only-print">
+    <tr>
+      <td class="sdg-wheel-container">
+        <svg aria-hidden="true" id="sdgWheelPrint" data-node="{{sdgWheelNodeData}}"></svg>
+      </td>
+    </tr>
+    <tr><td class="cover-text"><h1 class="cover-title">{{assessmentName}}</h1></td></tr>
+    <tr><td class="cover-text"><h3 class="cover-subtitle">An Accelerating Action Tool Assessment</h3></td></tr>
+    <tr class="footer"><td><img class="logo" src="/images/logo.svg"/></td></tr>
+  </table>
+	<div class="action-profile-section">
+        <h2>Info</h2>
+        <div class="col action-info-col"
+          <pre>
+              <p class="action-info-titles"> Name:</p>
+              <p class="action-name">{{assessmentName}}</p>
+              <p class="action-info-titles"> Owner:</p>
+              <p>{{assessmentOwner}}</p>
+              <p class="action-info-titles"> Owner Type:</p>
+              <p>{{assessmentOwnerType}}</p>
+              {{#if actionOverview}}
+              <p class="action-info-titles"> Overview:</p>
+              <p>{{assessmentOverview}}</p>
+              {{/if}}
+              {{#if actionObjectives}}
+              <p class="action-info-titles"> Objectives:</p>
+              <p>{{assessmentObjectives}}</p>
+              {{/if}}
+              <p class="action-info-titles"> Type:</p>
+              <p>{{assessmentType}}</p>
+              <p class="action-info-titles"> Status:</p>
+              <p>{{assessmentStatus}}</p>
+              <p class="action-info-titles"> Location:</p>
+              <p>{{assessmentLocation}}</p>
+          </pre>
+        </div>
+    </div>
+	<div class="action-profile-section">
+        <h2>Tags</h2>
+        <div class="selected-tags-container">
+          {{#if tags}}
+            {{#each this.tags}}
+              {{>selectedTag}}
+            {{/each}}
+          {{/if}}
+        </div>
+    </div>
+    <div class="action-profile-section no-print">
+      <h2 id="wheel-header" data-toggle="modal" data-target="#wheelPostModal">SDG Wheel <i class="fa-solid fa-share-nodes no-print"></i></h2>
+      <p>Relevant SDG Goals and Targets</p>
+      <div class="action-profile-section sdg-wheel-container no-print">
+        <svg aria-hidden="true" id="sdgWheel" data-node="{{sdgWheelNodeData}}" data-toggle="modal" data-target="#wheelPostModal"></svg>
+      </div>
+    </div>
+    <div class="action-profile-section">
+        <h2 id="goals-header" data-toggle="modal" data-target="#goalsPostModal">SDGs <i class="fa-solid fa-share-nodes no-print"></i></h2>
+        <p>Contributing to {{goalsCount}} SDGs</p>
+        {{#each goals}}
+          <div class="goal-image-container" data-toggle="modal" data-target="#goalPostModal" data-id="{{this}}">
+            <img id="goal{{this}}-image" class="goal-image" src="/images/Goal-{{this}}.png">
+            <div class="goal-image-overlay">
+                <i class="fa-solid fa-share-nodes goals-share-icon"></i>
+            </div>
+          </div>
+        {{/each}}
+    </div>
+    <div class="action-profile-section no-bottom-spacing">
+      <h2 id="targets-header">SDG Targets</h2>
+      <p class="no-break-after">Contributing to {{targetsCount}} SDG Targets</p>
+      {{#each targets}}
+          {{> selectedTarget}}
+      {{/each}}
+    </div>
+</div>
+<div id="goalsPostModal" class="modal fade" tabindex="-1" aria-labelledby='inviteModalLabel' aria-hidden='true'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="post-container">
+          <canvas id="goals-post-canvas" data-title="{{assessmentName}}" data-description="contributes to {{goalsCount}} out of the 17 goals" data-selected-goals="{{goals}}">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a id="download-goals-post-link" class="btn btn-primary" download="goals.png"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="goalPostModal" class="modal fade" tabindex="-1" aria-labelledby='inviteModalLabel' aria-hidden='true'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="post-container">
+          <canvas id="goal-post-canvas" data-title="{{assessmentName}}" data-description="contributes to SDG goal">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a id="download-goal-post-link" class="btn btn-primary" download="goal.png"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="wheelPostModal" class="modal fade" tabindex="-1" aria-labelledby='inviteModalLabel' aria-hidden='true'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="post-container">
+          <canvas id="wheel-post-canvas" data-title="{{assessmentName}}" data-description="An SDG assessment">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a id="download-sdg-wheel-post-link" class="btn btn-primary" download="sdg-wheel.png"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="targetPostModal" class="modal fade" tabindex="-1" aria-labelledby='inviteModalLabel' aria-hidden='true'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Preview</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="post-container">
+          <canvas id="target-post-canvas" data-action-name="{{assessmentName}}">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a id="download-target-post-link" class="btn btn-primary" download="target.png"><i class="fa-solid fa-download"></i> Download</a>
+      </div>
+    </div>
+  </div>
+</div>
+<img id="logo" src="/images/logo.svg" hidden>

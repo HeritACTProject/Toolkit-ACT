@@ -1,0 +1,16 @@
+<div>
+  {{#if this.title}}<p class = "profile-target-action-title">{{this.title}}</p>{{/if}}
+  <div class ="profile-target-action-details-container">
+    {{#if this.description}}<p>{{this.description}}</p>{{/if}}
+    {{#if this.indicators.[0]}}
+    <p>Indicators:</p>
+    <ul class="selected-indicator">
+      {{#each this.indicators}}
+      {{#if this}}
+      <li><p>{{this}}</p></li>
+      {{/if}}
+      {{/each}}
+    </ul>
+    {{/if}}
+  </div>
+</div>

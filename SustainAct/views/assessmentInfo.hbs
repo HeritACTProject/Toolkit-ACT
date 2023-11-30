@@ -1,0 +1,112 @@
+<form id="actionInfoForm" class="needs-validation" method="post" novalidate>
+  <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+  <input type="hidden" name="isEdit" value="{{edit}}"/>
+	<header class="assessment-header assessment-header--new-action">
+		<div class="assessment-header__flex-container">
+			<div class="navigation-container">
+				<div class="navigation-flex-container">
+					<div></div>
+						<h1>Assessment Info</h1>
+						<button class="btn primary-button next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="assessment-body assessment-body--new-action">
+    <div class="guidance">
+      <div class="guidance-text">
+        Let's begin! First, let us know a little about what you're assessing. Tip: if what you're assessing is 
+        complicated it can be useful to break it into several assessments.
+      </div>
+      <img class="guidance-image" src="/images/Header_Action_info.svg"/>
+    </div>
+		<div class="new-action-input-container">
+			<label for="actionName" class="action-info-label action-info-label--singleline">
+        What is the name of your assessment? (This will become the title of this report)
+      </label>
+      <span style="display: inline; float: none;">*</span>
+			<input type="text" id="actionName" name="assessmentName" class="form-control action-info-input"
+        placeholder="Add title" required
+        oninvalid="this.setCustomValidity('Enter Assessment Name')"
+        oninput="this.setCustomValidity('')"/>
+		</div>
+		<div class="new-action-input-container">
+			<label for="actionOwner" class="action-info-label action-info-label--singleline">
+        Who is the owner of the project, policy or plan being assessed?
+      </label>
+      <span style="display: inline; float: none;">*</span>
+			<input type="text" id="actionOwner" name="assessmentOwner" class="form-control action-info-input"
+        placeholder="Add action owner" required
+        oninvalid="this.setCustomValidity('Enter Assessment Owner')"
+        oninput="this.setCustomValidity('')"/>
+		</div>
+		<div class="new-action-input-container">
+			<label for="actionOwnerType" class="action-info-label action-info-label--singleline">Assessment Owner Type</label>
+      <span style="display: inline; float: none;">*</span>
+			<select id="actionOwnerType" name="assessmentOwnerType" class="form-control selectpicker action-info-input action-info-multiselect" multiple="multiple" required
+        oninvalid="this.setCustomValidity('Enter Assessment Owner Type')"
+        oninput="this.setCustomValidity('')"/>
+				<option value="Individual">Individual</option>
+				<option value="Community">Community</option>
+				<option value="Local government">Local government</option>
+				<option value="National government">National government</option>
+				<option value="Regional body">Regional body</option>
+				<option value="International body">International body</option>
+				<option value="Non-governmental organizations">Non-governmental organization</option>
+				<option value="Private sector">Private sector</option>
+				<option value="Academic">Academic</option>
+				<option value="Other">Other</option>
+			</select>
+		</div>
+		<div  class="new-action-input-container new-action-input-container--multiline">
+			<label for="actionOverview" class="action-info-label action-info-label--multiline">Give a brief overview of what you are assessing</label>
+      <label id="actionOverviewLength" class="length">1000 characters</label>
+			<textarea type="text" id="actionOverview" name="assessmentOverview" class="form-control input-multiline"
+        placeholder="Add an Overview" maxlength="1000" data-provide="markdown"></textarea>
+		</div>
+		<div class="new-action-input-container new-action-input-container--multiline">
+			<label for="actionObjectives" class="action-info-label action-info-label--multiline">
+        What are the aims and objectives?
+      </label>
+      <label id="actionObjectivesLength" class="length">1000 characters</label>
+			<textarea type="text" id="actionObjectives" name="assessmentObjectives" class="form-control input-multiline"
+        placeholder="Add aims and objectives here" maxlength="1000"></textarea>
+		</div>
+		<div class="new-action-input-container">
+			<label for="actionType" class="action-info-label action-info-label--singleline">What are you assessing?</label>
+      <span style="display: inline; float: none;">*</span>
+			<select id="actionType" name="assessmentType" class="form-control selectpicker action-info-input action-info-multiselect" multiple="multiple" required
+        oninvalid="this.setCustomValidity('Enter Assessment Type')"
+        oninput="this.setCustomValidity('')"/>
+				<option value="Project">Project (single specific task)</option>
+				<option value="Program">Program (a collection of related projects)</option>
+				<option value="Policy / Regulation">Policy / Regulation</option>
+				<option value="Plan / Strategy">Plan / Strategy</option>
+				<option value="Funding / Financing">Funding / Financing</option>
+				<option value="Research / Study">Research / Study</option>
+				<option value="Campaign / Challenge">Campaign / Challenge</option>
+				<option value="Event / Workshop">Event / Workshop</option>
+				<option value="Coaching / Mentoring">Coaching / Mentoring</option>
+				<option value="Other">Other</option>
+			</select>
+		</div>
+		<div class="new-action-input-container">
+			<label for="actionStatus" class="action-info-label action-info-label--singleline">What is the status?</label>
+      <span style="display: inline; float: none;">*</span>
+			<select id="actionStatus" name="assessmentStatus" class="form-control selectpicker action-info-input action-info-singleselect"
+        required title="Nothing selected"
+        oninvalid="this.setCustomValidity('Enter Assessment Stage')"
+        oninput="this.setCustomValidity('')"/>
+				<option value="Concept / Initiation">Concept / Initiation</option>
+				<option value="Definition / Planning">Definition / Planning</option>
+				<option value="Being implemented">Being implemented</option>
+				<option value="Completed and closed">Completed and closed</option>
+			</select>
+    </div>
+    <div class="new-action-input-container">
+      {{> countrySelect}}
+    </div>
+  <button class="btn primary-button next-button bottom-next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+</div>
+</form>

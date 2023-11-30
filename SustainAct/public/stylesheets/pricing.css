@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pricing {
+  margin: 5rem;
+  margin-top: mim(auto, 0.1rem);
+  margin-bottom: min(auto, 0.1rem);
+  width: 28rem;
+  height: 35rem;
+  padding: 7em 3em;
+  text-align: left;
+  background-color: #252b3b;
+  border-radius: 5%;
+}
+
+.pricing hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.pricing button {
+  margin-top: 1em;
+  width: 100%;
+}
+
+.feature-list {
+  padding: 1em 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.feature-list li {
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
+}
+
+.feature-list .fa-check-circle {
+  background-color: green;
+  border-radius: 50%;
+}

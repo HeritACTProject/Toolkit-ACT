@@ -1,0 +1,87 @@
+<div class="profile-target-container {{#if @last}}no-bottom-spacing{{/if}}">
+    <div class="profile-target-summary-container">
+        <div class="profile-target-image-container" data-toggle="modal" data-target="#targetPostModal" data-target-id="{{this.id}}" data-target-title="{{this.title}}">
+            <img id="target-{{this.id}}-image" class="profile-target-image" src="http://{{@root.domain}}/images/GOAL_{{this.goal}}_TARGET_{{this.id}}.png">
+            <div class="profile-target-image-overlay">
+                <i class="fa-solid fa-share-nodes profile-target-share-icon"></i>
+            </div>
+        </div>
+        <div class="profile-target-summary-text-container">
+            <p class="profile-target-title">{{this.id}} - {{this.title}}</p>
+            {{#if this.impact}}
+                <div class="profile-target-impact-row">
+                    <p class="profile-target-impact-text"><i aria-hidden="true" class="fa-solid {{#ifEquals this.impact.[0] 'positive'}}fa-plus{{else}}fa-minus{{/ifEquals}}"></i> {{this.impact.[0]}} impact</p>
+                    <p class="profile-target-impact-text"><i aria-hidden="true" class="{{#ifEquals this.impact.[1] 'direct'}}fa-solid fa-bullseye{{else}}fa-regular fa-circle{{/ifEquals}}"></i> {{this.impact.[1]}} impact</p>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="profile-target-actions-and-indicators-container">
+        {{#if this.actions}}
+        <div>
+            {{#each this.actions}}
+                {{> profileAction}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if this.customActions}}
+        <div>
+        {{#each this.customActions}}
+            {{> profileAction parent=../this}}
+        {{/each}}
+        </div>
+        {{/if}}
+    </div>
+    <div class="profile-target-action-plan-container">
+        {{#if this.targetPlan.description}}
+        <p class="profile-target-title">Target Action Plan</p>
+        {{/if}}
+        {{#if this.targetPlan.description}}
+            <p>{{this.targetPlan.description}}</p>
+        {{/if}}
+        {{#if this.targetPlan.startDate}}
+            <p>Start date: {{this.targetPlan.startDate}}</p>
+        {{/if}}
+        {{#if this.targetPlan.endDate}}
+        <p>End date: {{this.targetPlan.endDate}}</p>
+        {{/if}}
+        {{#if this.targetPlan.kpis}}
+        <p>Monitoring and evaluation:</p>
+        {{#each this.targetPlan.kpis}}
+        <div class="kpi-container {{#if @last}}last-kpi{{/if}}">
+          {{#if this.name}}
+            <div class="kpi row">
+                <div class="column column-title">
+                    <p>KPI: {{this.name}}</p>
+                </div>
+            </div>
+          {{/if}}
+          {{#if this.source}}
+            <div class="row kpi">
+              <div class="column column-title">
+                  <p >Source: {{this.source}}</p>
+              </div>
+            </div>
+          {{/if}}
+          {{#if this.currentMeasure}}
+            <div class="row kpi">
+              <div class="column column-title">
+                  <p>Current Measure: {{this.currentMeasure}}</p>
+              </div>
+            </div>
+          {{/if}}
+          {{#if this.targetMeasure}}
+            <div class="row kpi">
+              <div class="column column-title">
+                  <p>Target measure: {{this.targetMeasure}}</p>
+              </div>
+            </div>
+          {{/if}}
+        </div>
+        {{/each}}
+        {{/if}}
+        {{#if this.targetPlan.comment}}
+            <p>Comment: {{this.targetPlan.comment}}</p>
+        {{/if}}
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="target-container">
+      <div class="target-row" data-toggle='tooltip' data-placement="top" title="{{this.description}}">
+          <div class="target-image-container">
+              <img class="target-image" src="/images/GOAL_{{this.goal}}_TARGET_{{this.id}}.png">
+          </div>
+          <div class="target-details-container">
+            <p>Target {{this.id}}</p>
+            <p>{{this.title}}</p>
+            <div class="target-switches-container">
+              <div class="target-impact">
+                <label for="{{this.id}}-positive" class="impact-radio"><input class="impact-radio" id="{{this.id}}-positive" value="positive" type="radio" name="{{this.id}}-positive" {{#if this.impact}}{{#ifEquals "positive" this.impact.[0]}}checked{{/ifEquals}}{{else}}checked{{/if}}>Positive Impact</label>
+                <label for="{{this.id}}-negative" class="impact-radio"><input class="impact-radio" id="{{this.id}}-negative" value="negative" type="radio" name="{{this.id}}-positive" {{#if this.impact}}{{#ifEquals "negative" this.impact.[0]}}checked{{/ifEquals}}{{/if}}>Negative Impact</label>
+              </div>
+              <div class="target-impact">
+                <label for="{{this.id}}-direct" class="impact-radio"><input class="impact-radio" id="{{this.id}}-direct" value="direct" type="radio" name="{{this.id}}-direct" {{#if this.impact}}{{#ifEquals "direct" this.impact.[1]}}checked{{/ifEquals}}{{else}}checked{{/if}}>Direct Impact</label>
+                <label for="{{this.id}}-indirect" class="impact-radio"><input class="impact-radio" id="{{this.id}}-indirect" value="indirect" type="radio" name="{{this.id}}-direct" {{#if this.impact}}{{#ifEquals "indirect" this.impact.[1]}}checked{{/ifEquals}}{{/if}}>Indirect Impact</label>
+              </div>
+            </div>
+            <p class="selected-action-count"></p>
+          </div>
+          <label for="target-approve-checkbox-{{this.id}}" hidden>Select Target {{this.id}}</label>
+          <div class="target-approve-container">
+              <input class="target-approve-checkbox" id="target-approve-checkbox-{{this.id}}" type="checkbox" id={{this.id}} name="targets" value={{this.id}} {{#if this.selected}}checked{{/if}}>
+          </div>
+      </div>
+      <details>
+        <summary class="target-actions-summary">Example Actions</summary>
+        <div class="target-actions-row" >
+          {{#each this.actions}}
+            <div class="target-action-container">
+                <p>{{this.title}}</p>
+                <label for="action-approve-checkbox-{{this.actionId}}" hidden>Select Action</label>
+                <input class="action-approve-checkbox" id="action-approve-checkbox-{{this.actionId}}" type="checkbox" id={{this.actionId}} name="actions" value={{this.actionId}} {{#if this.selected}}checked{{/if}}>
+                <hr>
+                <details>
+                    <summary class="action-details-summary">More Details</summary>
+                    <div class="action-details-container">
+                        <div class="action-description-container">
+                            <em><p>{{this.description}}</p></em>
+                        </div>
+                        <div class="action-indicators-container">
+                            <p>Indicators:</p>
+                            <ul>
+                            {{#each this.indicators}}
+                                <li><p>{{this}}</p></li>
+                            {{/each}}
+                            </ul>
+                        </div>
+                    </div>
+                </details>
+            </div>
+          {{/each}}
+          {{#each this.customActions}}
+            {{> customAction this parent=../this}}
+          {{else}}
+            {{> customAction this parent=this}}
+          {{/each}}
+          <button class="btn add-custom-action primary-button">Add custom action</button>
+        </div>
+    </details>
+</div>

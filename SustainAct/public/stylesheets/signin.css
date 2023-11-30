@@ -1,0 +1,12 @@
+ body {
+  margin: auto;
+  text-align: center;
+}
+
+#branding {
+  margin-bottom: 3em;
+}
+
+#branding img {
+  width: 15em;
+}
