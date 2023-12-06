@@ -48,6 +48,14 @@ module.exports.saveOrgInfo = ({id, email, logoUrl, websiteUrl, mission, prevActi
   `);
 };
 
+module.exports.updateVerifiedById = (id) => {
+  return db.run(`INSERT INTO profiles
+      (id, verified)
+    VALUES ("${id}", 1)
+    ON CONFLICT(id) DO UPDATE SET
+      verified = excluded.verified;`);
+};
+
 module.exports.get = (id) => {
   const query = db.query('SELECT * FROM profiles WHERE id = $id;');
   return query.get({ $id: id });

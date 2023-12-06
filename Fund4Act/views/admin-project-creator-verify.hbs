@@ -1,0 +1,15 @@
+{{>header}}
+<link rel="stylesheet" href="/styles/normform.min.css"/>
+<style>
+  #status-message{
+    color: green;
+  }
+</style>
+{{#if statusMsg}}
+  <span id="status-message"><p>{{statusMsg}}</p></span>
+{{/if}}
+<form method="POST">
+  <label for="ticket-id">Enter ticket No.</label>
+  <input type="text" id="ticket-id" name="ticket-id" required>
+  <input type="submit">
+</form>
