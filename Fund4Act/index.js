@@ -12,6 +12,7 @@ const security = require('./middleware/security.js');
 const appRouter = require('./routes/app.js');
 const profileRouter = require('./routes/profile.js');
 const actionRouter = require('./routes/action.js');
+const resourceRouter = require('./routes/resource.js');
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/', appRouter);
 app.use('/profile', profileRouter);
 app.use('/login', passport.authenticate('SimpleLogin'));
 app.use('/action', actionRouter);
+app.use('/resource', resourceRouter);
 app.use('/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}), 
 (req, res) => {
   res.redirect(req.session.returnTo ||'/');
