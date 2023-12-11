@@ -507,17 +507,30 @@ function onTagFormSubmit() {
   }
 }
 
+function setRelevantPoliciesCounter(policiesContainer) {
+  const counter = policiesContainer.getElementsByClassName('policies-count')[0];
+
+  counter.innerHTML =
+    '(' +
+    policiesContainer.querySelectorAll('li').length +
+    ')';
+}
+
 function setSelectedActionsCounter(actionContainer) {
   const counter = actionContainer.closest('.target-container').getElementsByClassName('selected-action-count')[0];
 
-  counter.innerHTML = 
-    actionContainer.querySelectorAll('input:checked').length +
-    actionContainer.querySelectorAll('.custom-action-container:not([hidden])').length +
-    ' actions selected';
+  counter.innerHTML =
+    '(' +
+    (actionContainer.querySelectorAll('input:checked').length +
+    actionContainer.querySelectorAll('.custom-action-container:not([hidden])').length) +
+    ' selected)';
 }
 
 function onTargetFormLoad() {
+  const policiesContainers = [].slice.call(document.getElementsByClassName('policies-container'));
   const actionsContainer = [].slice.call(document.getElementsByClassName('target-actions-row'));
+
+  policiesContainers.map((policiesContainer) => setRelevantPoliciesCounter(policiesContainer));
 
   actionsContainer.map((actionContainer) => {
     setSelectedActionsCounter(actionContainer);
@@ -525,6 +538,70 @@ function onTargetFormLoad() {
       if (event.target.type !== 'checkbox' && event.target.type !== 'submit') return;
       setSelectedActionsCounter(actionContainer);
     })
+  });
+
+  function closeFilters(dropContent) {
+    var dropdowns = $('.dropdown-content').filter(function() { return $(this).css("display") == "block" });
+    dropdowns.map(function() {
+      if (!$(this).is(dropContent)) $(this).stop(true,true).fadeToggle();
+    });
+  }
+  $('.filters-container').children().on('click', function (e) {
+    if (!e.target.matches('input') &&
+      !($(e.target)).parent('.filter-option').length &&
+      !($(e.target)).parent('.filter-group').length &&
+      !($(e.target)).hasClass('filter-option')) {
+      const dropContent = $(this).find('.dropdown-content').first();
+      closeFilters(dropContent);
+      dropContent.stop(true,true).fadeToggle();
+      $(dropContent).find('input').first().focus();
+    }
+  });
+  $('.clear-filter').on('click', function (e, timer) {
+    const filter = $(this).closest('.filter');
+    const label = $(filter).find('label').first();
+    const input = $(filter).find('input');
+    closeFilters();
+    if (input.attr('type') === 'checkbox') input.each(function() {$(this).prop('checked', false)});
+    $(`#${filterName.toLowerCase()}-filter`).trigger('input');
+  })
+
+  function addTextToFilter(filter, text) {
+    if (text !== '') text = ': ' + text;
+    const label = $(filter).find('label').first();
+    const filterName = label.text().split(" ")[0];
+    label.text(`${filterName} ${text}`);
+  }
+
+  function toggleFilterBorder(filter, active) {
+    if (active) $(filter).css("border-color", "var(--sdg10-color");
+    else $(filter).css("border-color", "lightgrey");
+  }
+
+  $('.filter').on('input', function (e) {
+    const policyFilterInput = $('.policy-filter input:checked').map(function() {
+      return $(this).val();
+    }).get();
+
+    addTextToFilter($(this), policyFilterInput.join(', '));
+
+    toggleFilterBorder($(this).closest('.filter'), false);
+
+    const matches = $('.target-container').filter(function () {
+      if (!policyFilterInput.length) return this;
+
+      const policies = $(this).find('.policy');
+      if (!policies) return null;
+
+      const match = $(policies).filter(function () {
+        return policyFilterInput.includes($(this).text().trim());
+      });
+
+      return match.length;
+    });
+
+    $('.target-container').stop(true,true).fadeOut();
+    matches.each(function() { $(this).stop(true,true).fadeIn() });
   });
 }
 

@@ -492,12 +492,13 @@ b {
 }
 
 .filter-options {
-  width: 200px;
+  width: max-content;
 }
 
 .filter-option, .group-option {
   border: 2px solid white;
   background-color: white;
+  color: black;
 }
 
 .filter-option:hover, .group-option:hover {
@@ -753,6 +754,11 @@ opacity: 0;
 	justify-content: center;
 }
 
+.filters-container{
+  width: 80%;
+  margin:auto;
+}
+
 /* Todo: Edit this*/
 .target-container {
 	display: block;
@@ -773,7 +779,11 @@ opacity: 0;
 .target-container .target-row {
 	display: flex;
 	flex-direction: row;
-	padding: 20px;
+	padding: 20px 20px 0 20px;
+}
+
+.target-container .target-row:last-child{
+  padding: 20px;
 }
 
 .target-container .target-impact {
@@ -786,14 +796,6 @@ opacity: 0;
 .target-container input[type="radio"] {
   accent-color: var(--primary-button-background-color);
   margin-right: 1rem;
-}
-
-.target-container .target-actions-summary {
-  position: relative;
-  float: right;
-  margin-top: -40px;
-  margin-right: 25px;
-  z-index: 1;
 }
 
 .target-container .action-details-summary {
@@ -841,10 +843,6 @@ opacity: 0;
 
 .target-row .target-switch {
   padding-right: 10px;
-}
-
-.selected-action-count {
-  margin-left: 1.5rem;
 }
 
 .custom-control-input:valid ~ .custom-control-label::before {

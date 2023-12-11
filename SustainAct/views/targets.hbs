@@ -28,17 +28,39 @@
       </p>
       <img class="guidance-image" src="/images/Header_Targets.svg">
     </div>
-        <div class="targets-container">
-            {{#if isEdit}}
-              {{#each existingData}}
-                {{> target}}
-              {{/each}}
-              <hr class="target-separator">
-            {{/if}}
-            {{#each targets}}
-                {{> target}}
-            {{/each}}
+    <div class="filters-container">
+      <div class="filter policy-filter">
+        <label>Policy</label>
+        <i class="fas fa-angle-down"></i>
+        <div class="dropdown-content">
+          <div class="filter-options">
+            <button class="filter-option clear-filter">
+              <i class="fa-regular fa-circle-xmark"></i>
+              clear
+            </button>
+              <div class="filter-option">
+                <input type="checkbox" id="neb" value="New European Bauhaus">
+                <label for="neb">New European Bauhaus</label>
+              </div>
+              <div class="filter-option">
+                <input type="checkbox" id="egd" value="European Green Deal">
+                <label for="egd">European Green Deal</label>
+              </div>
+          </div>
         </div>
-      <button class="btn primary-button next-button bottom-next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
-    </section>
+      </div>
+    </div>
+    <div class="targets-container">
+        {{#if isEdit}}
+          {{#each existingData}}
+            {{> target}}
+          {{/each}}
+          <hr class="target-separator">
+        {{/if}}
+        {{#each targets}}
+            {{> target}}
+        {{/each}}
+    </div>
+    <button class="btn primary-button next-button bottom-next-button" type="submit">Continue <i class="fas fa-angle-right fa-2x"></i></button>
+  </section>
 </form>

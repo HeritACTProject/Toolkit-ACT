@@ -23,6 +23,9 @@ const targetSchema = mongoose.Schema({
   id: {
     type: String,
   },
+  policies {
+    type: Object,
+  },
 });
 
 // Export Target Model

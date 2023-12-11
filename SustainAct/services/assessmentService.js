@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-const { nanoid } = require('nanoid/async');
+const { nanoid } = require('nanoid');
 const { decodeEntity } = require('html-entities');
 const Assessment = require('../models/assessment');
 const TagGroup = require('../models/tagGroup');

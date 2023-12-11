@@ -27,7 +27,7 @@
     "mongoose": "^6.11.3",
     "mongoose-intl": "^3.2.0",
     "mongoose-lean-virtuals": "^0.8.0",
-    "nanoid": "^3.3.2",
+    "nanoid": "^5.0.4",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
