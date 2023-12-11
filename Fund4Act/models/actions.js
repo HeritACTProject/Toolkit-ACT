@@ -42,7 +42,7 @@ module.exports.create = ({profileId, name, total, target, deadline, imageUrl, ad
       category, slug, beauty_ambition, sustain_ambition, together_ambition, participatory_process_ambition,
       multi_level_engagement_ambition, transdiciplinary_ambition)
     VALUES ("${profileId}", "${name}", "${total}", "${target}", "${deadline}", "${imageUrl}", "${address}","${lat}","${lon}","${overview}",
-      "${startDate}", "${endDate}", "${category}", "${slug}", "${beautyAmbition}", "${sustainAmbition}", "${togetherAmbition}", 
+      "${startDate}", "${endDate}", "${category}", "${slug}", "${beautyAmbition}", "${sustainAmbition}", "${togetherAmbition}",
       "${participProcessAmbition}", "${multiLevelEngagementAmbition}", "${transdiciplinaryAmbition}")
   `);
 };
@@ -52,7 +52,8 @@ module.exports.updateBySlug = (slug, {name, total, target, deadline, imageUrl, a
                         multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
   return db.run(`UPDATE actions SET
     name = "${name}", fundraising_total = "${total}", fundraising_target = "${target}",
-      fundraising_deadline = "${deadline}", image_url = "${imageUrl}", overview = "${overview}",
+      fundraising_deadline = "${deadline}", image_url = "${imageUrl}", address = "${address}",
+      latitude = "${lat}", longitude = "${lon}", overview = "${overview}",
       start_date = "${startDate}", end_date = "${endDate}", category = "${category}",
       beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}",
       together_ambition = "${togetherAmbition}",

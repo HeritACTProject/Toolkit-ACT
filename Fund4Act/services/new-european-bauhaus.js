@@ -54,7 +54,7 @@ module.exports.getAmbitionLevels = async ({beautyAmbitionInput, sustainAmbitionI
 
   var participProcessAmbition;
   if(!Array.isArray(participAmbitionInput)) {
-    participProcessAmbitionInput = [participAmbitionInput];
+    participAmbitionInput = [participAmbitionInput];
   }
   if (participAmbitionInput.includes("self-govern")) {
     participProcessAmbition = 3;

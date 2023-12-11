@@ -41,12 +41,13 @@
       var start = [51.165691, 10.451526];
 
       // Create the map
-      var map = L.map('map').setView(start, 3.1);
+      var map = L.map('map').setView(start, 3);
 
       // Set up the OSM layer
       L.tileLayer(
         'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18
+          maxZoom: 18,
+          minZoom: 3
         }).addTo(map);
 
       {{#each actions}}

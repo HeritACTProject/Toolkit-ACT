@@ -1,7 +1,14 @@
 const { param, body, validationResult } = require('express-validator');
-const action = require('../models/actions.js');
+const Action = require('../models/actions.js');
 const { getAmbitionLevels }= require('../services/new-european-bauhaus.js');
 const request = require('request-promise');
+
+const locationSearch = async (query) => {
+  const nominatimResponse = await request(`https://nominatim.openstreetmap.org/search?q=${query}&format=json`);
+  const geocode = await JSON.parse(nominatimResponse)[0];
+  if (!geocode.lat) throw Error();
+  return [geocode.lat, geocode.lon];
+}
 
 exports.post = [
   [
@@ -55,21 +62,26 @@ exports.post = [
     data.multiLevelEngagementAmbition = nebData.multiLevelEngagementAmbition;
     data.transdiciplinaryAmbition = nebData.transdiciplinaryAmbition;
 
-    let nominatimResponse, geocode;
+
+    var lat = req.body.lat;
+    var lon = req.body.lon;
 
     try {
-      nominatimResponse = await request(`https://nominatim.openstreetmap.org/search?q=${data.address}&format=json`);
-      geocode = await JSON.parse(nominatimResponse)[0];
-      if (!geocode.lat) throw Error();
+      if (lat === undefined || lon === undefined) {
+        const latlon = await locationSearch(data.address);
+        lat = latlon[0];
+        lon = latlon[1];
+      }
     } catch (err) {
       res.render('action-create-form', {locationError: true});
       return;
     }
 
     try {
-      data.lat = geocode.lat;
-      data.lon = geocode.lon;
-      await action.updateBySlug(req.params.slug, data);
+      data.lat = lat;
+      data.lon = lon;
+      console.log(data);
+      await Action.updateBySlug(req.params.slug, data);
     } catch (err) {
       res.status(500).json({ errors: err.array });
       next(err);

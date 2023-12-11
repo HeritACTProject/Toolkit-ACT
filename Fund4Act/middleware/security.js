@@ -15,6 +15,9 @@ module.exports.init = (app) => {
           "'unsafe-inline'",
           "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
         ],
+        'default-src': [
+          "https://nominatim.openstreetmap.org",
+        ],
         'img-src': [
           "'self'",
           "https://unpkg.com/leaflet@1.9.4/dist/images/",
