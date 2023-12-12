@@ -178,4 +178,4 @@ dist
 *.sqlite
 
 # Bun
-*.lockb
+*/*.lockb

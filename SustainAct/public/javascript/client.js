@@ -526,9 +526,21 @@ function setSelectedActionsCounter(actionContainer) {
     ' selected)';
 }
 
+function setTargetShortlistCount() {
+  const visibleTargets = Array.from(
+      document.getElementsByClassName('target-container')
+    ).filter(function(target) {
+    return window.getComputedStyle(target, null).display !== 'none';
+  });
+  document.getElementsByClassName('targets-shortlist-count')[0].innerHTML =
+    visibleTargets.length + ' targets shortlisted';
+}
+
 function onTargetFormLoad() {
   const policiesContainers = [].slice.call(document.getElementsByClassName('policies-container'));
   const actionsContainer = [].slice.call(document.getElementsByClassName('target-actions-row'));
+
+  setTargetShortlistCount();
 
   policiesContainers.map((policiesContainer) => setRelevantPoliciesCounter(policiesContainer));
 
@@ -558,12 +570,13 @@ function onTargetFormLoad() {
     }
   });
   $('.clear-filter').on('click', function (e, timer) {
+    e.preventDefault();
     const filter = $(this).closest('.filter');
     const label = $(filter).find('label').first();
     const input = $(filter).find('input');
     closeFilters();
     if (input.attr('type') === 'checkbox') input.each(function() {$(this).prop('checked', false)});
-    $(`#${filterName.toLowerCase()}-filter`).trigger('input');
+    $(filter).trigger('input');
   })
 
   function addTextToFilter(filter, text) {
@@ -601,7 +614,10 @@ function onTargetFormLoad() {
     });
 
     $('.target-container').stop(true,true).fadeOut();
-    matches.each(function() { $(this).stop(true,true).fadeIn() });
+    matches.each(function() { $(this).stop(true,true).fadeIn() }).promise().done(function() {
+      setTargetShortlistCount();
+    });
+    return;
   });
 }
 

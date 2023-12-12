@@ -23,7 +23,7 @@ const targetSchema = mongoose.Schema({
   id: {
     type: String,
   },
-  policies {
+  policies: {
     type: Object,
   },
 });

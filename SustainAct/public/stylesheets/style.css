@@ -457,6 +457,7 @@ b {
   margin-right: 5px;
   hyphens: manual;
   overflow-wrap: break-word;
+  width: max-content;
 }
 
 .filter i {padding-left: 2px;}
@@ -757,6 +758,7 @@ opacity: 0;
 .filters-container{
   width: 80%;
   margin:auto;
+  flex-direction: column;
 }
 
 /* Todo: Edit this*/
