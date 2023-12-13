@@ -57,17 +57,18 @@ exports.getSelectedTags = async (selectedTagIds) => {
   return selectedTags;
 };
 
-exports.getTargetObjects = async (actionTargets) => {
-  if (actionTargets.length === null) {
+exports.getTargetObjects = async (assessmentTargets) => {
+  if (assessmentTargets.length === null) {
     return null;
   }
-  const targetIds = actionTargets.map((target) => target.id);
+  const targetIds = assessmentTargets.map((target) => target.id);
   const targets = await Target.find({ id: { $in: targetIds } }).exec();
-  const result = actionTargets.map((actionTarget) => {
-    const oldTargetObject = targets.filter((target) => target.id === actionTarget.id);
-    const newTargetObject = actionTarget;
+  const result = assessmentTargets.map((assessmentTarget) => {
+    const oldTargetObject = targets.filter((target) => target.id === assessmentTarget.id);
+    const newTargetObject = assessmentTarget;
     newTargetObject.title = oldTargetObject[0].title;
     newTargetObject.goal = oldTargetObject[0].goal;
+    newTargetObject.policies = oldTargetObject[0].policies;
     return newTargetObject;
   });
   return result;

@@ -1,7 +1,7 @@
 <div class="profile-target-container {{#if @last}}no-bottom-spacing{{/if}}">
     <div class="profile-target-summary-container">
         <div class="profile-target-image-container" data-toggle="modal" data-target="#targetPostModal" data-target-id="{{this.id}}" data-target-title="{{this.title}}">
-            <img id="target-{{this.id}}-image" class="profile-target-image" src="http://{{@root.domain}}/images/GOAL_{{this.goal}}_TARGET_{{this.id}}.png">
+            <img id="target-{{this.id}}-image" class="profile-target-image" src="/images/GOAL_{{this.goal}}_TARGET_{{this.id}}.png">
             <div class="profile-target-image-overlay">
                 <i class="fa-solid fa-share-nodes profile-target-share-icon"></i>
             </div>
@@ -15,6 +15,22 @@
                 </div>
             {{/if}}
         </div>
+    </div>
+    <div>
+        {{#if this.policies.neb}}    
+            <p class = "profile-target-action-title">Relevant Policies</p>
+            <ul>
+                <li class="policy">New European Bauhaus
+                {{#if this.policies.egd}}<li class="policy">European Green Deal{{/if}}
+            </ul>
+        {{else}}
+            {{#if this.policies.egd}}    
+            <p class = "profile-target-action-title">Relevant Policies</p>
+            <ul>
+                <li class="policy">European Green Deal
+            </ul>
+            {{/if}}
+        {{/if}}
     </div>
     <div class="profile-target-actions-and-indicators-container">
         {{#if this.actions}}
