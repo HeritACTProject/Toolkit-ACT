@@ -19,9 +19,19 @@ exports.getSDGWheelNodeData = async (selectedTargetIds) => {
     targetsInGoal = targetsInGoal.reverse();
     let previous = goal;
     targetsInGoal.forEach((target) => {
+      const policiesTextArray = [];
+      if(target.policies){
+        if(target.policies.neb){
+          policiesTextArray.push("New European Bauhaus");
+        }
+        if(target.policies.egd){
+          policiesTextArray.push("European Green Deal");
+        }
+      }
       const targetObject = {
         name: target.id,
         title: target.title,
+        policies: policiesTextArray,
         parent: previous.toString(),
       };
       if (target.id === targetsInGoal[targetsInGoal.length - 1].id) {

@@ -188,7 +188,21 @@ function createSDGWheel() {
     .attr('pointer-events', 'none')
     .attr('data-toggle', 'tooltip')
     .attr('data-html', 'true')
-    .attr('data-original-title', (d) => `<strong> Target ${d.data.name} </strong> <br> ${d.data.title}`);
+    .attr('data-original-title', (d) => {
+      var title = `<strong> Target ${d.data.name} </strong> <br> ${d.data.title}`;
+      if(d.data.policies[0]){
+        title = title + '<br><br> Relevant Policies:';
+        var policies = "";
+        d.data.policies.forEach((policy, i)=> { 
+          policies = policies + ` ${policy}`;
+          if(d.data.policies[i+1]){
+            policies = policies + ',';
+          } 
+        });
+        title = title + policies;
+      }
+      return title;
+    });
 
   $('.selectedTarget').hover(
     function(e) {
