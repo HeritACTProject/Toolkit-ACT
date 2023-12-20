@@ -86,7 +86,7 @@
       </script>
 
       <label for="overview">Action Overview*</label>
-      <textarea rows="5" id="overview" name="overview" required {{#if action.overview}}value="{{action.overview}}"{{/if}}></textarea>
+      <textarea rows="5" id="overview" name="overview" required>{{#if action.overview}}{{action.overview}}{{/if}}</textarea>
 
       <label for="start-date">Start Date*</label>
       <input type="date" id="start-date" name="start-date" required {{#if action.start_date}}value="{{action.start_date}}"{{/if}}>
