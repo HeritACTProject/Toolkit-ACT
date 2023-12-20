@@ -19,7 +19,7 @@ router.route('/')
 
       const isLastPage = !results[10];
 
-      res.render('action-browse.hbs', {actions, lastValue, isLastPage});
+      res.render('action-browse.hbs', {user: req.user, actions, lastValue, isLastPage});
     })
   .post(
     async (req, res) => {
@@ -28,7 +28,7 @@ router.route('/')
 
       const isLastPage = !results[10];
 
-      res.render('action-browse.hbs', {actions, lastValue, isLastPage});
+      res.render('action-browse.hbs', {user: req.user, actions, lastValue, isLastPage});
     });
 
 router.route('/create')
@@ -61,7 +61,7 @@ router.route('/:slug/pledge')
     createProfile.post,
     createPledge.post,
     async (req, res, next) => {
-      res.render('pledge-confirmation', {slug: req.params.slug})
+      res.render('pledge-confirmation', {user: req.user, slug: req.params.slug})
     })
 
 router.route('/:slug/edit')
@@ -71,7 +71,7 @@ router.route('/:slug/edit')
 
       if (!action) { throw Error('404'); }
 
-      res.render('action-create-form', {action});
+      res.render('action-create-form', {user: req.user, action});
     } catch (e) {
       next();
       return;
