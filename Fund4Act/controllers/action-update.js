@@ -80,7 +80,6 @@ exports.post = [
     try {
       data.lat = lat;
       data.lon = lon;
-      console.log(data);
       await Action.updateBySlug(req.params.slug, data);
     } catch (err) {
       res.status(500).json({ errors: err.array });

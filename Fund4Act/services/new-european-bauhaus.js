@@ -1,106 +1,93 @@
 module.exports.getAmbitionLevels = async ({beautyAmbitionInput, sustainAmbitionInput, togetherAmbitionInput,
   participAmbitionInput, transdiciplinaryAmbitionInput, multiLevelEngagementAmbitionInput}) => {
 
-  var beautyAmbition;
+  function setAmbition(ambition, index) {
+    if(index > ambition.length-1) return ambition;
+    return ambition.substring(0,index) + "1" + ambition.substring(index+1);
+  }
+
+  var beautyAmbition = "000";
   if(!Array.isArray(beautyAmbitionInput)) {
     beautyAmbitionInput = [beautyAmbitionInput];
   }
   if (beautyAmbitionInput.includes("integrate")) {
-    beautyAmbition = 3;
+    beautyAmbition = setAmbition(beautyAmbition, 2);
   }
-  else if (beautyAmbitionInput.includes("connect")) {
-    beautyAmbition = 2;
+  if (beautyAmbitionInput.includes("connect")) {
+    beautyAmbition = setAmbition(beautyAmbition, 1);
   }
-  else if (beautyAmbitionInput.includes("activate")) {
-    beautyAmbition = 1;
-  }
-  else {
-    beautyAmbition = 0;
+  if (beautyAmbitionInput.includes("activate")) {
+    beautyAmbition = setAmbition(beautyAmbition, 0);
   }
 
-  var sustainAmbition;
+  var sustainAmbition = "000";
   if(!Array.isArray(sustainAmbitionInput)) {
     sustainAmbitionInput = [sustainAmbitionInput];
   }
   if (sustainAmbitionInput.includes("regenerate")) {
-    sustainAmbition = 3;
+    sustainAmbition = setAmbition(sustainAmbition, 2);
   }
-  else if (sustainAmbitionInput.includes("close_loop")) {
-    sustainAmbition = 2;
+  if (sustainAmbitionInput.includes("close_loop")) {
+    sustainAmbition = setAmbition(sustainAmbition, 1);
   }
-  else if (sustainAmbitionInput.includes("repurpose")) {
-    sustainAmbition = 1;
-  }
-  else {
-    sustainAmbition = 0;
+  if (sustainAmbitionInput.includes("repurpose")) {
+    sustainAmbition = setAmbition(sustainAmbition, 0);
   }
 
-  var togetherAmbition;
+  var togetherAmbition = "000";
   if(!Array.isArray(togetherAmbitionInput)) {
     togetherAmbitionInput = [togetherAmbitionInput];
   }
   if (togetherAmbitionInput.includes("transform")) {
-    togetherAmbition = 3;
+    togetherAmbition = setAmbition(togetherAmbition, 2);
   }
-  else if (togetherAmbitionInput.includes("consolidate")) {
-    togetherAmbition = 2;
+  if (togetherAmbitionInput.includes("consolidate")) {
+    togetherAmbition = setAmbition(togetherAmbition, 1);
   }
-  else if (togetherAmbitionInput.includes("include")) {
-    togetherAmbition = 1;
-  }
-  else {
-    togetherAmbition = 0;
+  if (togetherAmbitionInput.includes("include")) {
+    togetherAmbition = setAmbition(togetherAmbition, 0);
   }
 
-  var participProcessAmbition;
+  var participProcessAmbition = "000";
   if(!Array.isArray(participAmbitionInput)) {
     participAmbitionInput = [participAmbitionInput];
   }
   if (participAmbitionInput.includes("self-govern")) {
-    participProcessAmbition = 3;
+    participProcessAmbition = setAmbition(participProcessAmbition, 2);
   }
-  else if (participAmbitionInput.includes("co-develop")) {
-    participProcessAmbition = 2;
+  if (participAmbitionInput.includes("co-develop")) {
+    participProcessAmbition = setAmbition(participProcessAmbition, 1);
   }
-  else if (participAmbitionInput.includes("consult")) {
-    participProcessAmbition = 1;
-  }
-  else {
-    participProcessAmbition = 0;
+  if (participAmbitionInput.includes("consult")) {
+    participProcessAmbition = setAmbition(participProcessAmbition, 0);
   }
 
-  var multiLevelEngagementAmbition;
+  var multiLevelEngagementAmbition = "000";
   if(!Array.isArray(multiLevelEngagementAmbitionInput)) {
     multiLevelEngagementAmbitionInput = [multiLevelEngagementAmbitionInput];
   }
   if (multiLevelEngagementAmbitionInput.includes("work_globally")) {
-    multiLevelEngagementAmbition = 3;
+    multiLevelEngagementAmbition = setAmbition(multiLevelEngagementAmbition, 2);
   }
-  else if (multiLevelEngagementAmbitionInput.includes("work_across")) {
-    multiLevelEngagementAmbition = 2;
+  if (multiLevelEngagementAmbitionInput.includes("work_across")) {
+    multiLevelEngagementAmbition = setAmbition(multiLevelEngagementAmbition, 1);
   }
-  else if (multiLevelEngagementAmbitionInput.includes("work_locally")) {
-    multiLevelEngagementAmbition = 1;
-  }
-  else {
-    multiLevelEngagementAmbition = 0;
+  if (multiLevelEngagementAmbitionInput.includes("work_locally")) {
+    multiLevelEngagementAmbition = setAmbition(multiLevelEngagementAmbition, 0);
   }
 
-  var transdiciplinaryAmbition;
+  var transdiciplinaryAmbition = "000";
   if(!Array.isArray(transdiciplinaryAmbitionInput)) {
     transdiciplinaryAmbitionInput = [transdiciplinaryAmbitionInput];
   }
   if (transdiciplinaryAmbitionInput.includes("beyond_disciplinary")) {
-    transdiciplinaryAmbition = 3;
+    transdiciplinaryAmbition = setAmbition(transdiciplinaryAmbition, 2);
   }
-  else if (transdiciplinaryAmbitionInput.includes("interdisciplinary")) {
-    transdiciplinaryAmbition = 2;
+  if (transdiciplinaryAmbitionInput.includes("interdisciplinary")) {
+    transdiciplinaryAmbition = setAmbition(transdiciplinaryAmbition, 1);
   }
-  else if (transdiciplinaryAmbitionInput.includes("multidisciplinary")) {
-    transdiciplinaryAmbition = 1;
-  }
-  else {
-    transdiciplinaryAmbition = 0;
+  if (transdiciplinaryAmbitionInput.includes("multidisciplinary")) {
+    transdiciplinaryAmbition = setAmbition(transdiciplinaryAmbition, 0);
   }
 
   return {

@@ -18,12 +18,12 @@ module.exports.init = () => {
     end_date TEXT,
     category TEXT,
     slug TEXT NOT_NULL,
-    beauty_ambition INTEGER,
-    sustain_ambition INTEGER,
-    together_ambition INTEGER,
-    participatory_process_ambition INTEGER,
-    multi_level_engagement_ambition INTEGER,
-    transdiciplinary_ambition INTEGER
+    beauty_ambition TEXT,
+    sustain_ambition TEXT,
+    together_ambition TEXT,
+    participatory_process_ambition TEXT,
+    multi_level_engagement_ambition TEXT,
+    transdiciplinary_ambition TEXT
   )`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_action_id

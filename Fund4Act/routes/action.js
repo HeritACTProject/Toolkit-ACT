@@ -45,6 +45,12 @@ router.route('/create')
 router.route('/:slug')
   .get(async (req, res) => {
     const actionData = await Action.getByActionSlug(req.params.slug);
+    actionData.beauty_ambition = actionData.beauty_ambition.toString().split('');
+    actionData.sustain_ambition = actionData.sustain_ambition.toString().split('');
+    actionData.together_ambition = actionData.together_ambition.toString().split('');
+    actionData.participatory_process_ambition = actionData.participatory_process_ambition.toString().split('');
+    actionData.multi_level_engagement_ambition = actionData.multi_level_engagement_ambition.toString().split('');
+    actionData.transdiciplinary_ambition = actionData.transdiciplinary_ambition.toString().split('');
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     res.render('action', {user: req.user, actionData});
