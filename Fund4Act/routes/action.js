@@ -4,6 +4,7 @@ const createAction = require('../controllers/action-create.js');
 const createPledge = require('../controllers/pledge-create.js');
 const createProfile = require('../controllers/profile-create.js');
 const updateAction = require('../controllers/action-update.js');
+const { convertImage } = require('../controllers/image-upload.js');
 const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
 const Profile = require('../models/profiles')
@@ -68,6 +69,27 @@ router.route('/:slug/pledge')
     createPledge.post,
     async (req, res, next) => {
       res.render('pledge-confirmation', {user: req.user, slug: req.params.slug})
+    })
+
+router.route('/:slug/image-upload')
+  .get(
+    ensureLoggedIn,
+    async (req, res, next) => {
+      res.render('image-upload', {user: req.user})
+    })
+  .post(
+    ensureLoggedIn,
+    async (req,res, next) => {
+      try {
+        if (!req.body.image) {
+          throw Error('500');
+        }
+        const convertedImage = convertImage(req.user.id, req.params.slug, req.body['image'])
+        res.redirect(`/${req.params.slug}/`);
+      } catch (e) {
+        next();
+        return;
+      }
     })
 
 router.route('/:slug/edit')

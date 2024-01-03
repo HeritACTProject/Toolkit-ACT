@@ -12,7 +12,6 @@
     <h2>Your Profile</h2>
 
     <section id="profile-header" aria-label="profile">
-      {{log profile}}
       <h3>{{profile.display_name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
       <div>
         <a href="/profile/{{profile.slug}}">View Public Profile</a>

@@ -13,13 +13,17 @@ module.exports.init = (app) => {
         'script-src': [
           "'self'",
           "'unsafe-inline'",
+          "data:",
           "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
         ],
         'default-src': [
+          "'self'",
+          "data:",
           "https://nominatim.openstreetmap.org",
         ],
         'img-src': [
           "'self'",
+          "data:",
           "https://unpkg.com/leaflet@1.9.4/dist/images/",
           "http://a.tile.openstreetmap.org",
           "http://b.tile.openstreetmap.org",
