@@ -1,5 +1,12 @@
 {{> header}}
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+
 <style>
   main{
     margin: 0 5rem;
@@ -12,6 +19,20 @@
     max-width: 30ch;
   }
 
+  .pledge{
+    font-size: 12px;
+    margin: .75rem 0;
+  }
+
+  .pledge p{
+    margin: 0;
+  }
+
+  .pledge, .pledge:hover, .pledge:active , .pledge:visited {
+    text-decoration: none;
+    color: #000;
+  }
+
   #overview{
     display: flex;
     flex-direction: row;
@@ -20,38 +41,122 @@
   .column{
     width: 100%;
   }
+
+  #map{
+    height: 20rem;
+    width: 20rem;
+  }
+
+  .button, button{
+    background: #30732F;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: 16px;
+    border-width: 2px;
+    border-color: #30732F;
+    margin: 0.5rem 0;
+    cursor:pointer;
+  }
+
+  .button-secondary{
+    background-color: #fff;
+    border-color: #30732F;
+    color: #000;
+    
+  }
+
+  .button:hover, .button:active {
+  text-decoration: none;
+  color: #fff; 
+  }
+
+  .button:visited{
+    color: #fff;
+  }
+
+  #neb{
+    width:30rem;
+    height:30rem;
+  }
+
+  #neb-image{
+    height:100%;
+  }
+
+  progress::-moz-progress-bar { background: #30732F; }
+  progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
+  progress { color: #30732F; border-radius: 5px; border-width: 0; }
+
+  #view-pledges{
+    width: 50%;
+  }
 </style>
 
 <main class="wide">
   <section id="overview" aria-label="pledges">
     <div class="column">
       <h1>{{actionData.name}}</h1>
+      <div id="map"></div>
+    <script type='text/javascript'>
+      // center of the map
+      var start = [{{actionData.latitude}}, {{actionData.longitude}}];
+
+      // Create the map
+      var map = L.map('map', {zoomControl: false}).setView(start, 5);
+      map.dragging.disable();
+      map.scrollWheelZoom.disable();
+
+      // Set up the OSM layer
+      L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          minZoom: 3
+        }).addTo(map);
+
+      L.marker([{{actionData.latitude}}, {{actionData.longitude}}]).addTo(map);
+    </script>
     </div>
     <div id="pledge" class="column">
       <label for="fundraising"><b>€{{actionData.pledgeTotal}}</b> pledged of €{{actionData.fundraising_target}} target</label>
       <progress id="fundraising" max="{{actionData.fundraising_target}}" value="{{actionData.pledgeTotal}}">{{actionData.fundraising_target}}</progress>
       <p>Funding Deadline: {{actionData.fundraising_deadline}}</p>
 
-      <a href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
-      <button id="share">Share</button>
-      <p id="link-copied-success">Link Copied</p>
+      <a class="button" href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
+      <button class="button-secondary" id="share">Share</button>
       <script>
-        document.getElementById("link-copied-success").style.visibility = 'hidden';
         document.getElementById("share").addEventListener("click", function(){
           let url = document.location.href
           navigator.clipboard.writeText(url).then(function() {
-              document.getElementById("link-copied-success").style.visibility = 'visible'
+             document.getElementById("share").innerHTML = "Link Copied!"
+             setTimeout(function(){
+              document.getElementById("share").innerHTML= "Share";
+              },3000);
           });
         });
       </script>
         {{#if actionData.pledges}}
-        {{#each actionData.pledges}}
-          <p>{{this.donor_name}}
-          <p>€{{this.amount}}
-          <p>{{this.date}}
-          <p><a href="/profile/{{this.donor_slug}}">view profile</a>
-          <hr>
-        {{/each}}
+        {{#if actionData.pledges.[0]}}
+        <a class="pledge" href="/profile/{{actionData.pledges.[0].donor_slug}}">
+          <p>{{actionData.pledges.[0].donor_name}}</p>
+          <p><b>Pledged €{{actionData.pledges.[0].amount}}</b> {{actionData.pledges.[0].date}}</p>
+        </a>
+        {{/if}}
+        {{#if actionData.pledges.[1]}}
+        <a class="pledge" href="/profile/{{actionData.pledges.[1].donor_slug}}">
+          <p>{{actionData.pledges.[1].donor_name}}</p>
+          <p><b>Pledged €{{actionData.pledges.[1].amount}}</b> {{actionData.pledges.[1].date}}</p>
+        </a>
+        {{/if}}
+        {{#if actionData.pledges.[2]}}
+        <a class="pledge" href="/profile/{{actionData.pledges.[2].donor_slug}}">
+          <p>{{actionData.pledges.[2].donor_name}}</p>
+          <p><b>Pledged €{{actionData.pledges.[2].amount}}</b> {{actionData.pledges.[2].date}}</p>
+        </a>
+        {{/if}}
+        <button class="button-secondary" id="view-pledges">View All Pledges</button>
         {{else}}
         <p>No pledges yet</p>
       {{/if}}
@@ -60,17 +165,20 @@
 
   </section>
   <section>
-    <p>Organised by <b>{{actionData.profile_id}}</b></p>
-    <p>{{actionData.address}}</p>
+    <p>Organised by<br><b>{{actionData.profile_id}}</b></p>
     <p>{{actionData.categories}}</p>
     
     <p>{{actionData.overview}}</p>
+    
     <p>Action Timeline: {{actionData.start_date}} - {{actionData.end_date}}</p>
   </section>
 
   <section>
     <h2>Impact</h2>
-    <svg id="neb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.89 595.28"><defs><style>.cls-1{fill:none;stroke:#f0f0ef;stroke-linecap:round;stroke-miterlimit:10;stroke-width:8px;}.cls-2{fill:#b3b3b2;stroke-width:0px;}.filled-line{fill:none;stroke:#b3b3b2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:8px}</style></defs><line class="cls-1" x1="401.11" y1="288" x2="360.11" y2="388"/><line class="cls-1" x1="507.11" y1="320" x2="401.11" y2="288"/><line class="cls-1" x1="364.11" y1="186" x2="401.11" y2="288"/><circle class="cls-2" cx="507.26" cy="320.18" r="2.88"/><circle class="cls-2" cx="472.26" cy="309.18" r="2.88"/><circle class="cls-2" cx="437.26" cy="298.18" r="2.88"/><circle class="cls-2" cx="387.26" cy="322.18" r="2.88"/><circle class="cls-2" cx="373.26" cy="356.18" r="2.88"/><circle class="cls-2" cx="360.26" cy="388.18" r="2.88"/><circle class="cls-2" cx="390.26" cy="256.18" r="2.88"/><circle class="cls-2" cx="377.26" cy="221.18" r="2.88"/><circle class="cls-2" cx="364.26" cy="186.18" r="2.88"/>
+    <img id="neb-image" src="/images/neb-compass.png">
+    <div>
+      <h3>{{actionData.name}}'s Compass:</h3>
+    <svg id="neb" xmlns="http://www.w3.org/2000/svg" viewBox="250 150 325 300"><defs><style>.cls-1{fill:none;stroke:#f0f0ef;stroke-linecap:round;stroke-miterlimit:10;stroke-width:8px;}.cls-2{fill:#b3b3b2;stroke-width:0px;}.filled-line{fill:none;stroke:#b3b3b2;stroke-linecap:round;stroke-miterlimit:10;stroke-width:8px}</style></defs><line class="cls-1" x1="401.11" y1="288" x2="360.11" y2="388"/><line class="cls-1" x1="507.11" y1="320" x2="401.11" y2="288"/><line class="cls-1" x1="364.11" y1="186" x2="401.11" y2="288"/><circle class="cls-2" cx="507.26" cy="320.18" r="2.88"/><circle class="cls-2" cx="472.26" cy="309.18" r="2.88"/><circle class="cls-2" cx="437.26" cy="298.18" r="2.88"/><circle class="cls-2" cx="387.26" cy="322.18" r="2.88"/><circle class="cls-2" cx="373.26" cy="356.18" r="2.88"/><circle class="cls-2" cx="360.26" cy="388.18" r="2.88"/><circle class="cls-2" cx="390.26" cy="256.18" r="2.88"/><circle class="cls-2" cx="377.26" cy="221.18" r="2.88"/><circle class="cls-2" cx="364.26" cy="186.18" r="2.88"/>
       {{#if actionData.beauty_ambition.[2]}}
       <path d="M376.11 348s8-26 17-36c8.06-8.95 19-22 37-24s28 7 31 11 17 22 20 29 14 28 6 45-10 18-24 26-41 11-62 3-25-26-25-26c-2-6-2-11 0-28Z" style="fill:none;stroke:#b9e3f9;stroke-miterlimit:10"/><path d="M389.11 352s1-9 5-17 8-19 9-21 3-8 7-11 12-7 29 2 35 21 39 33 6 23 5 32-8 21-25 27-38-5-45-9-17.49-13.74-21-19c-4-6-3-13-3-17Z" style="fill:#e0f2fd;stroke-width:0"/><path d="M401.11 349s1-12 10-21 18-10 26-8 20 6 28 17 4 27-4 35-17 11-28 10-22-3-27-10-6-16-5-23Z" style="fill:#97d5f2;stroke-width:0"/>
       {{else if actionData.beauty_ambition.[1]}}
@@ -117,7 +225,8 @@
       <path class="filled-line" d="m401.11 288-41 100" id="multi"/>
       {{/if}}
     </svg>
-    <h3>Beauty</h3>
+    </div>
+    <h4>Beautiful</h4>
     <ul>
       {{#if actionData.beauty_ambition.[0]}}
         <li>This action considers sensory perceptions and or regional/local particularities in its design.
@@ -130,7 +239,7 @@
       {{/if}}
     </ul>
 
-    <h3>Sustainable</h3>
+    <h4>Sustainable</h4>
     <ul>
       {{#if actionData.sustain_ambition.[0]}}
         <li>This action takes into account sustainability in terms of reuse, material choices, energy use and or social use.
@@ -143,7 +252,7 @@
       {{/if}}
     </ul>
 
-    <h3>Together</h3>
+    <h4>Together</h4>
     <ul>
       {{#if actionData.together_ambition.[0]}}
         <li>This action is affordable and equally accessible to all communities.
@@ -156,7 +265,7 @@
       {{/if}}
     </ul>
 
-    <h3>Participatory</h3>
+    <h4>Participatory</h4>
     <ul>
       {{#if actionData.participatory_process_ambition.[0]}}
         <li>This action keeps stakeholders informed and allows them to contribute.
@@ -169,7 +278,7 @@
       {{/if}}
     </ul>
 
-    <h3>Multi-Level Enagement</h3>
+    <h4>Multi-Level Enagement</h4>
     <ul>
       {{#if actionData.multi_level_engagement_ambition.[0]}}
         <li>This action interacts with local networks and communities.
@@ -181,7 +290,7 @@
         <li>This action aims at achieving a global transformational impact.
       {{/if}}
     </ul>
-    <h3>Transdiciplinary</h3>
+    <h4>Transdiciplinary</h4>
     <ul>
       {{#if actionData.transdiciplinary_ambition.[0]}}
         <li>This action involves people from different disciplines working in parallel.

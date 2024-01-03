@@ -84,7 +84,7 @@ module.exports.getXMostUrgent = (x) => {
 }
 
 module.exports.getAllCoordinatesAndSlugs = () => {
-  const query = db.query(`SELECT latitude, longitude, slug FROM actions WHERE fundraising_deadline >= date('now')`);
+  const query = db.query(`SELECT latitude, longitude, slug FROM actions`);
   const results = query.all();
   return results;
 }
