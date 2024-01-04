@@ -7,32 +7,77 @@
 
 <style>
   body { padding: 0; }
-  header { display: flex; justify-content:space-between; align-items:center; height: 4rem; padding: 0 1rem; }
+  header { display: flex; justify-content:space-between; align-items:center; height: 5rem; padding: 0 1rem; }
   header h1 { border-bottom: none; }
   header img { width: 2rem; margin: 0; }
   .right { display: flex; }
   #start-action{ margin: 1rem; }
   #profile-image { align-self: center; }
-  h2, p { margin: 1rem; }
-  hr { margin: 0; }
+  h2, p, pre { margin: 1rem; }
+  hr { margin: 0; background: #ddd;}
   #map { height: 70vh; margin: 0; }
+  aside {background: #30732F; color: #fdfdfd; display: flex; justify-content: center; align-items: center;}
+  aside a, aside a:visited {color: #fdfdfd;}
+  header a, header a:visited {text-decoration: none; color: #000000}
+  .accent {color: #30732F;}
+  #title-link { text-decoration: none; color: inherit; }
+  section:not(#map-section) { padding: 3rem 0; }
+  #actions {  display: flex; flex-direction: column; gap: 2rem; }
+  #most-urgent { display: flex; flex-direction: row; justify-content: space-around; gap: 4rem; margin: 0 6rem;}
+  #most-urgent a {text-decoration: none; color: #000;}
+  .column { width: 100%; display: flex; flex-direction: column;}
+  footer { height: 15rem; background: #30732F; color: #fdfdfd;}
+  pre { white-space: pre-wrap; line-height: 1.5rem;}
+  #about-us, #heritact {margin-left: 6rem; margin-right: 6rem;}
+  #heritact img { max-width: 15rem; margin: 0 .5rem;}
+  .button{
+    background: #30732F;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: 16px;
+    border-width: 2px;
+    border-color: #30732F;
+    margin: 0.5rem 0;
+    cursor:pointer;
+    max-width: 10rem;
+  }
+   .button:hover, .button:active {
+  text-decoration: none;
+  color: #fff; 
+  }
+
+  .button:visited{
+    color: #fff;
+  }
+  #view-all{align-self: center;}
+  progress::-moz-progress-bar { background: #30732F; }
+  progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
+  progress { color: #30732F; border-radius: 5px; border-width: 0; }
+  #most-urgent p, #most-urgent h3, #most-urgent label { margin: .5rem 0;}
 </style>
 
+<aside>
+<p>This page emits less CO2 than  <a href="https://www.websitecarbon.com/" target="_blank">90% of pages globally</a></p>
+</aside>
+
 <header>
-  <h1>Fund4Act</h1>
+  <a id="title-link" href="/"><h1>Fund<span class="accent">4</span>Act</h1></a>
 
   <div class="right">
-  {{#unless user}}<a href="/login">login</a>{{/unless}}
+  {{#unless user}}<a href="/login">Login</a>{{/unless}}
   {{#if user}}
     <a id="start-action" href="/profile">Start an action</a>
-    <a id="profile-image" href="/profile"><img src="/images/user.svg" arialabel="user profile"></a>
+    <a id="profile-image" href="/profile"><img alt="profile image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAATdSURBVHgB1ZpNTBxlGMf/7ywNmECy0MQu68GtTWgTlQ4Bo2DU4SCeEDwpTUzpQeqNj/XiieXSeODzWC6CB/FIoYf6kbhGY02UOMR6kETdegCqCWAg0TSw0+d52V12YWd35p1ZdvtLNjsfz7Dvn/fj+XhHwCf0oUsRaGcMaOIyIAxYCNLl9CdNQn6EZSJprSIZiJvTZgI+IOABfUgPQksOQoh+Oo1ADRa2iH1txosoJSH60HMGAoFROjTgL3M4EGMqglwJoR6IIGBN0WEvSotrQQGnhnq0eRAaPuNDlB6dfqs31P7kv5t3/zadPOBIiD7SPEXzIEaHNTg9gvSbvaGXzwU3v3/weTHjgkNLTuYq62tagU6jF+wRMLEvOmmo7dib2OBVRGN9I9outGXOd//bxcrvK9j9fxdKFBFTZfugoojWZ1ox0HUdrRda895fW1/DxK1xrPyxAldwW7hNQEu+23nniJwTEK5XJhYQezuGcEPY1uZs3Vl0v9BNPbSHe3/9ApeE7ObMCSH6yPP9ENpHcEl3Wzeib0Yd23dc6pBDbWN7A+4QL4Xaz9Fq9uCH7Kta9on0E0IbhQLcG6fxjESIUdnWLHKEkLNjERG4xCBHz5PbLTyPmsJNUCCYcswZMkJSCvuhgIqINOGGp6BIL7XZSJ8c9chhbyhRV1MHVWpraqFMVpulEC+9UWYM6e+Q7hGRHMLjinbY9kMhmuhBmdjYWocnhLjKX1pqWEXgAeWwwx8iLdGWpzVoBwY8skdeupxY1n6nBkuUN7L1AyF07bBY4A0ONVTgiHhtYw3eEa/xZI/AI+vb60pi4r/GpRgfCPoihFn47lO45faPy/CJoAafkEmTi/8uL7uucxJ7/BPCIiaXJhzbz345Cz9hITvwieWflmUGWIy19d+krZ/4KoSZWBoveJ97LjrnPAFzSEKjpN43IRzON4UvFsz69kgIFyUU8xA7EkIfbp4mXzIIRTiE73vliszD3eYlPAzj9+I0zJYUUt5srBmRytE/hkvC9WG81zUgc3U/4Dkz+8VNNUGWuCZS9dw/nT6T7oEBElEKlAQdiPOyQKdHL7OQSCHbtIC+V/s8ZYRO4AVh4dsF6WSL+iYLCXNy9bwsB1GtqF5uztgw8Pp13Hj3BjoudqC6qhqlpvpMtSxMvKF38bDB/X8SeLj/ML+xsOapNHTnsEc4XQxY28dtuGoYe2fMU3HBDzYoluMlO6+PomHF2w+Z2i8NLy5HGulz41kD4/3OPfVpcGWq77iYOXNi9RofHIUoQoxlW0R7PkClcfP9Y2HNwVGbM0LMcTNOX4vp83IPp3zUPZGzyMxl72jlBo0HYhg+hywlgVaq7N5gcoRIhVauQWVycn/xRBhvTprT7PJRsYgZauPciat25lO3J3/e2t2qqMJEQ22DOdw9knejx3bHav6rTzrJt/CSXCliTJoXnXY3i2+GVoYYKUJpMzQb2mOneaMe6nuD5sSEWbQ27WifnWOZUHvjfXDPiJyXZErJDjnpD0lEzImx4zcfNu9umqEXG29BszjALPVQW6Sh9BatTnecPqD4Ug3nMMkYPX4V/hLnUCkVZbjC62tOLGiInGgP/aUI1EhQ4+exj+lCk7kYnoRkI0VpFD2LJA07WU+OIDdZ2zn6WN/A0kwk4duLZ48AwZW9nCitJWkAAAAASUVORK5CYII="/></a>
   {{/if}}
   </div>
 </header>
 <hr>
 
 <main class="wide">
-  <section aria-label="actions map view">
+  <section id="map-section" aria-label="actions map view">
     <h2>Donate to local heritage actions</h2>
     <p>Showcase your businesses commitment to your local community</p>
     <div id="map"></div>
@@ -58,17 +103,40 @@
     </script>
   </section>
 
-  <section aria-label="actions closest to deadline">
+  <section id="actions" aria-label="actions closest to deadline">
+    <div id="most-urgent">
     {{#each data.mostUrgent}}
-      <h3>{{name}}</h3>
-      <a href="/action/{{slug}}">view</a>
-      {{#unless @last}}
-        <hr>
-      {{/unless}}
+      <a href="/action/{{slug}}" class="column">
+        <h3>{{name}}</h3>
+        <p>Organised by <b>{{profile_id}}</b></p>
+        <label for="fundraising"><b>€3</b> pledged of €{{fundraising_target}} target</label>
+        <progress id="fundraising" max="{{fundraising_target}}" value="3">{{fundraising_target}}</progress>
+      </a>
     {{/each}}
+    </div>
+    <a id="view-all" class="button" href="/action">view all actions</a>
   </section>
 
-  <section>
-    <a href="/action">view all actions</a>
+  <hr>
+
+  <section id="about-us">
+    <h2>About Fund4ACT</h2>
+    <pre>Welcome to Fund4ACT! Please explore our map of cultural heritage actions who require crowdfunding!
+
+Fund4ACT is part of the innovative HeritACT digital toolkit which enables active citizen participation in reactivating their cultural heritage.
+
+Fund4ACT is a crowdfunding platform that supports the reactivating of cultural heritage through enabling social groups and organisations to demonstrate their heritage action's impacts as well as their group's organisational competence.
+
+Fund4ACT helps groups map their heritage action's impacts to the New European Bauhaus Compass as well allowing groups to digitally demonstrate their organisation's competence through their constitution, past delivered actions and any additional climate action plans they may have.
+
+Fund4ACT aims to create "bankable" heritage actions which will encourage funding pledges from local individuals and SMEs keen to invest in their local cultural heritage. </pre>
+  </section>
+  <hr>
+  <section id="heritact">
+    <h2>What is Heritact?</h2>
+    <img alt="Heritact Logo" src="data:image/webp;base64,UklGRkgDAABXRUJQVlA4TDwDAAAv24VlEIcgEEjS2V9xiEmZFIFACje4RA2O4YBg22rcBg2xkYMt9r/djgFLSV3aH9H/CSD4H/6H/+F/+B/+h//hf/gf/of/4X/4H/6H/+F/+B/+h//hf/gf/o/eWV3XK0ZZm+z6dpe21kjutnX9ar8vKYTL3PV7+5bDt9T0kVuO3dauD+bALYs+fi9R262rxb7EbItabRFbU7tbvMZqeYvWFrXdYrWq1pdILXVzPQdqd7W/x2k39biGaYeLnoI0Vp8cpB1OegrRFvXKIdru5ojQsvotAdrqqAVo4ugI0NRzCs+KqxqeLa44PGNXW3jWXEl4JvDf31v30I7/LODwrLpaw7PsqoZndHii+GxzJAHazdEaoFH3k63l6rr80KXq+1fA5uZO1lldyw9dVd+/AoqbW4hG4uSgGK06WYI0ursQitJy91DCNFodMMVpdDe3U6SWdmM9hWqUu6leKFaj0g31QtEalW6mF4rXKO9GjkIRG6XNhCSK2Yhu/WF9JcfhF6XtQfdMkRtR3h4glXxHYESZj2/pLZP3GIyICssXpFU6wTDsban8fi10kqHYCcN/8B/8h9ks4rpEZ5dw+A/+g//gP/jvSrJX0/m1UOpMjqaaLkNbZKoXe008t69UPX8HTQbbjDXx3EZinE9LJrB5EJ3J0diWobFONdsT9SwTJDpYMSbqWZ4unUCB/+A/+A/+g//gP/gP/oP/4D/4D/6D/+A/+A/+g//gP/gP/oP/ArjKo5V5K2LyGEyTwbYXlpxkvx6Ml+fNKA9mckfyOpSZEvqZhv/gP/gP/vv/Xa6u06uvVNf5icjVdTmz6jq/ulL1PU+sruurT9Q1PxGsruXM1DW/uqr6hv/gP/gP/oP/4D/4D/6D/+A/+A/+g//gP/gP/kPjKru+XC3seblkjfbqM/fwH/wH/8F//1M4eLjXgkNMlsE1mcnrxYCvBUbr4ERnEv6D/+A/+A/+A+4WtnsEbJYF/oP/4D/4D/6D/+A/+A/+g//gP/gP/oP/4L/o6Oe6vs30/Jf6lgbN55+/MtyFZ9LeY3N9mwj+h//hf/gf/of/4X/4H/6H/+F/+B/+h//hf/gf/of/4X/4H/7/bzI=" />
+    <pre>HeritACT is an European funded project that activates heritage through engaging experiences towards sustainable development by introducing innovative architectural  design solutions and cultural practices to enable common action.</pre>
   </section>
 </main>
+<footer>
+</footer>

@@ -47,7 +47,7 @@ main:not(.wide) {
     max-width: 75ch;
 }
 body, input {
-    font-family: "Verdana", sans-serif;
+    font-family: "Arial", sans-serif;
 }
 
 h1,h2,h3,h4,h5,h6,p,blockquote,dl,figure {
@@ -87,8 +87,8 @@ cite {
     margin-top: 1rem;
 }
 
-kbd,code,samp,pre,var { font: var(--mobile-font-size) monospace; }
-code, pre {
+kbd,code,samp,var { font: var(--mobile-font-size) monospace; }
+code {
     background: var(--tertiary-color);
     border: 1px solid;
     overflow: auto;
