@@ -15,7 +15,7 @@
   #pledge{
     display: flex;
     flex-direction: column;
-    margin: 2rem 5rem;
+    margin: 0rem 5rem;
     max-width: 30ch;
   }
 
@@ -40,6 +40,7 @@
 
   .column{
     width: 100%;
+    display: flex;
   }
 
   #map{
@@ -99,9 +100,10 @@
 </style>
 
 <main class="wide">
+  <h1>{{actionData.name}}</h1>
   <section id="overview" aria-label="pledges">
     <div class="column">
-      <h1>{{actionData.name}}</h1>
+    <div class="row">
       <div id="map"></div>
     <script type='text/javascript'>
       // center of the map
@@ -121,6 +123,10 @@
 
       L.marker([{{actionData.latitude}}, {{actionData.longitude}}]).addTo(map);
     </script>
+    </div>
+    <div class="row">
+      <img src="/images/upload/{{actionData.profile_id}}/{{actionData.slug}}.webp">
+    </div>
     </div>
     <div id="pledge" class="column">
       <label for="fundraising"><b>€{{actionData.pledgeTotal}}</b> pledged of €{{actionData.fundraising_target}} target</label>
@@ -164,15 +170,15 @@
         <p>No pledges yet</p>
       {{/if}}
     </div>
-  </section> 
+  </section>
 
   </section>
   <section>
     <p>Organised by<br><b>{{actionData.profile_id}}</b></p>
     <p>{{actionData.categories}}</p>
-    
+
     <p>{{actionData.overview}}</p>
-    
+
     <p>Action Timeline: {{actionData.start_date}} - {{actionData.end_date}}</p>
   </section>
 
@@ -205,7 +211,7 @@
       {{else if actionData.together_ambition.[0]}}
       <path d="M283.11 278s4-10 20-24 24-20 39-23 33 5 42 16 13 21 14 27 4.03 20.91 3.02 29.95S397.11 327 385.11 334s-24 14-48 9-43-18-48-27-13-19-6-38Z" style="fill:none;stroke:#f9ec62;stroke-miterlimit:10"/>
       {{/if}}
-      
+
       {{#if actionData.participatory_process_ambition.[2]}}
       <path class="filled-line" d="m402.11 289-38-103" id="self-govern"/><path class="filled-line" d="m402.11 289-25-68" id="co-develop"/><path class="filled-line" d="m402.11 289-12-32" id="consult"/>
       {{else if actionData.participatory_process_ambition.[1]}}
