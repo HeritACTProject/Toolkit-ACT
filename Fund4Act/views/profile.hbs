@@ -22,6 +22,27 @@
       <h3>Your Actions</h3>
       <a href="/action/create">Create an Action</a>
       {{#if actions}}
+        <style>
+          .action-row{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-bottom: 1px solid #000;
+          }
+
+          .action-row a {
+            margin: 1rem;
+          }
+
+          .action-links{
+            display: flex;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            .action-row { border-color: #fff; }
+          }
+        </style>
+
         <div id="actions-list">
           {{#each actions}}
             {{> profile-action}}

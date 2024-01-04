@@ -18,7 +18,7 @@
   #map { height: 70vh; margin: 0; }
   aside {background: #30732F; color: #fdfdfd; display: flex; justify-content: center; align-items: center;}
   aside a, aside a:visited {color: #fdfdfd;}
-  header a, header a:visited {text-decoration: none; color: #000000}
+  header a, header a:visited {text-decoration: none; color: #000}
   .accent {color: #30732F;}
   #title-link { text-decoration: none; color: inherit; }
   section:not(#map-section) { padding: 3rem 0; }
@@ -46,7 +46,7 @@
   }
    .button:hover, .button:active {
   text-decoration: none;
-  color: #fff; 
+  color: #fff;
   }
 
   .button:visited{
@@ -57,6 +57,10 @@
   progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
   progress { color: #30732F; border-radius: 5px; border-width: 0; }
   #most-urgent p, #most-urgent h3, #most-urgent label { margin: .5rem 0;}
+
+  @media (prefers-color-scheme: dark) {
+    header a, header a:visited, #most-urgent a{ color: #fff; }
+  }
 </style>
 
 <aside>
