@@ -124,10 +124,6 @@ body {
   background-color: var(--primary-background-color);
 }
 
-.assessment-header h1 {
-  		padding-left: 120px;
-}
-
 @media screen {
   .assessment-body {
   	margin-top: 100px;
@@ -313,6 +309,10 @@ b {
 
 .active {
 	color: #ffd685 !important;
+}
+
+.navigation-flex-container img {
+  width: 10rem;
 }
 
 /*********************************************************************************/
