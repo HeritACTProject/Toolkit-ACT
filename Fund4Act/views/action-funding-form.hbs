@@ -1,0 +1,46 @@
+{{> header}}
+
+<main>
+
+  <link rel="stylesheet" href="/styles/normform.min.css"/>
+
+  <h1>Create your action</h1>
+
+  <label>Watch our video explainer of creating an action <a>here</a></label>
+
+  <form class="normform">
+    <br>
+
+    <fieldset>
+      <legend>Funding</legend>
+
+      <label>Consider Best Practice for each category</label>
+      <ul>
+        <li><a href="/resource/action-categories#community-engagement">Community Engagement - Best Practice</a></li>
+        <li><a href="/resource/action-categories#cultural-celebrations">Cultural Celebrations - Best Practice</a></li>
+        <li><a href="/resource/action-categories#ecosystem-conservation">Ecosystem Conservation - Best Practice</a></li>
+        <li><a href="/resource/action-categories#education-and-awareness">Education and Awareness - Best Practice</a></li>
+        <li><a href="/resource/action-categories#environmental-education">Environmental Education - Best Practice</a></li>
+        <li><a href="/resource/action-categories#green-spaces-and-biodiversity">Green Spaces and Biodiversity - Best Practice</a></li>
+        <li><a href="/resource/action-categories#historic-building-preservation">Historic Building Preservation - Best Practice</a></li>
+        <li><a href="/resource/action-categories#language-and-tradition">Language and Tradition - Best Practice</a></li>
+        <li><a href="/resource/action-categories#storytelling-and-documentation">Storytelling and Documentation - Best Practice</a></li>
+        <li><a href="/resource/action-categories#traditional-cuisine-initiatives">Traditional Cuisine Initiatives - Best Practice</a></li>
+      </ul>
+
+      <label for="target">Total Cost of Action (€)</label>
+      <input type="number" id="target" name="total" min="1" step="1">
+
+      <label for="target">Fundraising Target (€)*</label>
+      <input type="number" id="target" name="target" min="1" step="1" required {{#if action.fundraising_target}}value="{{action.fundraising_target}}"{{/if}}>
+
+      <label for="deadline">Deadline*</label>
+      <input type="date" id="deadline" name="deadline" required {{#if action.fundraising_deadline}}value="{{action.fundraising_deadline}}"{{/if}}>
+    </fieldset>
+
+    <input type="checkbox" id="terms-conditions" name="terms-conditions" value="terms-conditions" required>
+    <label for="terms-conditions">Do you agree to our <a>terms and conditions</a>?</label>
+
+    <input type="submit" formmethod="post" value="Submit">
+  </form>
+</main>

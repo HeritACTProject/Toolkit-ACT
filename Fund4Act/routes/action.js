@@ -36,7 +36,7 @@ router.route('/create')
   .get(
     ensureLoggedIn,
     async (req, res) => {
-    res.render('action-create-form');
+    res.render('action-info-form', {user: req.user});
   })
   .post(
     ensureLoggedIn,
@@ -94,12 +94,17 @@ router.route('/:slug/image-upload')
 
 router.route('/:slug/edit')
   .get(ensureLoggedIn, async (req, res, next) => {
+    res.redirect(`/action/${req.params.slug}/edit/info`)
+  })
+
+router.route('/:slug/edit/info')
+  .get(ensureLoggedIn, async (req, res, next) => {
     try {
       const action = await Action.getByActionSlug(req.params.slug);
 
       if (!action) { throw Error('404'); }
 
-      res.render('action-create-form', {user: req.user, action});
+      res.render('action-info-form', {user: req.user, action});
     } catch (e) {
       next();
       return;
@@ -107,7 +112,43 @@ router.route('/:slug/edit')
   })
   .post(
     ensureLoggedIn,
-    updateAction.post,
+    updateAction.updateInfoBySlug,
+  );
+
+router.route('/:slug/edit/impact')
+  .get(ensureLoggedIn, async (req, res, next) => {
+    try {
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      if (!action) { throw Error('404'); }
+
+      res.render('action-impact-form', {user: req.user, action});
+    } catch (e) {
+      next();
+      return;
+    }
+  })
+  .post(
+    ensureLoggedIn,
+    updateAction.updateAmbitionsBySlug,
+  );
+
+router.route('/:slug/edit/funding')
+  .get(ensureLoggedIn, async (req, res, next) => {
+    try {
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      if (!action) { throw Error('404'); }
+
+      res.render('action-funding-form', {user: req.user, action});
+    } catch (e) {
+      next();
+      return;
+    }
+  })
+  .post(
+    ensureLoggedIn,
+    updateAction.updateFundingBySlug,
   );
 
 router.route('/:slug/delete')

@@ -7,8 +7,8 @@ module.exports.init = () => {
     profile_id TEXT NOT NULL,
     name TEXT NOT NULL,
     fundraising_total DECIMAL,
-    fundraising_target DECIMAL NOT NULL,
-    fundraising_deadline TEXT NOT NULL,
+    fundraising_target DECIMAL,
+    fundraising_deadline TEXT,
     image_url TEXT,
     address TEXT,
     latitude TEXT,
@@ -47,19 +47,31 @@ module.exports.create = ({profileId, name, total, target, deadline, imageUrl, ad
   `);
 };
 
-module.exports.updateBySlug = (slug, {name, total, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
-                        category, beautyAmbition, sustainAmbition, togetherAmbition, participProcessAmbition,
-                        multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
+module.exports.updateInfoBySlug = (slug, {name, address, lat, lon, overview, startDate, endDate, category}) => {
   return db.run(`UPDATE actions SET
-    name = "${name}", fundraising_total = "${total}", fundraising_target = "${target}",
-      fundraising_deadline = "${deadline}", image_url = "${imageUrl}", address = "${address}",
+    name = "${name}", address = "${address}",
       latitude = "${lat}", longitude = "${lon}", overview = "${overview}",
-      start_date = "${startDate}", end_date = "${endDate}", category = "${category}",
+      start_date = "${startDate}", end_date = "${endDate}", category = "${category}"
+    WHERE slug  = "${slug}"
+  `);
+};
+
+module.exports.updateAmbitionsBySlug = (slug, {beautyAmbition, sustainAmbition, togetherAmbition,
+                        participProcessAmbition,multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
+  return db.run(`UPDATE actions SET
       beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}",
       together_ambition = "${togetherAmbition}",
       participatory_process_ambition = "${participProcessAmbition}",
       multi_level_engagement_ambition = "${multiLevelEngagementAmbition}",
       transdiciplinary_ambition = "${transdiciplinaryAmbition}"
+    WHERE slug  = "${slug}"
+  `);
+};
+
+module.exports.updateFundingBySlug = (slug, {total, target, deadline}) => {
+  return db.run(`UPDATE actions SET
+    fundraising_total = "${total}", fundraising_target = "${target}",
+      fundraising_deadline = "${deadline}"
     WHERE slug  = "${slug}"
   `);
 };
@@ -88,7 +100,6 @@ module.exports.getAllCoordinatesAndSlugs = () => {
   const results = query.all();
   return results;
 }
-
 
 module.exports.getPage = (offset) => {
   const query = db.query(`SELECT id, name, slug, fundraising_deadline FROM actions

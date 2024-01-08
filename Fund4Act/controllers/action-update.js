@@ -10,12 +10,9 @@ const locationSearch = async (query) => {
   return [geocode.lat, geocode.lon];
 }
 
-exports.post = [
+exports.updateInfoBySlug = [
   [
     body('name').trim().notEmpty().escape(),
-    body('target').notEmpty().isNumeric().toFloat(),
-    body('deadline').notEmpty().isISO8601(),
-    body('image-url').trim().escape(),
     body('address').trim().escape(),
     body('overview').trim().escape(),
     body('start-date').notEmpty().isISO8601(),
@@ -26,10 +23,6 @@ exports.post = [
     const data = {
       profileId: req.user.id,
       name: req.body.name,
-      total: req.body.total,
-      target: req.body.target,
-      deadline: req.body.deadline,
-      imageUrl: req.body["image-url"],
       address: req.body.address,
       overview: req.body.overview,
       startDate: req.body["start-date"],
@@ -43,6 +36,51 @@ exports.post = [
       res.status(400).json({ errors: err.array });
       next(err);
     }
+
+    var lat = req.body.lat;
+    var lon = req.body.lon;
+
+    try {
+      if (lat === undefined || lon === undefined) {
+        const latlon = await locationSearch(data.address);
+        lat = latlon[0];
+        lon = latlon[1];
+      }
+    } catch (err) {
+      res.render('action-create-form', {locationError: true});
+      return;
+    }
+
+    try {
+      data.lat = lat;
+      data.lon = lon;
+      await Action.updateInfoBySlug(req.params.slug, data);
+    } catch (err) {
+      res.status(500).json({ errors: err.array });
+      next(err);
+    }
+
+    res.redirect(`/action/${req.params.slug}/edit/impact`)
+  }];
+
+exports.updateAmbitionsBySlug = [
+  [
+    body('beauty_ambition').trim().escape(),
+    body('sustain_ambition').trim().escape(),
+    body('together_ambition').trim().escape(),
+    body('particip_ambition').trim().escape(),
+    body('multi_level_engagement').trim().escape(),
+    body('transdiciplinary').trim().escape(),
+  ], async (req, res, next) => {
+
+    try {
+      validationResult(req.params, req.body).throw();
+    } catch (err) {
+      res.status(400).json({ errors: err.array });
+      next(err);
+    }
+
+    const data = {};
 
     const ambitionInputs = {
       beautyAmbitionInput: req.body['beauty_ambition'],
@@ -62,27 +100,27 @@ exports.post = [
     data.multiLevelEngagementAmbition = nebData.multiLevelEngagementAmbition;
     data.transdiciplinaryAmbition = nebData.transdiciplinaryAmbition;
 
+    res.redirect(`/action/${req.params.slug}/edit/funding`)
+  }];
 
-    var lat = req.body.lat;
-    var lon = req.body.lon;
+exports.updateFundingBySlug = [
+  [
+    body('target').notEmpty().isNumeric().toFloat(),
+    body('total').notEmpty().isNumeric().toFloat(),
+    body('deadline').notEmpty().isISO8601(),
+  ], async (req, res, next) => {
+
+    const data = {
+      profileId: req.user.id,
+      total: req.body.total,
+      target: req.body.target,
+      deadline: req.body.deadline,
+    };
 
     try {
-      if (lat === undefined || lon === undefined) {
-        const latlon = await locationSearch(data.address);
-        lat = latlon[0];
-        lon = latlon[1];
-      }
+      validationResult(req.params, req.body).throw();
     } catch (err) {
-      res.render('action-create-form', {locationError: true});
-      return;
-    }
-
-    try {
-      data.lat = lat;
-      data.lon = lon;
-      await Action.updateBySlug(req.params.slug, data);
-    } catch (err) {
-      res.status(500).json({ errors: err.array });
+      res.status(400).json({ errors: err.array });
       next(err);
     }
 

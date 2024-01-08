@@ -1,0 +1,132 @@
+{{> header}}
+
+<main>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+  <link rel="stylesheet" href="/styles/normform.min.css"/>
+
+  {{#if this.locationError}}
+    <style>#error-msg {: 1rem; color: red;}</style>
+    <span><p id="error-msg">There was a problem finding the address, please try again</p></span>
+  {{/if}}
+
+  <style>
+    #map{height: 70vh;margin-bottom:1rem;}
+  </style>
+
+  <h1>Create your action</h1>
+
+  <label>Watch our video explainer of creating an action <a>here</a></label>
+
+  <form class="normform">
+    <br>
+    <fieldset>
+      <legend>Overview</legend>
+      <label for="name">Action Name*</label>
+      <input type="text" id="name" name="name" required {{#if action.name}}value="{{action.name}}"{{/if}}>
+
+      <label for="location">Action Address*</label>
+      <input type="text" id="address" name="address" required {{#if action.address}}value="{{action.address}}"{{/if}}>
+
+      <fieldset id="address-select">
+      </fieldset>
+      <input type="hidden" id="lat" name="lat" {{#if action.latitude}}value="{{action.latitude}}"{{/if}}>
+      <input type="hidden" id="lon" name="lon" {{#if action.longitude}}value="{{action.longitude}}"{{/if}}>
+      <button id="find-location" disabled>Find address</button>
+      <div id="map"></div>
+      <script type='text/javascript'>
+        // center of the map
+        var start = [51.165691, 10.451526];
+
+        // Create the map
+        var map = L.map('map').setView(start, 3);
+
+        // Set up the OSM layer
+        L.tileLayer(
+          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            minZoom: 3
+          }).addTo(map);
+
+        var marker = L.marker(start, { draggable: true, autoPan: true }).addTo(map);
+
+        marker.on('moveend', function() {
+          var latlon = marker.getLatLng();
+          document.getElementById('lat').value = latlon.lat;
+          document.getElementById('lon').value = latlon.lng;
+
+        });
+
+        var findLocBtn = document.getElementById('find-location');
+
+        findLocBtn.disabled = false;
+
+        findLocBtn.addEventListener("click", function(e){
+          e.stopPropagation();
+          e.preventDefault();
+          var query = document.getElementById('address').value;
+          var uri = `https://nominatim.openstreetmap.org/search?q=${query}&format=json`
+
+          fetch(uri)
+            .then(function(response) {
+              return response.json();
+            }).then(function(data) {
+              var fieldset = document.getElementById('address-select');
+              // map data to address select checkboxes
+              var {lat, lon} = data[0];
+              marker.setLatLng([lat, lon]);
+            });
+        });
+      </script>
+
+      <label for="overview">Action Overview*</label>
+      <textarea rows="5" id="overview" name="overview" required>{{#if action.overview}}{{action.overview}}{{/if}}</textarea>
+
+      <label for="start-date">Start Date*</label>
+      <input type="date" id="start-date" name="start-date" required {{#if action.start_date}}value="{{action.start_date}}"{{/if}}>
+
+      <label for="end-date">End Date*</label>
+      <input type="date" id="end-date" name="end-date" required {{#if action.end_date}}value="{{action.end_date}}"{{/if}}>
+
+      <label>Action Category (<a href="/resource/action-categories">Read more about our categories here</a>)</label>
+
+      <input type="checkbox" id="category-1" name="category" value="Community Engagement">
+      <label for="category-1" title="Involves engaging the community in heritage-related projects, such as community-led public art projects and interactive heritage workshops, fostering a sense of shared responsibility and pride.">Community Engagement</label>
+
+      <input type="checkbox" id="category-2" name="category" value="Cultural Celebrations">
+      <label for="category-2" title="Cultural celebrations focus on organizing events such as festivals and artisan workshops that showcase and celebrate the unique cultural aspects of a community.">Cultural Celebrations</label>
+
+      <input type="checkbox" id="category-3" name="category" value="">
+      <label for="category-3" title="Activities dedicated to the restoration and conservation of natural ecosystems, with a focus on wildlife habitat restoration to support biodiversity and maintain ecological balance.">Ecosystem Conservation</label>
+
+      <input type="checkbox" id="category-4" name="category" value="">
+      <label for="category-4" title="Heritage education programs and historical walking tours aimed at educating the community and visitors about the history, traditions, and values that shape the community's identity.">Education and Awareness</label>
+
+      <input type="checkbox" id="category-5" name="category" value="">
+      <label for="category-5" title="Projects that aim to educate and raise awareness about the environment, including nature trail creation and environmental education programs designed to instill a sense of responsibility for natural heritage.">Environmental Education</label>
+
+      <input type="checkbox" id="category-6" name="category" value="">
+      <label for="category-6" title="Involves community garden initiatives, tree planting programs, and green space enhancement projects that contribute to the preservation of biodiversity and the creation of sustainable, natural environments.">Green Spaces and Biodiversity</label>
+
+      <input type="checkbox" id="category-7" name="category" value="">
+      <label for="category-7" title="This category involves the restoration and preservation of historic buildings and monuments, ensuring that the physical structures of the past are maintained for future generations.">Historic Building Preservation</label>
+
+      <input type="checkbox" id="category-8" name="category" value="">
+      <label for="category-8" title="Activities centered around revitalizing and preserving languages and traditions, promoting cultural exchange programs to ensure the transmission of linguistic and cultural heritage.">Language and Tradition</label>
+
+      <input type="checkbox" id="category-9" name="category" value="">
+      <label for="category-9" title="Capturing and preserving the oral histories and documented artifacts of a community, ensuring that the stories and experiences of individuals are recorded and shared.">Storytelling and Documentation</label>
+
+      <input type="checkbox" id="category-10" name="category" value="">
+      <label for="category-10" title="This category focuses on events related to culinary heritage, including culinary heritage events and traditional cooking classes that celebrate and preserve traditional food practices.">Traditional Cuisine Initiatives</label>
+    </fieldset>
+
+    <input type="submit" formmethod="post" value="Submit">
+  </form>
+</main>
