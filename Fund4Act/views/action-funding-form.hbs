@@ -49,7 +49,7 @@
       </ul>
 
       <label for="target">Total Cost of Action (€)</label>
-      <input type="number" id="target" name="total" min="1" step="1">
+      <input type="number" id="target" name="total" min="1" step="1" {{#if action.fundraising_total}}value="{{action.fundraising_total}}"{{/if}}>
 
       <label for="target">Fundraising Target (€)*</label>
       <input type="number" id="target" name="target" min="1" step="1" required {{#if action.fundraising_target}}value="{{action.fundraising_target}}"{{/if}}>
