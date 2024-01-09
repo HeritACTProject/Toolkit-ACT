@@ -102,6 +102,13 @@ exports.updateAmbitionsBySlug = [
     data.multiLevelEngagementAmbition = nebData.multiLevelEngagementAmbition;
     data.transdiciplinaryAmbition = nebData.transdiciplinaryAmbition;
 
+    try {
+      await Action.updateAmbitionsBySlug(req.params.slug, data);
+    } catch (err) {
+      res.status(500).json({ errors: err.array });
+      next(err);
+    }
+
     res.redirect(`/action/${req.params.slug}/edit/funding`)
   }];
 
@@ -123,6 +130,13 @@ exports.updateFundingBySlug = [
       validationResult(req.params, req.body).throw();
     } catch (err) {
       res.status(400).json({ errors: err.array });
+      next(err);
+    }
+
+    try {
+      await Action.updateFundingBySlug(req.params.slug, data);
+    } catch (err) {
+      res.status(500).json({ errors: err.array });
       next(err);
     }
 
