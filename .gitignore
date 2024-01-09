@@ -1,3 +1,7 @@
+# user upload directories
+
+*/public/images/upload/*
+
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
 # Logs
