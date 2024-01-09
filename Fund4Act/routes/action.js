@@ -104,6 +104,9 @@ router.route('/:slug/edit/info')
 
       if (!action) { throw Error('404'); }
 
+      action.category = action.category.split(',');
+      action.category = action.category.reduce((acc,curr)=> (acc[curr.toLowerCase().replace(/\s+/g, '_')]=true,acc),{});
+
       res.render('action-info-form', {user: req.user, action});
     } catch (e) {
       next();
