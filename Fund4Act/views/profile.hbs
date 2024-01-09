@@ -3,31 +3,70 @@
 {{#if profile.display_name}}
   {{#if profile.email}}
     <style>
-      #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; }
+      #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; justify-content: space-between; gap: 1rem; }
       #profile-header div a { display: block; padding-right: 1rem; }
-      #profile-header img, #profile-header div, #profile-actions { margin: 1rem; }
+      #profile-header, #profile-header img, #profile-header div, #profile-actions { margin: 1rem; }
       #profile-header img { width: 3rem; }
+        .button, button{
+    background: #30732F;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: 16px;
+    border-width: 2px;
+    border-color: #30732F;
+    margin: 0.5rem 0;
+    cursor:pointer;
+    border-style: solid;
+  }
+
+  .button-secondary{
+    background-color: #fff;
+    border-color: #30732F;
+    color: var(--text-color);
+  }
+
+  .button:hover, .button:active {
+  text-decoration: none;
+  color: #fff;
+  }
+
+  .button:visited{
+    color: #fff;
+  }
+
+  .button-secondary:hover, .button-secondary:active {
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .button-secondary:visited{
+    color: var(--text-color);
+  }
+
+  a,a:visited{color: var(--text-color)}
     </style>
 
-    <h2>Your Profile</h2>
-
     <section id="profile-header" aria-label="profile">
-      <h3>{{profile.display_name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h3>
+      <h1>{{profile.display_name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h1>
       <div>
-        <a href="/profile/{{profile.slug}}">View Public Profile</a>
-        <a href="/logout">Log Out</a>
+        <a class="button" href="/profile/{{profile.slug}}">View Public Profile</a>
+        <a class="button button-secondary" href="/logout">Log Out</a>
       </section>
     </div>
     <section id="profile-actions" aria-label="actions">
       <h3>Your Actions</h3>
-      <a href="/action/create">Create an Action</a>
+      <a class="button" href="/action/create">Create an Action</a>
       {{#if actions}}
         <style>
           .action-row{
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid var(--text-color);
+            align-items: center;
           }
 
           .action-row a {
@@ -36,6 +75,11 @@
 
           .action-links{
             display: flex;
+          }
+
+          #actions-list{
+            margin-top: 2rem;
+            margin-bottom: 2rem;
           }
 
           @media (prefers-color-scheme: dark) {

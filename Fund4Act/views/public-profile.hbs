@@ -1,6 +1,19 @@
 {{> header}}
-
-<img src="{{profile.logo_url}}">
+<style>
+    main{ margin: 1rem;}
+    .action-row{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--text-color);
+        align-items: center;
+    }
+    .action-row a {
+        margin: 1rem;
+    }
+    a,a:visited{color: var(--text-color)}
+</style>
+<main class="wide">
 <h1>{{profile.display_name}}</h1>
 <h2>Contact:</h2>
 <p>{{profile.email}}</p>
@@ -8,17 +21,17 @@
 {{#if actions}}
     <h2>Our Actions:</h2>
     {{#each actions}}
-        <p><a href="/action/{{this.slug}}">{{this.name}}</a></p>
-        <br>
+    <div class="action-row">
+        <p>{{this.name}}</p>
+        <p><a href="/action/{{this.slug}}">View</a></p> 
+    </div>
+        
     {{/each}}
 {{/if}}
 {{#if pledges}}
     <h2>Our Pledges:</h2>
     {{#each pledges}}
-        <p><a href="/action/{{this.proj_slug}}">{{this.action_name}}</a></p>
-        <p>€{{this.amount}}</p>
-        <p>{{this.date}}</p>
-        <br>
+        <p>{{this.date}} - Pledged €{{this.amount}} to <a href="/action/{{this.proj_slug}}">{{this.action_name}}</a></p>
     {{/each}}
 {{/if}}
 <h2>Our Mission:</h2>
@@ -36,3 +49,4 @@
 <h2>Our Partnerships:</h2>
 <p>{{profile.partnerships}}</p>
 {{/if}}
+</main>
