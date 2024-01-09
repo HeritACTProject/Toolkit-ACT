@@ -1,16 +1,30 @@
 {{> header}}
 
+<style>
+  .action, .action:visited, .action:hover{text-decoration: none; color: var(--text-color);;display: flex;flex-direction: column;}
+  .action h3, .action p, .action label {margin: .5rem 0;}
+  .actions{display: flex;flex-direction:column;gap:2rem;}
+  progress::-moz-progress-bar { background: #30732F; }
+  progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
+  progress { color: #30732F; border-radius: 5px; border-width: 0; width: 15rem;}
+  main {margin: 1rem;}
+</style>
+<main class="wide">
 <h1>View All Actions</h1>
 
+<div class="actions">
 {{#each actions}}
-  <h3>{{name}}</h3>
-  <a href="/action/{{slug}}">view</a>
-  <hr>
+  <a href="/action/{{slug}}" class="action column">
+    <h3>{{name}}</h3>
+    <p>Organised by <b>{{profile_id}}</b></p>
+    <label for="fundraising"><b>€3</b> pledged of €{{fundraising_target}} target</label>
+    <progress id="fundraising" max="{{fundraising_target}}" value="3">{{fundraising_target}}</progress>
+  </a>
 {{/each}}
-
-<form>
+</div>
 
 <form>
   <input type="hidden" name="offset" value="{{lastValue}}">
   <input type="submit" formmethod="post" value="Load More" {{#if isLastPage}}disabled{{/if}}>
 </form>
+</main>

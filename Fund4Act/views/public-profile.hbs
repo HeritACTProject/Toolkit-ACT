@@ -49,4 +49,9 @@
 <h2>Our Partnerships:</h2>
 <p>{{profile.partnerships}}</p>
 {{/if}}
+<h2>Our Documents</h2>
+<a href="{{profile.constitution_url}}">Our Constitution</a>
+{{#if profile.climate_action_plan_url}}
+<a href="{{profile.climate_action_plan_url}}">Our Climate Action Plan</a>
+{{/if}}
 </main>

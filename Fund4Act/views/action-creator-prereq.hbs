@@ -1,5 +1,46 @@
 {{> header}}
 
+<style>
+   .button, button{
+    background: #30732F;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: 16px;
+    border-width: 2px;
+    border-color: #30732F;
+    margin: 0.5rem 0;
+    cursor:pointer;
+    border-style: solid;
+  }
+
+  .button-secondary{
+    background-color: #fff;
+    border-color: #30732F;
+    color: var(--text-color);
+  }
+
+  .button:hover, .button:active {
+  text-decoration: none;
+  color: #fff;
+  }
+
+  .button:visited{
+    color: #fff;
+  }
+
+  .button-secondary:hover, .button-secondary:active {
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .button-secondary:visited{
+    color: var(--text-color);
+  }
+</style>
+
 <main>
   <h1>Before you start...</h1>
   <p>To register as an Action Creator you will need:</p>
@@ -10,5 +51,5 @@
     <li>A bank account (<a href='/resource/bank-account' target="_blank">Setting up a bank account for my organisation</a>)
   </ul>
 
-  <a href="/profile/update-action-creator/">Continue</a>
+  <a class="button" href="/profile/update-action-creator/">Continue</a>
 </main>

@@ -1,7 +1,5 @@
 {{> header}}
 
-{{#if profile.display_name}}
-  {{#if profile.email}}
     <style>
       #profile-header, #profile-header div { display: flex; flex-wrap:wrap; align-items: center; justify-content: space-between; gap: 1rem; }
       #profile-header div a { display: block; padding-right: 1rem; }
@@ -46,9 +44,15 @@
     color: var(--text-color);
   }
 
-  a,a:visited{color: var(--text-color)}
-    </style>
+  a , a:visited{color: var(--text-color)}
 
+  #action-creator-button{margin:2rem; width: 20rem;}
+
+  main{display: flex; flex-direction: column; margin: 1rem; }
+</style>
+
+{{#if profile.display_name}}
+  {{#if profile.email}}
     <section id="profile-header" aria-label="profile">
       <h1>{{profile.display_name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h1>
       <div>
@@ -95,9 +99,9 @@
       {{/if}}
     </section>
   {{else}}
-    <section>
-      <a href="/profile/action-creator-prereq/">Register as an action creator</a>
-    </section>
+    <main class="wide">
+      <a id="action-creator-button" class="button" href="/profile/action-creator-prereq/">Register as an action creator</a>
+    </main>
   {{/if}}
 {{else}}
   <link rel="stylesheet" href="/styles/normform.min.css"/>
@@ -106,6 +110,9 @@
     <form method="post" class="normform">
       <label for="name">Set your display name (You may use your organisation name)</label>
       <input type="text" id="name" name="name" required>
+
+      <input type="checkbox" id="terms-conditions" name="terms-conditions" value="terms-conditions" required>
+      <label for="terms-conditions">Do you agree to our <a href="/resource/terms-and-conditions/profile" target="_blank">terms and conditions</a>?</label>
 
       <input type="submit" value="Save">
     </form>
