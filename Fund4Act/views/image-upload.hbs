@@ -1,13 +1,13 @@
 {{>header}}
 
 <form method="POST">
-  <input type='file' id="image-select">
+  <input type='file' id="image-select" accept="image/png, image/jpeg, image/webp">
   <input type="hidden" id='encoded-image' name='image'>
   <input type='submit' value="save">
 </form>
 
 <label for="preview">preview</p>
-<img id="preview" alt="preview">
+<img id="preview" src="/images/upload/{{user.id}}/{{action.slug}}.webp" alt="preview">
 
 <noscript>
   <p>Javascript is required to upload images</p>

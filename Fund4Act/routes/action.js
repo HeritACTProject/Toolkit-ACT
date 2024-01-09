@@ -80,7 +80,7 @@ router.route('/:slug/image-upload')
   .get(
     ensureLoggedIn,
     async (req, res, next) => {
-      res.render('image-upload', {user: req.user})
+      res.render('image-upload', {user: req.user, action: {slug: req.params.slug}});
     })
   .post(
     ensureLoggedIn,
@@ -90,7 +90,7 @@ router.route('/:slug/image-upload')
           throw Error('500');
         }
         const convertedImage = convertImage(req.user.id, req.params.slug, req.body['image'])
-        res.redirect(`/${req.params.slug}/`);
+        res.redirect(`/action/${req.params.slug}/edit/impact`);
       } catch (e) {
         next();
         return;

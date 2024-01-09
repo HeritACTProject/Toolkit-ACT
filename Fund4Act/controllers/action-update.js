@@ -60,7 +60,7 @@ exports.updateInfoBySlug = [
       next(err);
     }
 
-    res.redirect(`/action/${req.params.slug}/edit/impact`)
+    res.redirect(`/action/${req.params.slug}/image-upload`)
   }];
 
 exports.updateAmbitionsBySlug = [
@@ -140,5 +140,5 @@ exports.updateFundingBySlug = [
       next(err);
     }
 
-    return res.redirect('/profile');
+    return res.redirect(`/action/${req.params.slug}`);
   }];

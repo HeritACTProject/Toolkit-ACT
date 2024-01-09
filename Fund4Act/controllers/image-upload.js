@@ -5,7 +5,6 @@ const checkIfDirectoryExists = async (dirPath) => {
   console.log(dirPath)
   try {
     await fs.access(dirPath);
-    console.log('hi')
   } catch (error) {
     await fs.mkdir(dirPath, {recursive: true});
   }
@@ -28,7 +27,6 @@ exports.convertImage = async (userId, actionSlug, image) => {
 
     return true;
   } catch (err) {
-    console.log(err)
     return err;
   }
 };
