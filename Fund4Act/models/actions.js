@@ -47,16 +47,16 @@ module.exports.create = ({profileId, name, total, target, deadline, imageUrl, ad
   `);
 };
 
-module.exports.updateInfoBySlug = (slug, {name, address, lat, lon, overview, startDate, endDate, category}) => {
+module.exports.updateInfoBySlug = (slug, {profileId, name, address, lat, lon, overview, startDate, endDate, category}) => {
   return db.run(`UPDATE actions SET
     name = "${name}", address = "${address}",
       latitude = "${lat}", longitude = "${lon}", overview = "${overview}",
       start_date = "${startDate}", end_date = "${endDate}", category = "${category}"
-    WHERE slug  = "${slug}"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
   `);
 };
 
-module.exports.updateAmbitionsBySlug = (slug, {beautyAmbition, sustainAmbition, togetherAmbition,
+module.exports.updateAmbitionsBySlug = (slug, {profileId, beautyAmbition, sustainAmbition, togetherAmbition,
                         participProcessAmbition,multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
   return db.run(`UPDATE actions SET
       beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}",
@@ -64,15 +64,15 @@ module.exports.updateAmbitionsBySlug = (slug, {beautyAmbition, sustainAmbition, 
       participatory_process_ambition = "${participProcessAmbition}",
       multi_level_engagement_ambition = "${multiLevelEngagementAmbition}",
       transdiciplinary_ambition = "${transdiciplinaryAmbition}"
-    WHERE slug  = "${slug}"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
   `);
 };
 
-module.exports.updateFundingBySlug = (slug, {total, target, deadline}) => {
+module.exports.updateFundingBySlug = (slug, {profileId, total, target, deadline}) => {
   return db.run(`UPDATE actions SET
     fundraising_total = "${total}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}"
-    WHERE slug  = "${slug}"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
   `);
 };
 

@@ -80,7 +80,9 @@ exports.updateAmbitionsBySlug = [
       next(err);
     }
 
-    const data = {};
+    const data = {
+      profileId: req.user.id,
+    };
 
     const ambitionInputs = {
       beautyAmbitionInput: req.body['beauty_ambition'],
