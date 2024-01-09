@@ -103,7 +103,7 @@ module.exports.getAllCoordinatesAndSlugs = () => {
 
 module.exports.getPage = (offset) => {
   const query = db.query(`SELECT id, name, slug, fundraising_deadline FROM actions
-    WHERE id > "${offset}" AND fundraising_deadline >= date('now')
+    WHERE id > "${offset}"
     ORDER BY name
     LIMIT 11;
   `);
