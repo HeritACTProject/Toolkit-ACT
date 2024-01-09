@@ -1,5 +1,19 @@
 {{> header}}
 
+<script>
+  function validateUrls (event) {
+    const url = event.target;
+    if (url.value === "") return;
+    if (!url.value.includes('://')) {
+      url.value = 'https://' + url.value;
+    }
+  }
+
+  window.addEventListener("load", (event) => {
+    const urls = document.querySelectorAll('input[type=url]');
+    urls.forEach(x => x.addEventListener("focusout", event => validateUrls(event)));
+  });
+</script>
 <main>
   <link rel="stylesheet" href="/styles/normform.min.css"/>
 
