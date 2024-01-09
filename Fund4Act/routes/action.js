@@ -12,6 +12,16 @@ const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 
 const ensureLoggedIn = ensureLogIn();
 
+const transformAmbitions = async (actionData) => {
+  actionData.beauty_ambition = actionData.beauty_ambition.toString().split('').map((x) => +x);
+  actionData.sustain_ambition = actionData.sustain_ambition.toString().split('').map((x) => +x);
+  actionData.together_ambition = actionData.together_ambition.toString().split('').map((x) => +x);
+  actionData.participatory_process_ambition = actionData.participatory_process_ambition.toString().split('').map((x) => +x);
+  actionData.multi_level_engagement_ambition = actionData.multi_level_engagement_ambition.toString().split('').map((x) => +x);
+  actionData.transdiciplinary_ambition = actionData.transdiciplinary_ambition.toString().split('').map((x) => +x);
+  return actionData;
+}
+
 router.route('/')
   .get(
     async (req, res) => {
@@ -45,13 +55,8 @@ router.route('/create')
 
 router.route('/:slug')
   .get(async (req, res) => {
-    const actionData = await Action.getByActionSlug(req.params.slug);
-    actionData.beauty_ambition = actionData.beauty_ambition.toString().split('').map((x) => +x);
-    actionData.sustain_ambition = actionData.sustain_ambition.toString().split('').map((x) => +x);
-    actionData.together_ambition = actionData.together_ambition.toString().split('').map((x) => +x);
-    actionData.participatory_process_ambition = actionData.participatory_process_ambition.toString().split('').map((x) => +x);
-    actionData.multi_level_engagement_ambition = actionData.multi_level_engagement_ambition.toString().split('').map((x) => +x);
-    actionData.transdiciplinary_ambition = actionData.transdiciplinary_ambition.toString().split('').map((x) => +x);
+    let actionData = await Action.getByActionSlug(req.params.slug);
+    actionData = await transformAmbitions(actionData);
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     res.render('action', {user: req.user, actionData});
@@ -121,11 +126,13 @@ router.route('/:slug/edit/info')
 router.route('/:slug/edit/impact')
   .get(ensureLoggedIn, async (req, res, next) => {
     try {
-      const action = await Action.getByActionSlug(req.params.slug);
+      let actionData = await Action.getByActionSlug(req.params.slug);
 
-      if (!action) { throw Error('404'); }
+      if (!actionData) { throw Error('404'); }
 
-      res.render('action-impact-form', {user: req.user, action});
+      actionData = await transformAmbitions(actionData);
+
+      res.render('action-impact-form', {user: req.user, actionData});
     } catch (e) {
       next();
       return;

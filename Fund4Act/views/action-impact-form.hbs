@@ -18,69 +18,71 @@
 
       <label>Beauty</label>
 
-      <input type="checkbox" id="activate" name="beauty_ambition" value="activate">
+      {{#with actionData}}
+      <input type="checkbox" id="activate" name="beauty_ambition" value="activate" {{#if beauty_ambition.[0]}}checked{{/if}}>
       <label for="activate">This action considers sensory perceptions and or regional/local particularities in its design.</label>
 
-      <input type="checkbox" id="connect" name="beauty_ambition" value="connect">
+      <input type="checkbox" id="connect" name="beauty_ambition" value="connect" {{#if beauty_ambition.[1]}}checked{{/if}}>
       <label for="connect">This action provides an attractive space that brings people together and gives opportunities to learn about new ideas, places or people.</label>
 
-      <input type="checkbox" id="integrate" name="beauty_ambition" value="integrate">
+      <input type="checkbox" id="integrate" name="beauty_ambition" value="integrate" {{#if beauty_ambition.[2]}}checked{{/if}}>
       <label for="integrate">This action provides participants the opportunity to question and reimagine their way of life, potentially have a postive transformative effect on the participants' lives.</label>
 
       <label>Sustainable</label>
 
-      <input type="checkbox" id="repurpose" name="sustain_ambition" value="repurpose">
+      <input type="checkbox" id="repurpose" name="sustain_ambition" value="repurpose" {{#if sustain_ambition.[0]}}checked{{/if}}>
       <label for="repurpose">This action takes into account sustainability in terms of reuse, material choices, energy use and or social use.</label>
 
-      <input type="checkbox" id="close_loop" name="sustain_ambition" value="close_loop">
+      <input type="checkbox" id="close_loop" name="sustain_ambition" value="close_loop" {{#if sustain_ambition.[1]}}checked{{/if}}>
       <label for="close_loop">This action takes into account circular economy principles regarding the closed-loop material cycle and or looks to measure its impacts using different sustainability metrics.</label>
 
-      <input type="checkbox" id="regenerate" name="sustain_ambition" value="regenerate">
+      <input type="checkbox" id="regenerate" name="sustain_ambition" value="regenerate" {{#if sustain_ambition.[2]}}checked{{/if}}>
       <label for="regenerate">This action is paradigm shifting and gives back more than it takes in, focusing on regeneration.</label>
 
       <label>Together</label>
 
-      <input type="checkbox" id="include" name="together_ambition" value="include">
+      <input type="checkbox" id="include" name="together_ambition" value="include" {{#if together_ambition.[0]}}checked{{/if}}>
       <label for="include">This action is affordable and equally accessible to all communities.</label>
 
-      <input type="checkbox" id="consolidate" name="together_ambition" value="consolidate">
+      <input type="checkbox" id="consolidate" name="together_ambition" value="consolidate" {{#if together_ambition.[1]}}checked{{/if}}>
       <label for="consolidate">This action helps overcome segregation between different communities.</label>
 
-      <input type="checkbox" id="transform" name="together_ambition" value="transform">
+      <input type="checkbox" id="transform" name="together_ambition" value="transform" {{#if together_ambition.[2]}}checked{{/if}}>
       <label for="transform">This action promotes new ways of communities living together and challenges unjust social models.</label>
 
       <label>Participatory Process</label>
 
-      <input type="checkbox" id="consult" name="particip_ambition" value="consult">
+      <input type="checkbox" id="consult" name="particip_ambition" value="consult" {{#if participatory_process_ambition.[0]}}checked{{/if}}>
       <label for="consult">This action keeps stakeholders informed and allows them to contribute.</label>
 
-      <input type="checkbox" id="co-develop" name="particip_ambition" value="co-develop">
+      <input type="checkbox" id="co-develop" name="particip_ambition" value="co-develop" {{#if participatory_process_ambition.[1]}}checked{{/if}}>
       <label for="co-develop">This action includes stakeholders in the decision making process and enables them to shape the final action's output.</label>
 
-      <input type="checkbox" id="self-govern" name="particip_ambition" value="self-govern">
+      <input type="checkbox" id="self-govern" name="particip_ambition" value="self-govern" {{#if participatory_process_ambition.[2]}}checked{{/if}}>
       <label for="self-govern">This action empowers stakeholders to take control and create a sustained grass-roots initiative beyond the initial action's implementation.</label>
 
       <label>Multilevel Engagement</label>
 
-      <input type="checkbox" id="work_locally" name="multi_level_engagement" value="work_locally">
+      <input type="checkbox" id="work_locally" name="multi_level_engagement" value="work_locally" {{#if multi_level_engagement_ambition.[0]}}checked{{/if}}>
       <label for="work_locally">This action interacts with local networks and communities.</label>
 
-      <input type="checkbox" id="work_across" name="multi_level_engagement" value="work_across">
+      <input type="checkbox" id="work_across" name="multi_level_engagement" value="work_across" {{#if multi_level_engagement_ambition.[1]}}checked{{/if}}>
       <label for="work_across">This action interacts with networks and/or institutions that are active beyond the scale of the action itself (e.g. from local to regional, from national to international)</label>
 
-      <input type="checkbox" id="work_globally" name="multi_level_engagement" value="work_globally">
+      <input type="checkbox" id="work_globally" name="multi_level_engagement" value="work_globally" {{#if multi_level_engagement_ambition.[2]}}checked{{/if}}>
       <label for="work_globally">This action aims at achieving a global transformational impact.</label>
 
       <label>Transdisciplinary</label>
 
-      <input type="checkbox" id="multidisciplinary" name="transdiciplinary" value="multidisciplinary">
+      <input type="checkbox" id="multidisciplinary" name="transdiciplinary" value="multidisciplinary" {{#if transdiciplinary_ambition.[0]}}checked{{/if}}>
       <label for="multidisciplinary">This action involves people from different disciplines working in parallel.</label>
 
-      <input type="checkbox" id="interdisciplinary" name="transdiciplinary" value="interdisciplinary">
+      <input type="checkbox" id="interdisciplinary" name="transdiciplinary" value="interdisciplinary" {{#if transdiciplinary_ambition.[1]}}checked{{/if}}>
       <label for="interdisciplinary">This action involves people from different disciplines interacting and working together on it and allows for new knowledge creation.</label>
 
-      <input type="checkbox" id="beyond_disciplinary" name="transdiciplinary" value="beyond_disciplinary">
+      <input type="checkbox" id="beyond_disciplinary" name="transdiciplinary" value="beyond_disciplinary" {{#if transdiciplinary_ambition.[2]}}checked{{/if}}>
       <label for="beyond_disciplinary">This action transcends the traditional discipline boundaries, giving equal value to formal and informal knowledge, and seeks a more holistic and comprehensive understanding.</label>
+      {{/with}}
     </fieldset>
 
     <input type="submit" formmethod="post" value="Submit">
