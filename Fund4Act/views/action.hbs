@@ -101,6 +101,9 @@
   @media (prefers-color-scheme: dark) {
     .pledge, .pledge:hover, .pledge:active , .pledge:visited { color: #fff; }
   }
+
+  .action-categories{display: flex; flex-wrap: wrap; gap:1rem;}
+  .action-categories p{margin:0; border-color: #30732F; border-style: solid; border-width: .1rem; padding: .5rem;}
 </style>
 
 <main class="wide">
@@ -169,7 +172,7 @@
           <p><b>Pledged €{{actionData.pledges.[2].amount}}</b> {{actionData.pledges.[2].date}}</p>
         </a>
         {{/if}}
-        <a>View All Pledges</a>
+        <a href="/action/{{actionData.slug}}/pledges">View All Pledges</a>
         {{else}}
         <p>No pledges yet</p>
       {{/if}}
@@ -178,8 +181,17 @@
 
   </section>
   <section>
-    <p>Organised by<br><b>{{actionData.profile_id}}</b></p>
-    <p>{{actionData.categories}}</p>
+    <p>Organised by<br><b>{{profile.display_name}}</b></p>
+
+    {{#if actionData.category.[0]}}
+    <div class="action-categories">
+      {{#each actionData.category}}
+        <p>{{this}}</p>
+      {{/each}}
+    </div>
+    {{/if}}
+    
+    
 
     <p>{{actionData.overview}}</p>
 

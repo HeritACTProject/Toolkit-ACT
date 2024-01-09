@@ -26,7 +26,14 @@ router.route('/')
   .get(
     async (req, res) => {
       const { results, lastValue } = Action.getPage(0);
-      const actions = results.slice(0, 9);
+      let actions = results.slice(0, 9);
+      actions = await Promise.all(actions.map(async (action)=>{
+        const pledges = await Pledge.getByActionSlug(action.slug);
+        action.total_pledged = pledges.reduce((a, {amount}) => a + amount, 0);
+        const profile = await Profile.getProfileInfo(action.profile_id);
+        action.profile_name = profile.display_name;
+        return action;
+      }));
 
       const isLastPage = !results[10];
 
@@ -35,7 +42,14 @@ router.route('/')
   .post(
     async (req, res) => {
       const {results, lastValue} = Action.getPage(req.body.offset);
-      const actions = results.slice(0, 9);
+      let actions = results.slice(0, 9);
+      actions = await Promise.all(actions.map(async (action)=>{
+        const pledges = await Pledge.getByActionSlug(action.slug);
+        action.total_pledged = pledges.reduce((a, {amount}) => a + amount, 0)
+        const profile = await Profile.getProfileInfo(action.profile_id);
+        action.profile_name = profile.display_name;
+        return action;
+      }));
 
       const isLastPage = !results[10];
 
@@ -55,12 +69,46 @@ router.route('/create')
 
 router.route('/:slug')
   .get(async (req, res) => {
+<<<<<<< Updated upstream
     let actionData = await Action.getByActionSlug(req.params.slug);
     actionData = await transformAmbitions(actionData);
+=======
+    const actionData = await Action.getByActionSlug(req.params.slug);
+    actionData.category = actionData.category.split(",");
+    actionData.beauty_ambition = actionData.beauty_ambition.toString().split('').map((x) => +x);
+    actionData.sustain_ambition = actionData.sustain_ambition.toString().split('').map((x) => +x);
+    actionData.together_ambition = actionData.together_ambition.toString().split('').map((x) => +x);
+    actionData.participatory_process_ambition = actionData.participatory_process_ambition.toString().split('').map((x) => +x);
+    actionData.multi_level_engagement_ambition = actionData.multi_level_engagement_ambition.toString().split('').map((x) => +x);
+    actionData.transdiciplinary_ambition = actionData.transdiciplinary_ambition.toString().split('').map((x) => +x);
+>>>>>>> Stashed changes
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = actionData.pledges.reduce((a, {amount}) => a + amount, 0);
-    res.render('action', {user: req.user, actionData});
+    const profile = Profile.getProfileInfo(actionData.profile_id);
+    res.render('action', {user: req.user, actionData, profile});
   });
+
+  router.route('/:slug/pledges')
+  .get(
+    async (req, res) => {
+      const { results, lastValue } = Pledge.getPage(0);
+      const pledges = results.slice(0, 9);
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      const isLastPage = !results[10];
+
+      res.render('pledge-browse.hbs', {user: req.user, pledges, action, lastValue, isLastPage});
+    })
+  .post(
+    async (req, res) => {
+      const {results, lastValue} = Pledge.getPage(req.body.offset);
+      const pledges = results.slice(0, 9);
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      const isLastPage = !results[10];
+
+      res.render('pledge-browse.hbs', {user: req.user, pledges, action,  lastValue, isLastPage});
+    });
 
 router.route('/:slug/pledge')
   .get(ensureLoggedIn, async (req, res) => {

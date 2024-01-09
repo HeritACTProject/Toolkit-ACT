@@ -51,3 +51,17 @@ module.exports.getByDonorId = (donor_id) => {
   const results = query.all({ $donor_id: donor_id });
   return results;
 }
+
+module.exports.getPage = (offset) => {
+  const query = db.query(`SELECT amount, date, profiles.display_name AS donor_name,
+  donor_id, profiles.slug AS donor_slug FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
+    WHERE donor_id > "${offset}"
+    ORDER BY date DESC, amount DESC
+    LIMIT 11;
+  `);
+  const results = query.all();
+
+  const lastValue = results?.at(-1)?.id
+
+  return {results, lastValue};
+}

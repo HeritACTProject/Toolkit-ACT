@@ -25,7 +25,7 @@
   #actions {  display: flex; flex-direction: column; gap: 2rem; }
   #most-urgent { display: flex; flex-direction: row; justify-content: space-around; gap: 4rem; margin: 0 6rem;}
   #most-urgent a {text-decoration: none; color: #000;}
-  .column { width: 100%; display: flex; flex-direction: column;}
+  .column { width: 100%; display: flex; flex-direction: column; max-width:20rem;}
   footer { height: 15rem; background: #30732F; color: #fdfdfd; padding: 2rem; display: flex;}
   footer a { align-self: flex-end;}
   pre { white-space: pre-wrap; line-height: 1.5rem;}
@@ -112,9 +112,10 @@
     <div id="most-urgent">
     {{#each data.mostUrgent}}
       <a href="/action/{{slug}}" class="column">
+      {{log this}}
         <h3>{{name}}</h3>
-        <p>Organised by <b>{{profile_id}}</b></p>
-        <label for="fundraising"><b>€3</b> pledged of €{{fundraising_target}} target</label>
+        <p>Organised by <b>{{profile_name}}</b></p>
+        <label for="fundraising"><b>€{{total_pledged}}</b> pledged of €{{fundraising_target}} target</label>
         <progress id="fundraising" max="{{fundraising_target}}" value="3">{{fundraising_target}}</progress>
       </a>
     {{/each}}

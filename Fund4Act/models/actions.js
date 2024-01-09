@@ -83,13 +83,15 @@ module.exports.getByProfileId = (pid) => {
 }
 
 module.exports.getByActionSlug = (slug) => {
-  const query = db.query('SELECT * FROM actions WHERE slug = $slug;');
+  const query = db.query(`SELECT * FROM actions
+  WHERE slug = $slug;`);
   const results = query.get({ $slug: slug });
   return results;
 }
 
 module.exports.getXMostUrgent = (x) => {
-  const query = db.query(`SELECT * FROM actions
+  const query = db.query(`SELECT actions.id, actions.profile_id, actions.name as name, actions.slug, actions.fundraising_deadline, actions.fundraising_target AS fundraising_target, profiles.display_name AS profile_name FROM actions 
+    INNER JOIN profiles on actions.profile_id = profiles.id
     ORDER BY fundraising_deadline DESC LIMIT $limit;`);
   const results = query.all({ $limit: x });
   return results;
@@ -102,7 +104,7 @@ module.exports.getAllCoordinatesAndSlugs = () => {
 }
 
 module.exports.getPage = (offset) => {
-  const query = db.query(`SELECT id, name, slug, fundraising_deadline FROM actions
+  const query = db.query(`SELECT id, name, profile_id, slug, fundraising_deadline, fundraising_target FROM actions
     WHERE id > "${offset}"
     ORDER BY name
     LIMIT 11;

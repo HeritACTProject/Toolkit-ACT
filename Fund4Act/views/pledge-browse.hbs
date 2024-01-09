@@ -8,18 +8,18 @@
   progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
   progress { color: #30732F; border-radius: 5px; border-width: 0; width: 15rem;}
   main {margin: 1rem;}
+  .pledge{margin: .75rem 0;}
+  .pledge p{margin: 0;}
+  .pledge, .pledge:hover, .pledge:active , .pledge:visited {text-decoration:none;color:#000;}
 </style>
 <main class="wide">
-<h1>View All Actions</h1>
+<h1>All pledges for <a href="/action/{{action.slug}}">{{action.name}}<a></h1>
 
 <div class="actions">
-{{#each actions}}
-  <a href="/action/{{slug}}" class="action column">
-  {{log this}}
-    <h3>{{name}}</h3>
-    <p>Organised by <b>{{profile_name}}</b></p>
-    <label for="fundraising"><b>€{{total_pledged}}</b> pledged of €{{fundraising_target}} target</label>
-    <progress id="fundraising" max="{{fundraising_target}}" value="3">{{fundraising_target}}</progress>
+{{#each pledges}}
+  <a class="pledge" href="/profile/{{this.donor_slug}}">
+    <p>{{this.donor_name}}</p>
+    <p><b>Pledged €{{this.amount}}</b> {{this.date}}</p>
   </a>
 {{/each}}
 </div>
