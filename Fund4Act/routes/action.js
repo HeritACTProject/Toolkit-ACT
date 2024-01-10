@@ -22,6 +22,16 @@ const transformAmbitions = async (actionData) => {
   return actionData;
 }
 
+const hasCompassData = async (actionData) => {
+  return actionData.beauty_ambition.length
+    + actionData.sustain_ambition.length
+    + actionData.together_ambition.length
+    + actionData.participatory_process_ambition.length
+    + actionData.multi_level_engagement_ambition.length
+    + actionData.transdiciplinary_ambition.length
+    > 6;
+}
+
 router.route('/')
   .get(
     async (req, res) => {
@@ -72,9 +82,9 @@ router.route('/:slug')
     let actionData = await Action.getByActionSlug(req.params.slug);
     actionData = await transformAmbitions(actionData);
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
-    actionData.pledgeTotal = actionData.pledges.reduce((a, {amount}) => a + amount, 0);
-    const profile = Profile.getProfileInfo(actionData.profile_id);
-    res.render('action', {user: req.user, actionData, profile});
+    actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
+    actionData.hasCompassData = await hasCompassData(actionData);
+    res.render('action', {user: req.user, actionData});
   });
 
   router.route('/:slug/pledges')

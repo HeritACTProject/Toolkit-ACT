@@ -55,7 +55,7 @@
     gap: 1rem;
   }
 
-  #map{1862
+  #map{
     height: 20rem;
     width: 20rem;
   }
@@ -206,6 +206,8 @@
     <p>Action Timeline: {{actionData.start_date}} - {{actionData.end_date}}</p>
   </section>
 
+  {{log actionData}}
+  {{#if actionData.hasCompassData}}
   <section>
     <h2>Impact</h2>
     <img id="neb-image" src="/images/neb-compass.png">
@@ -336,5 +338,6 @@
       {{/if}}
     </ul>
   </section>
+  {{/if}}
 
 </main>
