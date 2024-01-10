@@ -91,6 +91,7 @@ module.exports.getByActionSlug = (slug) => {
 
 module.exports.getXMostUrgent = (x) => {
   const query = db.query(`SELECT actions.id, actions.profile_id, actions.name as name, actions.slug, actions.fundraising_deadline, actions.fundraising_target AS fundraising_target, profiles.display_name AS profile_name FROM actions 
+    WHERE fundraising_deadline < date('now')
     INNER JOIN profiles on actions.profile_id = profiles.id
     ORDER BY fundraising_deadline DESC LIMIT $limit;`);
   const results = query.all({ $limit: x });
@@ -98,7 +99,10 @@ module.exports.getXMostUrgent = (x) => {
 }
 
 module.exports.getAllCoordinatesAndSlugs = () => {
-  const query = db.query(`SELECT latitude, longitude, slug FROM actions`);
+  const query = db.query(`
+    SELECT latitude, longitude, slug FROM actions
+    WHERE fundraising_deadline < date('now')
+  `);
   const results = query.all();
   return results;
 }

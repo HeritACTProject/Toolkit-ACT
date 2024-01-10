@@ -69,19 +69,8 @@ router.route('/create')
 
 router.route('/:slug')
   .get(async (req, res) => {
-<<<<<<< Updated upstream
     let actionData = await Action.getByActionSlug(req.params.slug);
     actionData = await transformAmbitions(actionData);
-=======
-    const actionData = await Action.getByActionSlug(req.params.slug);
-    actionData.category = actionData.category.split(",");
-    actionData.beauty_ambition = actionData.beauty_ambition.toString().split('').map((x) => +x);
-    actionData.sustain_ambition = actionData.sustain_ambition.toString().split('').map((x) => +x);
-    actionData.together_ambition = actionData.together_ambition.toString().split('').map((x) => +x);
-    actionData.participatory_process_ambition = actionData.participatory_process_ambition.toString().split('').map((x) => +x);
-    actionData.multi_level_engagement_ambition = actionData.multi_level_engagement_ambition.toString().split('').map((x) => +x);
-    actionData.transdiciplinary_ambition = actionData.transdiciplinary_ambition.toString().split('').map((x) => +x);
->>>>>>> Stashed changes
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     const profile = Profile.getProfileInfo(actionData.profile_id);
