@@ -19,7 +19,6 @@
   #pledge{
     display: flex;
     flex-direction: column;
-    margin: 0rem 5rem;
     max-width: 30ch;
   }
 
@@ -40,14 +39,23 @@
   #overview{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  #overview-image{
+    height: 20rem;
+    width: 20rem;
+    object-fit: cover;
   }
 
   .column{
-    width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  #map{
+  #map{1862
     height: 20rem;
     width: 20rem;
   }
@@ -132,7 +140,7 @@
     </script>
     </div>
     <div class="row">
-      <img src="/images/upload/{{actionData.profile_id}}/{{actionData.slug}}.webp" alt="action image">
+      <img src="/images/upload/{{actionData.profile_id}}/{{actionData.slug}}.webp" id="overview-image" alt="action image">
     </div>
     </div>
     <div id="pledge" class="column">
