@@ -29,7 +29,7 @@ module.exports.saveProfileInfo = ({id, displayName, slug}) => {
 };
 
 module.exports.getProfileInfo = (id) => {
-  const query = db.query('SELECT display_name FROM profiles WHERE id = $id;');
+  const query = db.query('SELECT display_name, slug FROM profiles WHERE id = $id;');
   return query.get({ $id: id });
 }
 

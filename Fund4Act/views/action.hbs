@@ -189,7 +189,8 @@
 
   </section>
   <section>
-    <p>Organised by<br><b>{{profile.display_name}}</b></p>
+    <p>Organised by<br><b>{{actionData.display_name}}</b><br><a href="/profile/{{actionData.profile_slug}}">view profile</a></p>
+    <p>{{actionData.categories}}</p>
 
     {{#if actionData.category.[0]}}
     <div class="action-categories">
@@ -198,15 +199,12 @@
       {{/each}}
     </div>
     {{/if}}
-    
-    
 
     <p>{{actionData.overview}}</p>
 
     <p>Action Timeline: {{actionData.start_date}} - {{actionData.end_date}}</p>
   </section>
 
-  {{log actionData}}
   {{#if actionData.hasCompassData}}
   <section>
     <h2>Impact</h2>

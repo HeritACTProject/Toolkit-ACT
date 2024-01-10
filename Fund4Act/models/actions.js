@@ -82,6 +82,16 @@ module.exports.getByProfileId = (pid) => {
   return results;
 }
 
+module.exports.getPublicByProfileId = (pid) => {
+  const query = db.query(`
+    SELECT * FROM actions
+    WHERE profile_id = $pid
+    AND fundraising_deadline < date('now');
+  `);
+  const results = query.all({ $pid: pid});
+  return results;
+}
+
 module.exports.getByActionSlug = (slug) => {
   const query = db.query(`SELECT * FROM actions
   WHERE slug = $slug;`);

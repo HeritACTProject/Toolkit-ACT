@@ -57,7 +57,7 @@ router.route('/:slug')
   .get(async (req, res) => {
     try {
       const profile = await Profile.getBySlug(req.params.slug);
-      const actions = await Action.getByProfileId(profile.id);
+      const actions = await Action.getPublicByProfileId(profile.id);
       const pledges = await Pledge.getByDonorId(profile.id);
       res.render('public-profile', {user: req.user, profile, actions, pledges});
     } catch (err) {
