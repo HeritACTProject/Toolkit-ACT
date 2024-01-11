@@ -13,6 +13,7 @@ const appRouter = require('./routes/app.js');
 const profileRouter = require('./routes/profile.js');
 const actionRouter = require('./routes/action.js');
 const resourceRouter = require('./routes/resource.js');
+const redirectRouter = require('./routes/redirect.js');
 const adminRouter = require('./routes/admin.js');
 
 const app = express();
@@ -55,6 +56,7 @@ app.use('/', appRouter);
 app.use('/profile', profileRouter);
 app.use('/action', actionRouter);
 app.use('/resource', resourceRouter);
+app.use('/redirect', redirectRouter);
 app.use('/admin', adminRouter);
 app.use('/login', passport.authenticate('SimpleLogin'));
 app.use('/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}), 

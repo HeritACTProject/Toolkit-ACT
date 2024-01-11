@@ -17,15 +17,14 @@
 <h1>{{profile.display_name}}</h1>
 <h2>Contact:</h2>
 <p>{{profile.email}}</p>
-<p>{{profile.website_url}}</p>
+{{#if profile.website_url}}<p><a href="/redirect/{{profile.website_url}}"><visit website</a></p>{{/if}}
 {{#if actions}}
     <h2>Our Actions:</h2>
     {{#each actions}}
     <div class="action-row">
         <p>{{this.name}}</p>
-        <p><a href="/action/{{this.slug}}">View</a></p> 
+        <p><a href="/action/{{this.slug}}">View</a></p>
     </div>
-        
     {{/each}}
 {{/if}}
 {{#if pledges}}
@@ -50,8 +49,8 @@
 <p>{{profile.partnerships}}</p>
 {{/if}}
 <h2>Our Documents</h2>
-<a href="{{profile.constitution_url}}">Our Constitution</a>
+<a href="/redirect/{{profile.constitution_url}}">Our Constitution</a>
 {{#if profile.climate_action_plan_url}}
-<a href="{{profile.climate_action_plan_url}}">Our Climate Action Plan</a>
+<a href="/redirect/{{profile.climate_action_plan_url}}">Our Climate Action Plan</a>
 {{/if}}
 </main>

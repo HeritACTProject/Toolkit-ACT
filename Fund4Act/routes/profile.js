@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { param, body, validationResult } = require('express-validator');
 const updateActionCreator = require('../controllers/action-creator-update.js');
 const createProfile = require('../controllers/profile-create.js');
 const Profile = require('../models/profiles.js');
@@ -59,6 +60,10 @@ router.route('/:slug')
       const profile = await Profile.getBySlug(req.params.slug);
       const actions = await Action.getPublicByProfileId(profile.id);
       const pledges = await Pledge.getByDonorId(profile.id);
+
+      profile.constitution_url = encodeURIComponent(profile.constitution_url);
+      profile.climate_action_plan_url = encodeURIComponent(profile.climate_action_plan_url);
+
       res.render('public-profile', {user: req.user, profile, actions, pledges});
     } catch (err) {
       res.status(404);
