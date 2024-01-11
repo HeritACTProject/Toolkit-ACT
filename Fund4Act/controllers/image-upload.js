@@ -2,7 +2,6 @@ const fs = require('fs/promises');
 const { execFile } = require("child_process");
 
 const checkIfDirectoryExists = async (dirPath) => {
-  console.log(dirPath)
   try {
     await fs.access(dirPath);
   } catch (error) {

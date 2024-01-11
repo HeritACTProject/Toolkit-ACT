@@ -22,6 +22,10 @@ const transformAmbitions = async (actionData) => {
   return actionData;
 }
 
+const transformCateory = async (category) => {
+  return category.split(",");
+}
+
 const hasCompassData = async (actionData) => {
   return actionData.beauty_ambition.length
     + actionData.sustain_ambition.length
@@ -84,6 +88,7 @@ router.route('/:slug')
     actionData.display_name = profile.display_name;
     actionData.profile_slug = profile.slug;
     actionData = await transformAmbitions(actionData);
+    actionData.category = await transformCateory(actionData.category);
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     actionData.hasCompassData = await hasCompassData(actionData);

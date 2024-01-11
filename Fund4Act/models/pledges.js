@@ -47,21 +47,21 @@ module.exports.getXMostRecentByActionSlug = (slug, x) => {
 module.exports.getByDonorId = (donor_id) => {
   const query = db.query(`SELECT amount, date, actions.name AS action_name,
     proj_slug FROM pledges INNER JOIN actions ON pledges.proj_slug = actions.slug WHERE donor_id = $donor_id
-    ORDER BY date DESC, amount DESC;`);
+    ORDER BY date DESC, amount DESC;
+    LIMIT 3`);
   const results = query.all({ $donor_id: donor_id });
   return results;
 }
 
 module.exports.getPage = (offset) => {
-  const query = db.query(`SELECT amount, date, profiles.display_name AS donor_name,
+  const query = db.query(`SELECT pledges.id AS pledge_id, amount, date, profiles.display_name AS donor_name,
   donor_id, profiles.slug AS donor_slug FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
-    WHERE donor_id > "${offset}"
-    ORDER BY date DESC, amount DESC
-    LIMIT 11;
+    LIMIT 11
+    OFFSET ${offset};
   `);
   const results = query.all();
 
-  const lastValue = results?.at(-1)?.id
+  const lastValue = results?.at(-1)?.pledge_id
 
   return {results, lastValue};
 }

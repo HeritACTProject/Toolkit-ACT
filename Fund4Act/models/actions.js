@@ -86,7 +86,7 @@ module.exports.getPublicByProfileId = (pid) => {
   const query = db.query(`
     SELECT * FROM actions
     WHERE profile_id = $pid
-    AND fundraising_deadline < date('now');
+    AND fundraising_deadline IS NOT "undefined";
   `);
   const results = query.all({ $pid: pid});
   return results;
@@ -100,9 +100,8 @@ module.exports.getByActionSlug = (slug) => {
 }
 
 module.exports.getXMostUrgent = (x) => {
-  const query = db.query(`SELECT actions.id, actions.profile_id, actions.name as name, actions.slug, actions.fundraising_deadline, actions.fundraising_target AS fundraising_target, profiles.display_name AS profile_name FROM actions 
+  const query = db.query(`SELECT * FROM actions
     WHERE fundraising_deadline < date('now')
-    INNER JOIN profiles on actions.profile_id = profiles.id
     ORDER BY fundraising_deadline DESC LIMIT $limit;`);
   const results = query.all({ $limit: x });
   return results;
@@ -119,9 +118,9 @@ module.exports.getAllCoordinatesAndSlugs = () => {
 
 module.exports.getPage = (offset) => {
   const query = db.query(`SELECT id, name, profile_id, slug, fundraising_deadline, fundraising_target FROM actions
-    WHERE id > "${offset}"
-    ORDER BY name
-    LIMIT 11;
+    WHERE fundraising_deadline IS NOT "undefined"
+    LIMIT 11
+    OFFSET "${offset}";
   `);
   const results = query.all();
 
