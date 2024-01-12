@@ -13,12 +13,12 @@ const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 const ensureLoggedIn = ensureLogIn();
 
 const transformAmbitions = async (actionData) => {
-  actionData.beauty_ambition = actionData.beauty_ambition.toString().split('').map((x) => +x);
-  actionData.sustain_ambition = actionData.sustain_ambition.toString().split('').map((x) => +x);
-  actionData.together_ambition = actionData.together_ambition.toString().split('').map((x) => +x);
-  actionData.participatory_process_ambition = actionData.participatory_process_ambition.toString().split('').map((x) => +x);
-  actionData.multi_level_engagement_ambition = actionData.multi_level_engagement_ambition.toString().split('').map((x) => +x);
-  actionData.transdiciplinary_ambition = actionData.transdiciplinary_ambition.toString().split('').map((x) => +x);
+  actionData.beauty_ambition = actionData.beautyAmbition.split('').map((x) => +x);
+  actionData.sustain_ambition = actionData.sustainAmbition.split('').map((x) => +x);
+  actionData.together_ambition = actionData.togetherAmbition.split('').map((x) => +x);
+  actionData.participatory_process_ambition = actionData.participProcessAmbition.split('').map((x) => +x);
+  actionData.multi_level_engagement_ambition = actionData.multiLevelEngagementAmbition.split('').map((x) => +x);
+  actionData.transdiciplinary_ambition = actionData.transdiciplinaryAmbition.split('').map((x) => +x);
   return actionData;
 }
 

@@ -58,6 +58,7 @@ module.exports.updateInfoBySlug = (slug, {profileId, name, address, lat, lon, ov
 
 module.exports.updateAmbitionsBySlug = (slug, {profileId, beautyAmbition, sustainAmbition, togetherAmbition,
                         participProcessAmbition,multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
+  console.log(typeof(beautyAmbition), beautyAmbition)
   return db.run(`UPDATE actions SET
       beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}",
       together_ambition = "${togetherAmbition}",
@@ -93,7 +94,14 @@ module.exports.getPublicByProfileId = (pid) => {
 }
 
 module.exports.getByActionSlug = (slug) => {
-  const query = db.query(`SELECT * FROM actions
+  const query = db.query(`SELECT *,
+  substr("00" || beauty_ambition, -3, 3) AS beautyAmbition,
+  substr("00" || sustain_ambition, -3, 3) AS sustainAmbition,
+  substr("00" || together_ambition, -3, 3) AS togetherAmbition,
+  substr("00" || participatory_process_ambition, -3, 3) AS participProcessAmbition,
+  substr("00" || multi_level_engagement_ambition, -3, 3) AS multiLevelEngagementAmbition,
+  substr("00" || transdiciplinary_ambition, -3, 3) AS transdiciplinaryAmbition
+  FROM actions
   WHERE slug = $slug;`);
   const results = query.get({ $slug: slug });
   return results;

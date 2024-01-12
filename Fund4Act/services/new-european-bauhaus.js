@@ -6,19 +6,20 @@ module.exports.getAmbitionLevels = async ({beautyAmbitionInput, sustainAmbitionI
     return ambition.substring(0,index) + "1" + ambition.substring(index+1);
   }
 
-  var beautyAmbition = "000";
+  var beautyAmbition = ['0','0','0'];
   if(!Array.isArray(beautyAmbitionInput)) {
     beautyAmbitionInput = [beautyAmbitionInput];
   }
   if (beautyAmbitionInput.includes("integrate")) {
-    beautyAmbition = setAmbition(beautyAmbition, 2);
+    beautyAmbition[2] = '1';
   }
   if (beautyAmbitionInput.includes("connect")) {
-    beautyAmbition = setAmbition(beautyAmbition, 1);
+    beautyAmbition[1] = '1';
   }
   if (beautyAmbitionInput.includes("activate")) {
-    beautyAmbition = setAmbition(beautyAmbition, 0);
+    beautyAmbition[0] = '1';
   }
+  beautyAmbition = beautyAmbition.join('');
 
   var sustainAmbition = "000";
   if(!Array.isArray(sustainAmbitionInput)) {
