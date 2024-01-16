@@ -58,7 +58,6 @@ module.exports.updateInfoBySlug = (slug, {profileId, name, address, lat, lon, ov
 
 module.exports.updateAmbitionsBySlug = (slug, {profileId, beautyAmbition, sustainAmbition, togetherAmbition,
                         participProcessAmbition,multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {
-  console.log(typeof(beautyAmbition), beautyAmbition)
   return db.run(`UPDATE actions SET
       beauty_ambition = "${beautyAmbition}", sustain_ambition= "${sustainAmbition}",
       together_ambition = "${togetherAmbition}",

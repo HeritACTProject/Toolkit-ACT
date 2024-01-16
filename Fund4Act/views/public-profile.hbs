@@ -12,6 +12,17 @@
         margin: 1rem;
     }
     a,a:visited{color: var(--text-color)}
+    .column{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    pre {
+        white-space: pre-line;
+        background: none;
+        border: none;
+        font-family: "Arial", sans-serif;
+    }
 </style>
 <main class="wide">
 <h1>{{profile.display_name}}</h1>
@@ -34,23 +45,25 @@
     {{/each}}
 {{/if}}
 <h2>Our Mission:</h2>
-<p>{{profile.mission}}</p>
+<pre>{{profile.mission}}</pre>
 
 {{#if profile.previous_actions}}
 <h2>Our Previous Actions:</h2>
-<p>{{profile.previous_actions}}</p>
+<pre>{{profile.previous_actions}}</pre>
 {{/if}}
 {{#if profile.previous_grants}}
 <h2>Our Previous Funding:</h2>
-<p>{{profile.previous_grants}}</p>
+<pre>{{profile.previous_grants}}</pre>
 {{/if}}
 {{#if profile.partnerships}}
 <h2>Our Partnerships:</h2>
-<p>{{profile.partnerships}}</p>
+<pre>{{profile.partnerships}}</pre>
 {{/if}}
 <h2>Our Documents</h2>
-<a href="/redirect/{{profile.constitution_url}}">Our Constitution</a>
+<div class="column">
+<a href="/redirect/{{profile.constitution_url}}" target="_blank">Our Constitution</a>
 {{#if profile.climate_action_plan_url}}
-<a href="/redirect/{{profile.climate_action_plan_url}}">Our Climate Action Plan</a>
+<a href="/redirect/{{profile.climate_action_plan_url}}" target="_blank">Our Climate Action Plan</a>
 {{/if}}
+</div>
 </main>
