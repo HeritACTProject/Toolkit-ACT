@@ -100,37 +100,35 @@
 
       <label>Action Category (<a href="/resource/action-categories" target="_blank">Read more about our categories here</a>)</label>
 
-      {{#with action.category}}
-      <input type="checkbox" id="category-1" name="category" value="Community Engagement" {{#if community_engagement}}checked{{/if}}>
+      <input type="checkbox" id="category-1" name="category" value="Community Engagement" {{#if action.category.community_engagement}}checked{{/if}}>
       <label for="category-1" title="Involves engaging the community in heritage-related projects, such as community-led public art projects and interactive heritage workshops, fostering a sense of shared responsibility and pride.">Community Engagement</label>
 
-      <input type="checkbox" id="category-2" name="category" value="Cultural Celebrations" {{#if cultural_celebrations}}checked{{/if}}>
+      <input type="checkbox" id="category-2" name="category" value="Cultural Celebrations" {{#if action.category.cultural_celebrations}}checked{{/if}}>
       <label for="category-2" title="Cultural celebrations focus on organizing events such as festivals and artisan workshops that showcase and celebrate the unique cultural aspects of a community.">Cultural Celebrations</label>
 
-      <input type="checkbox" id="category-3" name="category" value="Ecosystem Conservation" {{#if ecosystem_conservation}}checked{{/if}}>
+      <input type="checkbox" id="category-3" name="category" value="Ecosystem Conservation" {{#if action.category.ecosystem_conservation}}checked{{/if}}>
       <label for="category-3" title="Activities dedicated to the restoration and conservation of natural ecosystems, with a focus on wildlife habitat restoration to support biodiversity and maintain ecological balance.">Ecosystem Conservation</label>
 
-      <input type="checkbox" id="category-4" name="category" value="Education and Awareness" {{#if education_and_awareness}}checked{{/if}}>
+      <input type="checkbox" id="category-4" name="category" value="Education and Awareness" {{#if action.category.education_and_awareness}}checked{{/if}}>
       <label for="category-4" title="Heritage education programs and historical walking tours aimed at educating the community and visitors about the history, traditions, and values that shape the community's identity.">Education and Awareness</label>
 
-      <input type="checkbox" id="category-5" name="category" value="Environmental Education" {{#if environmental_education}}checked{{/if}}>
+      <input type="checkbox" id="category-5" name="category" value="Environmental Education" {{#if action.category.environmental_education}}checked{{/if}}>
       <label for="category-5" title="Projects that aim to educate and raise awareness about the environment, including nature trail creation and environmental education programs designed to instill a sense of responsibility for natural heritage.">Environmental Education</label>
 
-      <input type="checkbox" id="category-6" name="category" value="Green Spaces and Biodiversity" {{#if green_spaces_and_biodiversity}}checked{{/if}}>
+      <input type="checkbox" id="category-6" name="category" value="Green Spaces and Biodiversity" {{#if action.category.green_spaces_and_biodiversity}}checked{{/if}}>
       <label for="category-6" title="Involves community garden initiatives, tree planting programs, and green space enhancement projects that contribute to the preservation of biodiversity and the creation of sustainable, natural environments.">Green Spaces and Biodiversity</label>
 
-      <input type="checkbox" id="category-7" name="category" value="Historic Building Preservation" {{#if historic_building_preservation}}checked{{/if}}>
+      <input type="checkbox" id="category-7" name="category" value="Historic Building Preservation" {{#if action.category.historic_building_preservation}}checked{{/if}}>
       <label for="category-7" title="This category involves the restoration and preservation of historic buildings and monuments, ensuring that the physical structures of the past are maintained for future generations.">Historic Building Preservation</label>
 
-      <input type="checkbox" id="category-8" name="category" value="Language and Tradition" {{#if language_and_tradition}}checked{{/if}}>
+      <input type="checkbox" id="category-8" name="category" value="Language and Tradition" {{#if action.category.language_and_tradition}}checked{{/if}}>
       <label for="category-8" title="Activities centered around revitalizing and preserving languages and traditions, promoting cultural exchange programs to ensure the transmission of linguistic and cultural heritage.">Language and Tradition</label>
 
-      <input type="checkbox" id="category-9" name="category" value="Storytelling and Documentation" {{#if storytelling_and_documentation}}checked{{/if}}>
+      <input type="checkbox" id="category-9" name="category" value="Storytelling and Documentation" {{#if action.category.storytelling_and_documentation}}checked{{/if}}>
       <label for="category-9" title="Capturing and preserving the oral histories and documented artifacts of a community, ensuring that the stories and experiences of individuals are recorded and shared.">Storytelling and Documentation</label>
 
-      <input type="checkbox" id="category-10" name="category" value="Traditional Cuisine Initiatives" {{#if traditional_cuisine_initiatives}}checked{{/if}}>
+      <input type="checkbox" id="category-10" name="category" value="Traditional Cuisine Initiatives" {{#if action.category.traditional_cuisine_initiatives}}checked{{/if}}>
       <label for="category-10" title="This category focuses on events related to culinary heritage, including culinary heritage events and traditional cooking classes that celebrate and preserve traditional food practices.">Traditional Cuisine Initiatives</label>
-      {{/with}}
     </fieldset>
 
     <input type="submit" formmethod="post" value="Submit">
