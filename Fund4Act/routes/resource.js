@@ -72,4 +72,8 @@ router.get('/upload-to-google-drive', async (req, res, next) => {
     res.render('upload-to-google-drive-resource', {user: req.user});
 });
 
+router.get('/about-this-site', async (req, res, next) => {
+    res.render('about-this-site-resource', {user: req.user});
+});
+
 module.exports = router;
