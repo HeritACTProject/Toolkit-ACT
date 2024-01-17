@@ -63,5 +63,5 @@ exports.post = [
       next(err);
     }
 
-    res.redirect(`/action/${data.slug}/edit/impact`)
+    res.redirect(`/action/${data.slug}/image-upload`)
   }];
