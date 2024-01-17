@@ -8,9 +8,16 @@
   crossorigin=""></script>
 
 <style>
-  main{
-    margin: 0 5rem;
+  h1:not(header h1) { margin: 1rem;}
+  
+  section:not(#overview) {
+    margin: 0 1rem;
   }
+
+  #overview-image{
+      height: 100%;
+      object-fit: cover;
+    }
 
   img{
     font-size:0;
@@ -19,7 +26,8 @@
   #pledge{
     display: flex;
     flex-direction: column;
-    max-width: 30ch;
+    width: 100%;
+    margin: 0 1rem;
   }
 
   .pledge{
@@ -43,16 +51,9 @@
     gap: 1rem;
   }
 
-  #overview-image{
-    height: 20rem;
-    width: 20rem;
-    object-fit: cover;
-  }
-
   .column{
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
   }
 
   #map{
@@ -89,11 +90,6 @@
     color: #fff;
   }
 
-  #neb{
-    width:30rem;
-    height:30rem;
-  }
-
   #neb-image{
     height:100%;
   }
@@ -108,6 +104,32 @@
 
   @media (prefers-color-scheme: dark) {
     .pledge, .pledge:hover, .pledge:active , .pledge:visited { color: #fff; }
+  }
+
+  @media only screen and (min-width: 1000px) {
+    main{
+      margin: 0 5rem;
+    }
+
+    #pledge{
+      width: 30ch;
+    }
+
+    #neb{
+      width:30rem;
+      height:30rem;
+    }
+
+    #overview-image{
+      height: 20rem;
+      width: 20rem;
+      object-fit: cover;
+    }
+
+    section:not(#overview) {
+      margin: 0;
+    }
+    h1:not(header h1) { margin: 1rem 0;}
   }
 
   .action-categories{display: flex; flex-wrap: wrap; gap:1rem;}
@@ -185,8 +207,6 @@
         <p>No pledges yet</p>
       {{/if}}
     </div>
-  </section>
-
   </section>
   <section>
     <p>Organised by<br><b>{{actionData.display_name}}</b> (<a href="/profile/{{actionData.profile_slug}}">view profile</a>)</p>

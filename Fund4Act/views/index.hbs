@@ -11,7 +11,7 @@
   header h1 { border-bottom: none; }
   header img { width: 2rem; margin: 0; }
   .right { display: flex; }
-  #start-action{ margin: 1rem; }
+  #start-action{ margin: 1rem; visibility: hidden;}
   #profile-image { align-self: center; }
   h2, p, pre { margin: 1rem; }
   hr { margin: 0; background: #ddd;}
@@ -26,11 +26,9 @@
   #most-urgent { display: flex; flex-direction: row; justify-content: space-around; gap: 4rem; margin: 0 6rem;}
   #most-urgent a {text-decoration: none; color: #000;}
   .column { width: 100%; display: flex; flex-direction: column; max-width:20rem;}
-  footer { height: 15rem; background: #30732F; color: #fdfdfd; padding: 2rem 6rem; display: flex; justify-content: space-between;}
-  footer a { align-self: flex-end; justify-self: flex-end;}
+  footer { min-height: 15rem; background: #30732F; color: #fdfdfd; padding: 2rem 1rem; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;}
   footer p, footer h3 {margin:1rem 0;}
   pre { white-space: pre-wrap; line-height: 1.5rem;}
-  #about-us, #heritact {margin-left: 6rem; margin-right: 6rem;}
   #heritact img { max-width: 15rem; margin: 0 .5rem;}
   .button{
     background: #30732F;
@@ -63,10 +61,18 @@
   @media (prefers-color-scheme: dark) {
     header a, header a:visited, #most-urgent a{ color: #fff; }
   }
+
+  @media only screen and (min-width: 1000px) {
+     #about-us, #heritact {margin-left: 6rem; margin-right: 6rem;}
+     footer {padding: 2rem 6rem; flex-direction: row; gap: 0;}
+     footer a { align-self: flex-end; justify-self: flex-end;}
+      #start-action{ visibility: visible;}
+  }
+
 </style>
 
 <aside>
-<p>This page emits less CO2 than  <a href="https://www.websitecarbon.com/" target="_blank">90% of pages globally</a> - <a href="/resource/about-this-site" target="_blank">find out how</a></p>
+<p>This page emits less CO2 than  <a href="https://www.websitecarbon.com/" target="_blank">95% of pages globally</a> - <a href="/resource/about-this-site" target="_blank">find out how</a></p>
 </aside>
 
 <header>
