@@ -16,7 +16,7 @@ exports.convertImage = async (userId, actionSlug, image) => {
     const base64Image = image.split(';base64,').pop();
 
     const decodedImage = Buffer.from(base64Image, "base64");
-    Bun.write(`${userDir}/${actionSlug}`, decodedImage);
+    await Bun.write(`${userDir}/${actionSlug}`, decodedImage);
 
     const {stdout, stderr, error} = await execFile('sh ./tools/convertImage.sh', [`${userDir}/${actionSlug}`], {shell:true}, (error, stdout, stderr) => {
       if (error) {

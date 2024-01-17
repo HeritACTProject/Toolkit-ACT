@@ -146,7 +146,8 @@ router.route('/:slug/image-upload')
         if (!req.body.image) {
           throw Error('500');
         }
-        const convertedImage = convertImage(req.user.id, req.params.slug, req.body['image'])
+        const convertedImage = await convertImage(req.user.id, req.params.slug, req.body['image'])
+        console.log(convertedImage);
         res.redirect(`/action/${req.params.slug}/edit/impact`);
       } catch (e) {
         next();
