@@ -1,5 +1,5 @@
 <div class="action-row">
-  <p>{{this.name}}</p>
+  <p>{{this.name}} {{#ifEquals this.fundraising_deadline "undefined"}} (Not completed) {{else}} (Published){{/ifEquals}}</p>
   <div class="action-links">
     <a href="/action/{{this.slug}}">view</a>
     <a href="/action/{{this.slug}}/edit">edit</a>
