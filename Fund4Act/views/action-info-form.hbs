@@ -42,9 +42,15 @@
       </div>
       <input type="hidden" id="lat" name="lat" {{#if action.latitude}}value="{{action.latitude}}"{{/if}}>
       <input type="hidden" id="lon" name="lon" {{#if action.longitude}}value="{{action.longitude}}"{{/if}}>
-      
+
       <div id="map"></div>
       <script type='text/javascript'>
+        function populateLatLon() {
+          var latlon = marker.getLatLng();
+          document.getElementById('lat').value = latlon.lat;
+          document.getElementById('lon').value = latlon.lng;
+        }
+
         // center of the map
         var start = [51.165691, 10.451526];
 
@@ -60,12 +66,7 @@
 
         var marker = L.marker({{#if action.latitude}}[{{action.latitude}},{{action.longitude}}]{{else}}start{{/if}}, { draggable: true, autoPan: true }).addTo(map);
 
-        marker.on('moveend', function() {
-          var latlon = marker.getLatLng();
-          document.getElementById('lat').value = latlon.lat;
-          document.getElementById('lon').value = latlon.lng;
-
-        });
+        marker.on('moveend', populateLatLon);
 
         var findLocBtn = document.getElementById('find-location');
 
@@ -85,6 +86,7 @@
               // map data to address select checkboxes
               var {lat, lon} = data[0];
               marker.setLatLng([lat, lon]);
+              populateLatLon();
             });
         });
       </script>
