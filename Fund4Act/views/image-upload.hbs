@@ -1,13 +1,14 @@
 {{>header}}
-
-<a href="/action/{{action.slug}}/edit/impact">skip</a>
-<form method="POST">
-  <input type='file' id="image-select" accept="image/png, image/jpeg, image/webp">
+<link rel="stylesheet" href="/styles/normform.min.css"/>
+<main>
+<h1>Action Image Upload</h1>
+<form class="normform" method="POST">
+  <input type='file' id="image-select" accept="image/png, image/jpeg, image/webp" required>
   <input type="hidden" id='encoded-image' name='image'>
-  <input type='submit' value="save">
+  <input type='submit' value="Submit">
+  <label><a href="/action/{{action.slug}}/edit/impact">Skip this step</a></label>
 </form>
-
-<label for="preview">preview</p>
+<br>
 <img id="preview" src="/images/upload/{{user.id}}/{{action.slug}}.webp" alt="preview">
 
 <noscript>
@@ -55,3 +56,4 @@
       uploadImage(e);
   });
 </script>
+</main>
