@@ -207,6 +207,7 @@ router.route('/:slug/edit/funding')
 
       action.category = action.category.split(',');
       action.category = action.category.reduce((acc,curr)=> (acc[curr.toLowerCase().replace(/\s+/g, '_')]=true,acc),{});
+      action.hasNoCategories = Object.keys(action.category)[0] === "";
 
       res.render('action-funding-form', {user: req.user, action});
     } catch (e) {

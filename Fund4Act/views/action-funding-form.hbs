@@ -14,7 +14,9 @@
     <fieldset>
       <legend>Funding</legend>
 
+      {{#unless hasNoCategories}}
       <label>Consider Best Practice for each category</label>
+      {{/unless}}
       <ul>
         {{#with action.category}}
         {{#if community_engagement}}
@@ -26,7 +28,9 @@
         {{#if ecosystem_conservation}}
         <li><a href="/resource/action-categories/ecosystem-conservation" target="_blank">Ecosystem Conservation - Best Practice</a></li>
         {{/if}}
+        {{#if education_and_awareness}}
         <li><a href="/resource/action-categories/education-and-awareness" target="_blank">Education and Awareness - Best Practice</a></li>
+        {{/if}}
         {{#if environmental_education}}
         <li><a href="/resource/action-categories/environmental-education" target="_blank">Environmental Education - Best Practice</a></li>
         {{/if}}
