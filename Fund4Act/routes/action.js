@@ -128,7 +128,9 @@ router.route('/:slug/pledge')
     createProfile.post,
     createPledge.post,
     async (req, res, next) => {
-      res.render('pledge-confirmation', {user: req.user, slug: req.params.slug})
+      const action = await Action.getByActionSlug(req.params.slug);
+      const actionOwner = await Profile.getProfileInfo(action.profile_id);
+      res.render('pledge-confirmation', {user: req.user, slug: req.params.slug, actionOwner})
     })
 
 router.route('/:slug/image-upload')
