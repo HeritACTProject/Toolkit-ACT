@@ -108,7 +108,6 @@ module.exports.getByActionSlug = (slug) => {
 
 module.exports.getXMostUrgent = (x) => {
   const query = db.query(`SELECT * FROM actions
-    WHERE fundraising_deadline < date('now')
     ORDER BY fundraising_deadline DESC LIMIT $limit;`);
   const results = query.all({ $limit: x });
   return results;
@@ -117,7 +116,6 @@ module.exports.getXMostUrgent = (x) => {
 module.exports.getAllCoordinatesAndSlugs = () => {
   const query = db.query(`
     SELECT latitude, longitude, slug FROM actions
-    WHERE fundraising_deadline > date('now')
   `);
   const results = query.all();
   return results;
