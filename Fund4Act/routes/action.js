@@ -27,12 +27,12 @@ const transformCateory = async (category) => {
 }
 
 const hasCompassData = async (actionData) => {
-  return actionData.beautyAmbition === "000"
-    && actionData.sustainAmbition === "000"
-    && actionData.togetherAmbition === "000"
-    && actionData.participatoryProcessAmbition === "000"
-    && actionData.multiLevelEngagementAmbition === "000"
-    && actionData.transdiciplinaryAmbition === "000";
+  return actionData.beautyAmbition !== "000"
+    || actionData.sustainAmbition !== "000"
+    || actionData.togetherAmbition !== "000"
+    || actionData.participProcessAmbition !== "000"
+    || actionData.multiLevelEngagementAmbition !== "000"
+    || actionData.transdiciplinaryAmbition !== "000";
 }
 
 router.route('/')
