@@ -23,6 +23,10 @@
     background: white;
     color: black;
   }
+
+  a, a:visited, a:hover {
+    color: black;
+  }
   
   .no-print {
   	display: none !important;

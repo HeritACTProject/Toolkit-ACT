@@ -73,10 +73,7 @@
     </div>
     <div class="action-profile-section no-bottom-spacing">
       <h2 id="targets-header">SDG Targets</h2>
-      <p class="no-break-after">Contributing to {{targetsCount}} <a href="https://sdgs.un.org/goals" target="_blank">SDG</a> Targets</p>
-      <br>
-      <p class="no-break-after">{{policyCounts.neb}} targets are relevant to the New Eropean Bauhaus</p>
-      <p class="no-break-after">{{policyCounts.egd}} targets are relevant to the Eropean Green New Deal</p>
+      <p class="no-break-after">Contributing to {{targetsCount}} <a href="https://sdgs.un.org/goals" target="_blank">SDG</a> Targets. {{policyCounts.neb}} {{#ifEquals policyCounts.neb 1}}target is{{else}}targets are{{/ifEquals}} relevant to the <a href="https://new-european-bauhaus.europa.eu/index_en" target="_blank">New European Bauhaus</a>. {{policyCounts.egd}} {{#ifEquals policyCounts.egd 1}}target is{{else}}targets are{{/ifEquals}} relevant to the <a href="https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/european-green-deal_en" target="_blank">European Green New Deal</a></p>
       {{#each targets}}
           {{> selectedTarget}}
       {{/each}}
