@@ -1154,6 +1154,13 @@ function onTargetClick() {
   });
 }
 
+function redoDialog() {
+  $('.home-button').click(function(e) {
+    e.preventDefault();
+    $('#restartModal').modal('show');
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   setUpOrganisationsPage();
   if ($('.dashboard-filter').length) {
@@ -1186,5 +1193,8 @@ document.addEventListener('DOMContentLoaded', () => {
     onWheelHeaderClick();
     onWheelClick();
     onTargetClick();
+  }
+  if ($('.assessment-body--action-profile').length) {
+    redoDialog();
   }
 });
