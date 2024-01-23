@@ -1,375 +1,10 @@
-function setUpOrganisationsPage() {
-  // show whats new modal if first page load
-  if (sessionStorage.getItem("newFeatures_flag") === null) // Check if the key is set. It's a self defined key.
-    {
-      sessionStorage.setItem("newFeatures_flag", 1); // If not set, set it
-      const whatsNewModal = $('#latest-changes-modal');
-      whatsNewModal.modal('show');
-    }
-
-  let newGroupColor, newGroupId;
-
-  function generateNewGroup () {
-    newGroupColor = `hsl(${Math.floor(Math.random() * 361)}, 40%, 85%)`;
-    $('button.create-group label').css('background-color', newGroupColor)
-    newGroupId = self.crypto.randomUUID();
-  }
-
-  generateNewGroup();
-
-  // allows use of show/hide event
-  (function ($) {
-	  $.each(['show', 'hide'], function (i, ev) {
-	    var el = $.fn[ev];
-	    $.fn[ev] = function () {
-	      this.trigger(ev);
-	      return el.apply(this, arguments);
-	    };
-	  });
-	})(jQuery);
-
-  if (!$('.assessment-header--organisation-action').length) return
-  $('#profile-delete').on('click', function () {
-    return confirm("Are you sure? \nThis action cannot be undone")
-  })
-  $('.action-delete').on('click', function () {
-    return confirm("Are you sure? \nThis action cannot be undone")
-  })
-
-  $('.actions-filter button').on('click', function () {
-    $(this).hide();
-    $(`.filter label:contains(\"${$(this).text()}\")`).parent().fadeIn();
-  })
-
-  $('.nav-container-home a').on('click', function () {
-    $('.loading-screen').show().find('.loading-text').text('Loading');
-  });
-
-  $('.delete-filter').on('click', function (e, timer) {
-    const filter = $(this).closest('.filter');
-    const label = $(filter).find('label').first();
-    const input = $(filter).find('input');
-    $(filter).fadeOut(timer);
-    if (input.attr('type') === 'text') input.val("");
-    if (input.attr('type') === 'checkbox') input.each(function() {$(this).prop('checked', false)});
-    const filterName = $(label).text().split(" ")[0];
-    $(`#${filterName.toLowerCase()}-filter`).trigger('input');
-    $(`.actions-filter button:contains(\"${filterName}\")`).show();
-  })
-
-  function closeFilters(dropContent) {
-    var dropdowns = $('.dropdown-content').filter(function() { return $(this).css("display") == "block" });
-    dropdowns.map(function() {
-      if (!$(this).is(dropContent)) $(this).stop(true,true).fadeToggle();
-    });
-  }
-  $('.filters-container').children().on('click', function (e) {
-    e.stopPropagation();
-    if (!e.target.matches('input') &&
-      !($(e.target)).parent('.filter-option').length &&
-      !($(e.target)).parent('.filter-group').length &&
-      !($(e.target)).hasClass('group-filter')) {
-      const dropContent = $(this).find('.dropdown-content').first();
-      closeFilters(dropContent);
-      dropContent.stop(true,true).fadeToggle();
-      $(dropContent).find('input').first().focus();
-    }
-  });
-
-  function showDropdown(e, context) {
-    e.stopPropagation();
-    const dropContent = $(context).closest('.action-groups').find('.dropdown-content');
-    closeFilters();
-    if (dropContent.css('display') === 'none') {
-      dropContent.stop(true,true).fadeIn().promise();
-      $(dropContent).find('.search-group input').trigger('focus');
-    }
-  }
-
-  $('.root-groups, .add-group').on('click', function (e) {showDropdown(e, this)});
-
-  $('.group-filter .filter-option').on('click', function (e) {
-    if ($(e.target).is('input[type="checkbox"]') ||
-      $(e.target).is('label') || $(e.target).is('span') ) return;
-    $(this).find('input').trigger('click');
-  });
-
-  const deleteGroup = (groupId) => {
-    $('.loading-screen').show().find('.loading-text').text('Saving');
-
-    return $.post(`groups/${groupId}/delete`)
-      .done(() => {
-        $('.filter-option.group-filter').filter(function () {
-          return $(this).find(`label[data-id="${groupId}"]`).length;
-	}).remove();
-        $(`.root-groups label[data-id="${groupId}"]`).remove();
-        $('.group-option').filter(function () {
-          return $(this).find(`label[data-id="${groupId}"]`).length;
-        }).remove();
-
-	$('.loading-screen').hide();
-      })
-      .fail(() => location.reload());
-  } 
-
-  $('.group-options .options').on('click', function (e) {
-    e.stopPropagation()
-    if($(e.target).is('a') || $(e.target).is('i')) {
-      deleteGroup($(e.target).closest('.group-option').find('label').attr('data-id'));
-      return;
-    }
-    $(e.target).find('input').trigger('click');
-  });
-
-  function toggleFilterBorder(filter, active) {
-    if (active) $(filter).css("border-color", "var(--sdg10-color");
-    else $(filter).css("border-color", "lightgrey");
-  }
-
-  function addTextToFilter(filter, text) { 
-    if (text !== '') text = ': ' + text;
-    const label = $(filter).find('label').first();
-    const filterName = label.text().split(" ")[0];
-    label.text(`${filterName} ${text}`);
-  }
-
-  $('.filter').on('input', function (e) {
-    const filterInput = e.target.value || ""
-    const nameFilterInput = $('.filter.name-filter').find('input').val();
-    const ownerFilterInput = $('.filter.owner-filter').find('input').val();
-    const groupsFilterInput = $('.filter [id$=-groupfilter]:checked').map(function() {
-      return $(this).val();
-    }).get();
-
-    if ($(this).hasClass('group-filter')) addTextToFilter($(this), groupsFilterInput.join(', '))
-    else addTextToFilter($(this), filterInput); 
-
-    if (filterInput === "" || ($(this).hasClass('group-filter') && groupsFilterInput.length === 0)) {
-      toggleFilterBorder($(this).closest('.filter'), false);
-    } else toggleFilterBorder($(this).closest('.filter'), true);
-
-    const matches = $('.row-container').filter(function () {
-      const nameFilterMatch = $(this).find('.action-title').text().includes(nameFilterInput);
-      const ownerFilterMatch = $(this).find('.action-owner').text().includes(ownerFilterInput);
-      const groupFilterMatch = $(this).find('.root-group.action-group').filter(function(){
-        return groupsFilterInput.includes($(this).text().trim());
-      }).length;
-
-      // match should return false if filterInput is empty or don't match
-      const match = (!nameFilterInput || nameFilterMatch) &&
-        (!ownerFilterInput || ownerFilterMatch) && 
-        (!groupsFilterInput.length || groupFilterMatch);
-      return match;
-    });
-
-    $('.row-container').stop(true,true).fadeOut();
-    matches.each(function() { $(this).stop(true,true).fadeIn() });
-  });
-
-  // action groups
-  $('.col.action-groups .dropdown-content').on('show', function() {
-    const selectedGroups = $(this).siblings().find('.root-group')
-    $(this).find('input').prop('checked', false);
-    selectedGroups.each(function() {
-      $(this).closest('.action-groups').find(`input[data-id='${$(this).attr('data-id')}']`).prop('checked', true);
-    });
-  });
-
-  $('.col.action-groups .dropdown-content').on('hide', function(e) {
-    e.stopPropagation();
-    if (e.target.matches('.group-option, button, label, input')) return;
-    const groupOptions = $(this).find('.group-option');
-    const selectedOptions = $(groupOptions).filter(function() {
-      if ($(this).find('input:checked').length) return true;
-    }).find('label');
-    const selectedGroups = $(this).closest('.action-groups').attr('data-groups').split(',');
-
-    if (selectedOptions.length === 0) return;
-
-    // check if groups have changed
-    for (let i = 0; i < selectedOptions.length; i++) {
-      if (selectedGroups[i] !== $(selectedOptions[i]).attr("data-id")) break;
-      if (i === selectedOptions.length -1) return;
-    }
-
-    const selectedIds = [];
-    selectedOptions.each(function() {
-      selectedIds.push($(this).data("id"))
-    });
-
-    const actionId = $(this).closest('.row-container').data("id");
-
-    $('.loading-screen').stop(true,true).show().find('.loading-text').text('Saving');
-
-    return $.post(`${actionId}/groups`, {groups: selectedIds})
-      .done(() => {
-        $(this).closest('.action-groups').attr('data-groups', selectedIds);
-        $('.filter').first().trigger('input');
-	$('.loading-screen').hide()
-      })
-      .fail(() => location.reload());
-  })
-
-  // add and remove group on checkbox change
-  $('.action-groups .options').on('change', ':checkbox', function(e){
-    e.stopPropagation();
-    const groupId = $(this).attr('data-id');
-    const rootGroups = $(this).closest('.action-groups').find('.root-groups');
-
-    if (this.checked) {
-      const groupLabel = $(this).siblings('label');
-      groupLabel.clone(false)
-        .removeAttr('for', '')
-        .removeAttr('id', '')
-        .insertBefore($(rootGroups).find('button'))
-        .on('click', function (e) {showDropdown(e, this)})
-        .addClass('root-group');
-    } else {
-      $(this).closest(`.action-groups`)
-        .find(`.root-groups label[data-id="${groupId}"]`)
-        .remove();
-    }
-  });
-
-  $('.search-group').on('input', function (e) {
-    e.stopPropagation();
-    const searchText = $(this).find('input').val().trim();
-    
-    const createGroup = $(this).siblings('.create-group');
-    createGroup.stop(true, true).fadeOut();
-
-    const matches = $(this).siblings('.options').find(`.group-option:contains(${searchText})`);
-    const exactMatches = matches.filter(function () {
-      return $(this).find('label').text() === searchText; 
-    });
-
-    $(this).siblings('.options').find('.group-option').stop(true, true).fadeOut();
-    $(matches).stop(true, true).fadeIn();
-
-    if (searchText.length && !exactMatches.length) {
-      
-      $(createGroup).find('.new-group')
-        .text(searchText);
-      createGroup.stop(true, true).fadeIn();
-    }
-  });
-
-  $('button.create-group.submit').on('click', function () {
-    const searchBox = $(this).siblings('.search-group').find('input');
-    const newGroupName = searchBox.val();
-
-    $('.loading-screen').show().find('.loading-text').text('Saving');
-
-    return $.post('groups/create', {group: {id: newGroupId, color: newGroupColor, name: newGroupName}})
-      .done(() => {
-	const newGroupElm = $(this).siblings('.options').find('.group-option').first().clone(true)
-
-        $('.group-options .options').filter(function () {
-    	  const actionId = $(this).closest('.row-container').data('id');
-
-	  $(newGroupElm).find('input, label').attr('data-id', newGroupId);
-          $(newGroupElm).find('label')
-            .attr('for', `${newGroupName}-group-${actionId}`)
-	          .attr('id', `${newGroupName}-label-${actionId}`)
-            .css('background-color', newGroupColor)
-            .find('span')
-              .text(newGroupName)
-              .attr('title', newGroupName);
-          $(newGroupElm).find('input')
-            .prop('checked', true)
-            .attr('aria-label', newGroupName)
-            .attr('id', `${newGroupName}-group-${actionId}`)
-            .val(newGroupName);
-
-          $(this).append($(newGroupElm).clone(true).removeClass('hidden'));;
-	});
-        $(this).siblings('.options').find('.group-option').last().find('input').trigger('change');
-
-        //create element for filter
-        const newFilterEml = $('.filter-option.group-filter').first().clone(true);
-        $(newFilterEml).find('label')
-          .attr('for', `${newGroupName}-groupfilter`)
-	        .attr('data-id', newGroupId)
-          .css('background-color', newGroupColor)
-          .text(newGroupName);
-        $(newFilterEml).find('input')
-          .attr('id', `${newGroupName}-groupfilter`)
-          .val(newGroupName);
-	$(newFilterEml).find('input').prop('checked', false)
-        $('.group-filter .filter-options').append($(newFilterEml).removeClass('hidden'));
-
-        searchBox.val("")
-        searchBox.focus();
-        searchBox.trigger('input');
-        generateNewGroup();
-
-	$('.loading-screen').hide()
-      })
-      .fail(() => location.reload());
-  });
-
-  window.onclick = function(e) {
-    if (!e.target.matches('input') && 
-      !$(e.target).parent('.filter-option').length &&
-      !$(e.target).hasClass('group-option') &&
-      !$(e.target).hasClass('action-group') &&
-      !$(e.target).hasClass('delete-group') &&
-      !$(e.target).is('.delete-group i') &&
-      !$(e.target).hasClass('filters-container')) {
-      closeFilters();
-    }
-  }
-
-  if ($('#name-filter').val() === "") $('.name-filter .delete-filter').trigger('click', [0]);
-  else $('#name-filter').trigger('input');
-  if ($('#owner-filter').val() === "") $('.owner-filter .delete-filter').trigger('click', [0]);
-  else $('#owner-filter').trigger('input');
-  if ($('.filter [id$=-group]:checked').length === 0) $('.group-filter .delete-filter').trigger('click', [0]);
-  else $('.group-filter').trigger('input');
-}
-
-function setUpDashboardFilter() {
-  const searchParams = new URLSearchParams(window.location.search);
-  const groupIds = searchParams.get('groups');
-
-  if (!groupIds) return;
-
-  $(`.group-filter input`).prop('checked', false);
-  
-  groupIds.split(',').map(groupId => {
-    $(`.group-filter label[data-id="${groupId}"]`).siblings('input').trigger('click');
-  });
-}
-
-function dashboardFilter() {
-  $('.dashboard-filter .dropdown-content').on('hide', function(e) {
-    const searchParams = new URLSearchParams(window.location.search);
-    const groupIds = (searchParams.get('groups') || "").split(',');
-
-    const groupsFilterInput = $('.filter [id$=-groupfilter]:checked').map(function() {
-      return $(this).siblings('label').data('id');
-    }).get();
-
-    if (JSON.stringify(groupIds) === JSON.stringify(groupsFilterInput)) return;
-
-    $('.loading-screen').show().find('.loading-text').text('Loading');
-
-    const orgId = $('.orgId').data('orgid');
-    const encodedGroupFilterInput = groupsFilterInput.map(input => encodeURIComponent(input));
-    const query = '?groups=' + encodedGroupFilterInput.join(',');
-
-    const url = "/app/" + orgId + "/dashboard" + query;
-    window.location.href = url;
-  });
-}
-
 function setUpInfoForm() {
   if (!$('#actionInfoForm').length) return;
   const isEdit = $('input[name=isEdit]').val();
-  
+
   $(document).ready(function() {
     // populate multiline existing data
-    if (isEdit) { 
+    if (isEdit) {
       $('#actionOwnerType').selectpicker('val', $('#actionOwnerType').data().values.split(','));
       $('#actionType').selectpicker('val', $('#actionType').data().values.split(','));
       $('#actionStatus').selectpicker('val', $('#actionStatus').data().values);
@@ -703,85 +338,11 @@ function onTargetFormSubmit() {
   }
 }
 
-function onActionPlanSelcected() {
-  $('.target-plan-container .target-title-row').click(function() {
-    if (($(this).next()).is(":visible")) {
-	$(this).find('i').css({'transform' : 'rotate('+ 0 +'deg)'})
-	$(this).next().hide()
-    } else {
-	$(this).find('i').css({'transform' : 'rotate('+ 90 +'deg)'})
-	$(this).next().show();
-    }
-  })
-}
-
-function onActionPlanSubmit() {
-  if (document.getElementById('action-plan-form')) {
-    const actionPlanForm= document.getElementById('action-plan-form');
-    actionPlanForm.addEventListener('submit', (event) => {
-      if (actionPlanForm.checkValidity() === false) {
-        event.preventDefault();
-        const invalidElement = actionPlanForm.querySelectorAll(':invalid')[0];
-        invalidElement.closest('.target-plan-row').style.display = "block";
-        $('html, body').stop().animate({
-          scrollTop: $(invalidElement).offset().top - (innerHeight/2),
-        }, 100);
-        actionPlanForm.reportValidity();
-      }
-    });
-  }
-}
-
-function onAddKpi() {
-  $('.add-kpi-button').click(function() {
-    const kpiContainers = $(this).parent().find('.kpi\\-container');
-    if (kpiContainers.length >= 10) return
-
-    const kpiClone = kpiContainers.first().clone()
-    kpiClone.find("input").val("");
-    kpiClone.appendTo(kpiContainers.parent());
-  })
-}
-
 function downloadReport() {
   $('.download-pdf-button').click(function() {
     document.title = $('.action-name').text();
     window.print();
     document.title = "SDG Tag Tool";
-  })
-}
-
-function populateUserSettingModal() {
-  $('.open-PermissionsEditModal').click(function() {
-    const uid = $(this).data('id');
-
-    $('.modal-body #uid').val(uid);
-    $('.modal-body #role').val($(this).data('role')).change();
-  })
-}
-
-function populateUserDeleteModal() {
-  $('.open-deleteUserModal').click(function() {
-    const uid = $(this).data('id');
-
-    if ($(this).attr('id') === 'leave-workspace') {
-      $('#deleteModalLabel').text("Leave Workspace");
-      $('#delete-user-form p').text("Are you sure you want to leave?")
-      $('#deleteModal .modal-footer :last-child').text("Leave")
-    } else {
-      $('#deleteModalLabel').text("Delete User");
-      $('#delete-user-form p').text("Are you sure you want to remove this user?")
-      $('#deleteModal .modal-footer :last-child').text("Delete")
-    }
-    $('.modal-body #uid').val(uid);
-  })
-}
-
-function populateInviteDeleteModal() {
-  $('.open-deleteInviteModal').click(function() {
-    const id = $(this).data('id');
-
-    $('.modal-body #id').val(id);
   })
 }
 
@@ -795,9 +356,9 @@ function wrapLines(ctx, text, x, y, lineWidth, lineHeight) {
         var width = ctx.measureText(currentLine + " " + word).width;
         if (lineIndex <= 1 && width < lineWidth * 0.9 || lineIndex >= 2 && width < lineWidth * 0.7) {
             currentLine += " " + word;
-        } else { 
+        } else {
 	    if (lineIndex >= 2) {
-		currentLine += "..."; 
+		currentLine += "...";
             	ctx.fillText(currentLine, x, y + lineHeight * lineIndex);
 		break;
 	    }
@@ -1162,20 +723,12 @@ function redoDialog() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setUpOrganisationsPage();
-  if ($('.dashboard-filter').length) {
-    setUpDashboardFilter();
-    dashboardFilter();
-  }
   setUpInfoForm();
   if ($('#tags-section').length) {
     onTagScroll();
     onTagHover();
   }
-  onActionPlanSelcected();
-  onActionPlanSubmit();
   onActionInfoFormSubmit();
-  onAddKpi();
   downloadReport();
   onTagFormSubmit();
   if ($('#targets-section').length) {
@@ -1184,9 +737,6 @@ document.addEventListener('DOMContentLoaded', () => {
     onDeleteCustomAction();
     onTargetFormSubmit();
   }
-  populateUserSettingModal();
-  populateUserDeleteModal();
-  populateInviteDeleteModal();
   if ($('#sdgWheel').length) {
     onGoalsClick();
     onGoalClick();
