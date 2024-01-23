@@ -36,6 +36,13 @@ exports.generateContent = async (assessmentId) => {
     actionsCount: selectedTarget.actions?.length | 0 + selectedTarget.customActions?.length | 0,
   }));
 
+  const policyCounts = {neb: 0, egd: 0}
+
+  await selectedTargets.map((target) => {
+    if (target.policies.neb) policyCounts.neb += 1;
+    if (target.policies.egd) policyCounts.egd += 1;
+  })
+
   return {
     assessmentName: assessment.title,
     assessmentOwner: assessment.owner,
@@ -49,6 +56,7 @@ exports.generateContent = async (assessmentId) => {
     goalsCount: selectedGoals.length,
     targets: selectedTargets,
     targetsCount: selectedTargets.length,
+    policyCounts,
     sdgWheelNodeData,
     sdgWheel: true,
     tags: selectedTags,
