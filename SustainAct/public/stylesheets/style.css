@@ -1085,6 +1085,11 @@ opacity: 0;
 /* Action Profile                                                                */
 /*********************************************************************************/
 
+#heritact-logo {
+  width: 20rem;
+  margin: 5rem
+}
+
 .assessment-header--action-profile {
 	height: 100px;
 }
