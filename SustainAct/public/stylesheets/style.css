@@ -49,6 +49,11 @@ body {
 	color: var(--primary-font-color);
 }
 
+a, a:hover, a:visited {
+  color: var(--primary-font-color);
+  text-decoration: underline;
+}
+
 *:focus-visible {
   outline: 4px solid var(--sdg10-color) !important;
   outline-offset: 2px;

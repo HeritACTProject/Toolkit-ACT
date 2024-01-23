@@ -54,14 +54,14 @@
     </div>
     <div class="action-profile-section no-print">
       <h2 id="wheel-header" data-toggle="modal" data-target="#wheelPostModal">Impact Wheel <i class="fa-solid fa-share-nodes no-print"></i></h2>
-      <p>Relevant SDG Goals and Targets.<br><br>Hover over the Targets to see which are linked to the NEB and EGD.</p>
+      <p>Relevant <a href="https://sdgs.un.org/goals" target="_blank">SDG</a> Goals and Targets.<br><br>Hover over the Targets to see which are linked to the <a href="https://new-european-bauhaus.europa.eu/index_en" target="_blank">NEB</a> and <a href="https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/european-green-deal_en" target="_blank">EGD</a>.</p>
       <div class="action-profile-section sdg-wheel-container no-print">
         <svg aria-hidden="true" id="sdgWheel" data-node="{{sdgWheelNodeData}}" data-toggle="modal" data-target="#wheelPostModal"></svg>
       </div>
     </div>
     <div class="action-profile-section">
         <h2 id="goals-header" data-toggle="modal" data-target="#goalsPostModal">SDGs <i class="fa-solid fa-share-nodes no-print"></i></h2>
-        <p>Contributing to {{goalsCount}} SDGs</p>
+        <p>Contributing to {{goalsCount}} <a href="https://sdgs.un.org/goals" target="_blank">SDGs</a></p>
         {{#each goals}}
           <div class="goal-image-container" data-toggle="modal" data-target="#goalPostModal" data-id="{{this}}">
             <img id="goal{{this}}-image" class="goal-image" src="/images/Goal-{{this}}.png">
@@ -73,7 +73,7 @@
     </div>
     <div class="action-profile-section no-bottom-spacing">
       <h2 id="targets-header">SDG Targets</h2>
-      <p class="no-break-after">Contributing to {{targetsCount}} SDG Targets</p>
+      <p class="no-break-after">Contributing to {{targetsCount}} <a href="https://sdgs.un.org/goals" target="_blank">SDG</a> Targets</p>
       {{#each targets}}
           {{> selectedTarget}}
       {{/each}}
