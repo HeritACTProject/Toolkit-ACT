@@ -165,7 +165,7 @@
       var start = [{{actionData.latitude}}, {{actionData.longitude}}];
 
       // Create the map
-      var map = L.map('map', {zoomControl: false}).setView(start, 5);
+      var map = L.map('map', {zoomControl: false}).setView(start, 12);
       map.dragging.disable();
       map.scrollWheelZoom.disable();
 
@@ -344,77 +344,77 @@
     <h4>Beautiful</h4>
     <ul>
       {{#if actionData.beauty_ambition.[0]}}
-        <li>This action considers sensory perceptions and or regional/local particularities in its design.
+        <li><b>To Activate:</b> This action considers sensory perceptions and or regional/local particularities in its design.
       {{/if}}
       {{#if actionData.beauty_ambition.[1]}}
-        <li>This action provides an attractive space that brings people together and gives opportunities to learn about new ideas, places or people.
+        <li><b>To Connect:</b> This action provides an attractive space that brings people together and gives opportunities to learn about new ideas, places or people.
       {{/if}}
       {{#if actionData.beauty_ambition.[2]}}
-        <li>This action provides participants the opportunity to question and reimagine their way of life, potentially have a postive transformative effect on the participants' lives.
+        <li><b>To Integrate:</b> This action provides participants the opportunity to question and reimagine their way of life, potentially have a postive transformative effect on the participants' lives.
       {{/if}}
     </ul>
 
     <h4>Sustainable</h4>
     <ul>
       {{#if actionData.sustain_ambition.[0]}}
-        <li>This action takes into account sustainability in terms of reuse, material choices, energy use and or social use.
+        <li><b>To Repurpose:</b> This action takes into account sustainability in terms of reuse, material choices, energy use and or social use.
       {{/if}}
       {{#if actionData.sustain_ambition.[1]}}
-        <li>This action takes into account circular economy principles regarding the closed-loop material cycle and or looks to measure its impacts using different sustainability metrics.
+        <li><b>To Close the Loop:</b> This action takes into account circular economy principles regarding the closed-loop material cycle and or looks to measure its impacts using different sustainability metrics.
       {{/if}}
       {{#if actionData.sustain_ambition.[2]}}
-        <li>This action is paradigm shifting and gives back more than it takes in, focusing on regeneration.
+        <li><b>To regenerate:</b> This action is paradigm shifting and gives back more than it takes in, focusing on regeneration.
       {{/if}}
     </ul>
 
     <h4>Together</h4>
     <ul>
       {{#if actionData.together_ambition.[0]}}
-        <li>This action is affordable and equally accessible to all communities.
+        <li><b>To Include:</b> This action is affordable and equally accessible to all communities.
       {{/if}}
       {{#if actionData.together_ambition.[1]}}
-        <li>This action helps overcome segregation between different communities.
+        <li><b>To Consolidate:</b> This action helps overcome segregation between different communities.
       {{/if}}
       {{#if actionData.together_ambition.[2]}}
-        <li>This action promotes new ways of communities living together and challenges unjust social models.
+        <li><b>To Transform:</b> This action promotes new ways of communities living together and challenges unjust social models.
       {{/if}}
     </ul>
 
     <h4>Participatory</h4>
     <ul>
       {{#if actionData.participatory_process_ambition.[0]}}
-        <li>This action keeps stakeholders informed and allows them to contribute.
+        <li><b>To Consult:</b> This action keeps stakeholders informed and allows them to contribute.
       {{/if}}
       {{#if actionData.participatory_process_ambition.[1]}}
-        <li>This action includes stakeholders in the decision making process and enables them to shape the final action's output.
+        <li><b>To Co-Develop:</b> This action includes stakeholders in the decision making process and enables them to shape the final action's output.
       {{/if}}
       {{#if actionData.participatory_process_ambition.[2]}}
-        <li>This action empowers stakeholders to take control and create a sustained grass-roots initiative beyond the initial action's implementation.
+        <li><b>To Self-Govern:</b> This action empowers stakeholders to take control and create a sustained grass-roots initiative beyond the initial action's implementation.
       {{/if}}
     </ul>
 
     <h4>Multi-Level Enagement</h4>
     <ul>
       {{#if actionData.multi_level_engagement_ambition.[0]}}
-        <li>This action interacts with local networks and communities.
+        <li><b>To Work Locally:</b> This action interacts with local networks and communities.
       {{/if}}
       {{#if actionData.multi_level_engagement_ambition.[1]}}
-        <li>This action interacts with networks and/or institutions that are active beyond the scale of the action itself (e.g. from local to regional, from national to international)
+        <li><b>To Work Accross:</b> This action interacts with networks and/or institutions that are active beyond the scale of the action itself (e.g. from local to regional, from national to international)
       {{/if}}
       {{#if actionData.multi_level_engagement_ambition.[2]}}
-        <li>This action aims at achieving a global transformational impact.
+        <li><b>To Work Globally:</b> This action aims at achieving a global transformational impact.
       {{/if}}
     </ul>
     <h4>Transdiciplinary</h4>
     <ul>
       {{#if actionData.transdiciplinary_ambition.[0]}}
-        <li>This action involves people from different disciplines working in parallel.
+        <li><b>Multidisciplinary:</b> This action involves people from different disciplines working in parallel.
       {{/if}}
       {{#if actionData.transdiciplinary_ambition.[1]}}
-        <li>This action involves people from different disciplines interacting and working together on it and allows for new knowledge creation.
+        <li><b>Interdisciplinary:</b> This action involves people from different disciplines interacting and working together on it and allows for new knowledge creation.
       {{/if}}
       {{#if actionData.transdiciplinary_ambition.[2]}}
-        <li>This action transcends the traditional discipline boundaries, giving equal value to formal and informal knowledge, and seeks a more holistic and comprehensive understanding.
+        <li><b>Beyond Disciplinary:</b> This action transcends the traditional discipline boundaries, giving equal value to formal and informal knowledge, and seeks a more holistic and comprehensive understanding.
       {{/if}}
     </ul>
   </section>
