@@ -62,7 +62,7 @@
     </div>
     <section id="profile-actions" aria-label="actions">
       <h3>Your Actions</h3>
-      <a class="button" href="/action/create">Create an Action</a>
+      <a class="button" href="{{#if profile.verified}}/action/create{{else}}/profile/verify{{/if}}">Create an Action</a>
       {{#if actions}}
         <style>
           .action-row{

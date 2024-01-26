@@ -1,6 +1,7 @@
 const { param, body, validationResult } = require('express-validator');
 const slug = require('slug');
 const { nanoid } = require('nanoid');
+const Profile = require('../models/profiles.js');
 const Action = require('../models/actions.js');
 const { getAmbitionLevels }= require('../services/new-european-bauhaus.js');
 const request = require('request-promise');
@@ -36,7 +37,15 @@ exports.post = [
       validationResult(req.params, req.body).throw();
     } catch (err) {
       res.status(400).json({ errors: err.array });
-      next(err);
+      return next(err);
+    }
+
+    try {
+      const isVerified = await Profile.getVerifiedStatusById(data.profileId);
+      if (!isVerified) return res.redirect('/profile/verify');
+    } catch (err) {
+      res.status(500).json({ errors: err.array });
+      return next(err);
     }
 
     var lat = req.body.lat;
@@ -60,7 +69,7 @@ exports.post = [
       await Action.create(data);
     } catch (err) {
       res.status(500).json({ errors: err.array });
-      next(err);
+      return next(err);
     }
 
     res.redirect(`/action/${data.slug}/image-upload`)

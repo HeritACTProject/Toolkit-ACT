@@ -56,6 +56,11 @@ module.exports.updateVerifiedById = (id) => {
       verified = excluded.verified;`);
 };
 
+module.exports.getVerifiedStatusById = (id) => {
+  const query = db.query('SELECT verified FROM profiles WHERE id = $id;');
+  return query.get({ $id: id }).verified;
+}
+
 module.exports.get = (id) => {
   const query = db.query('SELECT * FROM profiles WHERE id = $id;');
   return query.get({ $id: id });
