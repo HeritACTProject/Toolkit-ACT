@@ -21,10 +21,10 @@ exports.getSDGWheelNodeData = async (selectedTargetIds) => {
     targetsInGoal.forEach((target) => {
       const policiesTextArray = [];
       if(target.policies){
-        if(target.policies.neb){
+        if(target.policies?.neb){
           policiesTextArray.push("New European Bauhaus");
         }
-        if(target.policies.egd){
+        if(target.policies?.egd){
           policiesTextArray.push("European Green Deal");
         }
       }

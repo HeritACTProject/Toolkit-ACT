@@ -39,8 +39,8 @@ exports.generateContent = async (assessmentId) => {
   const policyCounts = {neb: 0, egd: 0}
 
   await selectedTargets.map((target) => {
-    if (target.policies.neb) policyCounts.neb += 1;
-    if (target.policies.egd) policyCounts.egd += 1;
+    if (target.policies?.neb) policyCounts.neb += 1;
+    if (target.policies?.egd) policyCounts.egd += 1;
   })
 
   return {
