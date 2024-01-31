@@ -7,7 +7,8 @@ module.exports.init = () => {
     proj_slug TEXT NOT NULL,
     donor_id TEXT NOT NULL,
     amount INTEGER NOT NULL,
-    date TEXT NOT NULL
+    date TEXT NOT NULL,
+    comment TEXT
   )`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_pledge_proj_slug
@@ -15,10 +16,10 @@ module.exports.init = () => {
   `);
 };
 
-module.exports.create = ({proj_slug, donor_id, amount}) => {
+module.exports.create = ({proj_slug, donor_id, amount, comment}) => {
   return db.run(`INSERT INTO pledges
-    ( proj_slug, donor_id, amount, date)
-    VALUES ("${proj_slug}", "${donor_id}", "${amount}", date('now'))
+    ( proj_slug, donor_id, amount, date, comment )
+    VALUES ("${proj_slug}", "${donor_id}", "${amount}", date('now'), "${comment}")
   `);
 };
 
@@ -30,7 +31,7 @@ module.exports.getByActionSlug = (slug) => {
 }
 
 module.exports.getByActionSlugWithDonorInfo = (slug) => {
-  const query = db.query(`SELECT amount, date, profiles.display_name AS donor_name,
+  const query = db.query(`SELECT amount, date, comment, profiles.display_name AS donor_name,
     donor_id, profiles.slug AS donor_slug FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id WHERE proj_slug = $slug
     ORDER BY date DESC, amount DESC;`);
   const results = query.all({ $slug: slug });
@@ -45,7 +46,7 @@ module.exports.getXMostRecentByActionSlug = (slug, x) => {
 }
 
 module.exports.getByDonorId = (donor_id) => {
-  const query = db.query(`SELECT amount, date, actions.name AS action_name,
+  const query = db.query(`SELECT amount, date, comment, actions.name AS action_name,
     proj_slug FROM pledges INNER JOIN actions ON pledges.proj_slug = actions.slug WHERE donor_id = $donor_id
     ORDER BY date DESC, amount DESC;
     LIMIT 3`);
@@ -55,7 +56,7 @@ module.exports.getByDonorId = (donor_id) => {
 
 module.exports.getPage = (offset) => {
   const query = db.query(`SELECT pledges.id AS pledge_id, amount, date, profiles.display_name AS donor_name,
-  donor_id, profiles.slug AS donor_slug FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
+  donor_id, profiles.slug AS donor_slug, pledges.comment AS comment FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
     LIMIT 11
     OFFSET ${offset};
   `);
@@ -68,7 +69,7 @@ module.exports.getPage = (offset) => {
 
 module.exports.getPageForAction = (offset, actionSlug) => {
   const query = db.query(`SELECT pledges.id AS pledge_id, amount, date, profiles.display_name AS donor_name,
-  donor_id, profiles.slug AS donor_slug FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
+  donor_id, profiles.slug AS donor_slug, pledges.comment AS comment FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
     WHERE proj_slug = "${actionSlug}"
     LIMIT 11
     OFFSET ${offset};

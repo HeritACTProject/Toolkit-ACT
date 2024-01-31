@@ -206,18 +206,21 @@
         <a class="pledge" href="/profile/{{actionData.pledges.[0].donor_slug}}">
           <p>{{actionData.pledges.[0].donor_name}}</p>
           <p><b>Pledged €{{actionData.pledges.[0].amount}}</b> {{actionData.pledges.[0].date}}</p>
+          <pre>"{{actionData.pledges.[0].comment}}"</pre>
         </a>
         {{/if}}
         {{#if actionData.pledges.[1]}}
         <a class="pledge" href="/profile/{{actionData.pledges.[1].donor_slug}}">
           <p>{{actionData.pledges.[1].donor_name}}</p>
           <p><b>Pledged €{{actionData.pledges.[1].amount}}</b> {{actionData.pledges.[1].date}}</p>
+          <pre>"{{actionData.pledges.[1].comment}}"</pre>
         </a>
         {{/if}}
         {{#if actionData.pledges.[2]}}
         <a class="pledge" href="/profile/{{actionData.pledges.[2].donor_slug}}">
           <p>{{actionData.pledges.[2].donor_name}}</p>
           <p><b>Pledged €{{actionData.pledges.[2].amount}}</b> {{actionData.pledges.[2].date}}</p>
+          <pre>"{{actionData.pledges.[2].comment}}"</pre>
         </a>
         {{/if}}
         <a href="/action/{{actionData.slug}}/pledges">View All Pledges</a>

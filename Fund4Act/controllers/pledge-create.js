@@ -4,11 +4,13 @@ const pledge = require('../models/pledges.js');
 exports.post = [
   [
     body('amount').notEmpty().isNumeric(),
+    body('comment').notEmpty(),
   ], async (req, res, next) => {
     const data = {
       proj_slug: req.params.slug,
       donor_id: req.user.id,
       amount: req.body.amount,
+      comment: req.body.comment,
     };
 
     try {
