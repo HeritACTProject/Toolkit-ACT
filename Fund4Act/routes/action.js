@@ -91,7 +91,7 @@ router.route('/:slug')
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     actionData.hasCompassData = await hasCompassData(actionData);
-    res.render('action', {user: req.user, actionData});
+    res.render('action', {user: req.user, actionData, emptyAmbition: [0,0,0]});
   });
 
   router.route('/:slug/pledges')

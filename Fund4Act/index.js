@@ -35,6 +35,15 @@ app.engine('hbs', engine({
     ifEquals(arg1, arg2, options) {
       return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
     },
+    ifNotEquals(arg1, arg2, options) {
+      if (Array.isArray(arg1) & Array.isArray(arg2)){
+        const arraysAreEqual = (arg1.length == arg2.length) && arg1.every(function(element, index) {
+          return element === arg2[index]; 
+        });
+        return (!arraysAreEqual) ? options.fn(this) : options.inverse(this);
+      }
+      return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+    },
   },
 }));
 app.set('view engine', 'hbs');
