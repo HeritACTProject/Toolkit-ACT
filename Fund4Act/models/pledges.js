@@ -65,3 +65,17 @@ module.exports.getPage = (offset) => {
 
   return {results, lastValue};
 }
+
+module.exports.getPageForAction = (offset, actionSlug) => {
+  const query = db.query(`SELECT pledges.id AS pledge_id, amount, date, profiles.display_name AS donor_name,
+  donor_id, profiles.slug AS donor_slug FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
+    WHERE proj_slug = "${actionSlug}"
+    LIMIT 11
+    OFFSET ${offset};
+  `);
+  const results = query.all();
+
+  const lastValue = results?.at(-1)?.pledge_id
+
+  return {results, lastValue};
+}

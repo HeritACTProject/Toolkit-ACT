@@ -97,7 +97,7 @@ router.route('/:slug')
   router.route('/:slug/pledges')
   .get(
     async (req, res) => {
-      const { results, lastValue } = Pledge.getPage(0);
+      const { results, lastValue } = Pledge.getPageForAction(0, req.params.slug);
       const pledges = results.slice(0, 9);
       const action = await Action.getByActionSlug(req.params.slug);
 
@@ -107,7 +107,7 @@ router.route('/:slug')
     })
   .post(
     async (req, res) => {
-      const {results, lastValue} = Pledge.getPage(req.body.offset);
+      const {results, lastValue} = Pledge.getPageForAction(req.body.offset, req.params.slug);
       const pledges = results.slice(0, 9);
       const action = await Action.getByActionSlug(req.params.slug);
 
