@@ -26,8 +26,10 @@
 </style>
 <main class="wide">
 <h1>{{profile.display_name}}</h1>
+{{#if profile.email}}
 <h2>Contact:</h2>
 <p>{{profile.email}}</p>
+{{/if}}
 {{#if profile.website_url}}<p><a href="/redirect/{{profile.website_url}}"><visit website</a></p>{{/if}}
 {{#if actions}}
     <h2>Our Actions:</h2>
@@ -44,8 +46,10 @@
         <p>{{this.date}} - Pledged €{{this.amount}} to <a href="/action/{{this.proj_slug}}">{{this.action_name}}</a></p>
     {{/each}}
 {{/if}}
+{{#if profile.mission}}
 <h2>Our Mission:</h2>
 <pre>{{profile.mission}}</pre>
+{{/if}}
 
 {{#if profile.previous_actions}}
 <h2>Our Previous Actions:</h2>
@@ -59,9 +63,11 @@
 <h2>Our Partnerships:</h2>
 <pre>{{profile.partnerships}}</pre>
 {{/if}}
+{{#if profile.constitution_url}}
 <h2>Our Documents</h2>
 <div class="column">
 <a href="/redirect/{{profile.constitution_url}}" target="_blank">Our Constitution</a>
+{{/if}}
 {{#if profile.climate_action_plan_url}}
 <a href="/redirect/{{profile.climate_action_plan_url}}" target="_blank">Our Climate Action Plan</a>
 {{/if}}

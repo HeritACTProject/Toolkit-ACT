@@ -1,4 +1,5 @@
 const express = require('express');
+const he = require('he');
 const router = express.Router();
 const { param, body, validationResult } = require('express-validator');
 const updateActionCreator = require('../controllers/action-creator-update.js');
@@ -14,7 +15,11 @@ router.route('/')
   .get(ensureLoggedIn, async (req, res) => {
     const user = req.user;
     const profile = await Profile.get(user.id);
-    const actions = await Action.getByProfileId(user.id);
+    var actions = await Action.getByProfileId(user.id);
+    actions = actions.map((action)=>{
+      action.name = he.decode(action.name);
+      return action;
+    })
     res.render('profile', {user: user, profile, actions});
   })
   .post(
@@ -63,6 +68,12 @@ router.route('/:slug')
 
       profile.constitution_url = encodeURIComponent(profile.constitution_url);
       profile.climate_action_plan_url = encodeURIComponent(profile.climate_action_plan_url);
+      
+      profile.display_name = he.decode(profile.display_name);
+      profile.mission = he.decode(profile.mission);
+      profile.previous_actions = he.decode(profile.previous_actions);
+      profile.previous_grants = he.decode(profile.previous_grants);
+      profile.partnerships = he.decode(profile.partnerships);
 
       res.render('public-profile', {user: req.user, profile, actions, pledges});
     } catch (err) {

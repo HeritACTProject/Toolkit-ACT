@@ -9,6 +9,7 @@ const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
 const Profile = require('../models/profiles.js')
 const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
+const he = require('he');
 
 const ensureLoggedIn = ensureLogIn();
 
@@ -84,8 +85,10 @@ router.route('/:slug')
   .get(async (req, res) => {
     let actionData = await Action.getByActionSlug(req.params.slug);
     const profile = await Profile.getProfileInfo(actionData.profile_id);
-    actionData.display_name = profile.display_name;
+    actionData.display_name = he.decode(profile.display_name);
     actionData.profile_slug = profile.slug;
+    actionData.name = he.decode(actionData.name);
+    actionData.overview = he.decode(actionData.overview);
     actionData = await transformAmbitions(actionData);
     actionData.category = await transformCateory(actionData.category);
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
@@ -165,6 +168,9 @@ router.route('/:slug/edit/info')
       const action = await Action.getByActionSlug(req.params.slug);
 
       if (!action) { throw Error('404'); }
+
+      action.name = he.decode(action.name);
+      action.overview = he.decode(action.overview);
 
       action.category = action.category.split(',');
       action.category = action.category.reduce((acc,curr)=> (acc[curr.toLowerCase().replace(/\s+/g, '_')]=true,acc),{});

@@ -1,5 +1,6 @@
 const action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
+const he = require('he');
 
 exports.get = async (req, res, next) => {
   try {
@@ -8,6 +9,7 @@ exports.get = async (req, res, next) => {
     mostUrgent = await Promise.all(mostUrgent.map(async (action)=>{
       const pledges = await Pledge.getByActionSlug(action.slug);
       action.total_pledged = pledges.reduce((a, {amount}) => a + amount, 0);
+      action.name= he.decode(action.name);
       return action;
     }));
 

@@ -16,6 +16,7 @@
     "express-validator": "^7.0.1",
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^5.2.0",
+    "he": "^1.2.0",
     "helmet": "^7.0.0",
     "http-errors": "^2.0.0",
     "nanoid": "^5.0.3",
