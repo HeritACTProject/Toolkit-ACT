@@ -342,7 +342,7 @@ function downloadReport() {
   $('.download-pdf-button').click(function() {
     document.title = $('.action-name').text();
     window.print();
-    document.title = "SDG Tag Tool";
+    document.title = "SustainAct";
   })
 }
 
