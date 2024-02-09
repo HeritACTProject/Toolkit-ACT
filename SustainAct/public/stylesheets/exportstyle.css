@@ -98,11 +98,11 @@
   }
   
   .footer {
-    margin-top: 35%;
     text-align: right;
     margin-left: auto;
     width: 100%;
-    position: relative;
+    position: absolute;
+    bottom: 100px;
     margin-bottom: 0 !important; 
     page-break-inside: avoid !important;
     page-break-before: auto !important;
