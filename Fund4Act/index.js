@@ -38,7 +38,7 @@ app.engine('hbs', engine({
     ifNotEquals(arg1, arg2, options) {
       if (Array.isArray(arg1) & Array.isArray(arg2)){
         const arraysAreEqual = (arg1.length == arg2.length) && arg1.every(function(element, index) {
-          return element === arg2[index]; 
+          return element === arg2[index];
         });
         return (!arraysAreEqual) ? options.fn(this) : options.inverse(this);
       }
@@ -67,8 +67,9 @@ app.use('/action', actionRouter);
 app.use('/resource', resourceRouter);
 app.use('/redirect', redirectRouter);
 app.use('/admin', adminRouter);
-app.use('/login', passport.authenticate('SimpleLogin'));
-app.use('/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}), 
+app.use('/login', (req,res) => res.render('login'));
+app.use('/auth/simplelogin', passport.authenticate('SimpleLogin'));
+app.use('/simplelogin/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}),
 (req, res) => {
   res.redirect(req.session.returnTo ||'/');
   delete req.session.returnTo;

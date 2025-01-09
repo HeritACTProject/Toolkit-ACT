@@ -68,7 +68,7 @@ router.route('/:slug')
 
       profile.constitution_url = encodeURIComponent(profile.constitution_url);
       profile.climate_action_plan_url = encodeURIComponent(profile.climate_action_plan_url);
-      
+
       profile.display_name = he.decode(profile.display_name);
       profile.mission = he.decode(profile.mission);
       profile.previous_actions = he.decode(profile.previous_actions);

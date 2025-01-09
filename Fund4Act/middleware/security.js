@@ -9,17 +9,20 @@ module.exports.init = (app) => {
           "'self'",
           "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
           "'unsafe-inline'",
+          "https://accounts.google.com/gsi/style",
         ],
         'script-src': [
           "'self'",
           "'unsafe-inline'",
           "data:",
           "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+          "https://accounts.google.com/gsi/client",
         ],
         'default-src': [
           "'self'",
           "data:",
           "https://nominatim.openstreetmap.org",
+          "https://accounts.google.com/gsi/",
         ],
         'img-src': [
           "'self'",
