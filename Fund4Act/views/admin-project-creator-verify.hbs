@@ -1,15 +1,45 @@
 {{>header}}
 <link rel="stylesheet" href="/styles/normform.min.css"/>
 <style>
+  form{
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    padding:1rem;
+    max-width: 50ch;
+  }
   #status-message{
     color: green;
   }
+  h2{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: .5rem;
+  }
+  p{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  #ticket-id{
+    border-style: solid;
+    border-width: 1px;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+    border-radius: 5px;
+  }
+  #submit-button{
+    padding: .5rem;
+  }
 </style>
+<h2>Admin Page</h1>
+<p>This page is for ACT admins only. Use this page to verify users. Reminder, user's can't create actions until they have been verified by an administrator</p>
+<form method="POST">
+  <label for="ticket-id">Enter verification code provided by user (typically a 4 digit number e.g. '1111')</label>
+  <input type="text" id="ticket-id" name="ticket-id" required>
+  <input id="submit-button" type="submit" value="Submit">
+</form>
 {{#if statusMsg}}
   <span id="status-message"><p>{{statusMsg}}</p></span>
 {{/if}}
-<form method="POST">
-  <label for="ticket-id">Enter ticket No.</label>
-  <input type="text" id="ticket-id" name="ticket-id" required>
-  <input type="submit">
-</form>
