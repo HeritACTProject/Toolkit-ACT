@@ -53,6 +53,12 @@
     gap: 1rem;
   }
 
+  .row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   .column{
     display: flex;
     flex-wrap: wrap;
@@ -140,8 +146,7 @@
       margin: auto;
     }
 
-    #overview .column:first-child{
-      flex-direction: row;
+    #overview .row:first-child{
       gap: 1rem;
     }
 
@@ -157,38 +162,43 @@
 
 <main class="wide">
   <h1>{{actionData.name}}</h1>
-  <section id="overview" aria-label="pledges">
+  <section id="overview" aria-label="overview">
+    {{#if actionData.deleted}}
+      <p>This action has been deleted</p>
+    {{else}}
+      <div class="row">
+      <div class="column">
+        <div id="map"></div>
+        <script type='text/javascript'>
+          // center of the map
+          var start = [{{actionData.latitude}}, {{actionData.longitude}}];
+
+          // Create the map
+          var map = L.map('map', {zoomControl: false}).setView(start, 12);
+          map.dragging.disable();
+          map.scrollWheelZoom.disable();
+
+          // Set up the OSM layer
+          L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 18,
+              minZoom: 3
+            }).addTo(map);
+
+          L.marker([{{actionData.latitude}}, {{actionData.longitude}}]).addTo(map);
+        </script>
+      </div>
     <div class="column">
-    <div class="row">
-      <div id="map"></div>
-    <script type='text/javascript'>
-      // center of the map
-      var start = [{{actionData.latitude}}, {{actionData.longitude}}];
-
-      // Create the map
-      var map = L.map('map', {zoomControl: false}).setView(start, 12);
-      map.dragging.disable();
-      map.scrollWheelZoom.disable();
-
-      // Set up the OSM layer
-      L.tileLayer(
-        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-          minZoom: 3
-        }).addTo(map);
-
-      L.marker([{{actionData.latitude}}, {{actionData.longitude}}]).addTo(map);
-    </script>
-    </div>
-    <div class="row">
       <img src="/images/upload/{{actionData.profile_id}}/{{actionData.slug}}.webp" id="overview-image" alt="action image">
     </div>
     </div>
+    {{/if}}
     <div id="pledge" class="column">
       <label for="fundraising"><b>€{{actionData.pledgeTotal}}</b> pledged of €{{actionData.fundraising_target}} target</label>
       <progress id="fundraising" max="{{actionData.fundraising_target}}" value="{{actionData.pledgeTotal}}">{{actionData.fundraising_target}}</progress>
       <p>Funding Deadline: {{actionData.fundraising_deadline}}</p>
 
+      {{#unless actionData.deleted}}
       <a class="button" href="/action/{{actionData.slug}}/pledge">Pledge Now</a>
       <button class="button-secondary" id="share">Share</button>
       <script>
@@ -202,6 +212,7 @@
           });
         });
       </script>
+      {{/unless}}
         {{#if actionData.pledges}}
         {{#if actionData.pledges.[0]}}
         <a class="pledge" href="/profile/{{actionData.pledges.[0].donor_slug}}">
@@ -342,7 +353,7 @@
       <text transform="translate(16.24 282.84)"><tspan x="5" y="0" class="st20 st21">Transdisciplinary approach</tspan></text>
       <text xmlns="http://www.w3.org/2000/svg" transform="matrix(1 0 0 1 54.9028 297.95)" class="st17 st18">AMBITION I: to be multidisciplinary</text>
       <path id="Ambition_I:_to_be_multidisciplinary" class="st6" d="m238.3 161.1-14 34"></path>
-      {{/if}}      
+      {{/if}}
     </svg>
     </div>
     {{#ifNotEquals actionData.beauty_ambition emptyAmbition}}

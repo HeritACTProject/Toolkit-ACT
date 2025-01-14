@@ -29,7 +29,6 @@ module.exports.init = (app, passport) => {
       passReqToCallback   : true
     },
     function(request, accessToken, refreshToken, profile, done) {
-      console.log(accessToken, profile)
       return done(null, profile);
     }
   ));
@@ -49,7 +48,6 @@ module.exports.init = (app, passport) => {
     // openid needs to be in scope
     scope: 'openid'
   }, (issuer, profile, done) => {
-    console.log(profile)
     return done(null, profile);
   }));
 }

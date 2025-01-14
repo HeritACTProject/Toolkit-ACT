@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const createAction = require('../controllers/action-create.js');
+const deleteAction = require('../controllers/action-delete.js');
 const createPledge = require('../controllers/pledge-create.js');
 const createProfile = require('../controllers/profile-create.js');
 const updateAction = require('../controllers/action-update.js');
 const { convertImage } = require('../controllers/image-upload.js');
+const { deleteImage } = require('../controllers/image-delete.js');
 const Action = require('../models/actions.js');
 const Pledge = require('../models/pledges.js');
 const Profile = require('../models/profiles.js')
@@ -123,6 +125,12 @@ router.route('/:slug/pledge')
   .get(ensureLoggedIn, async (req, res) => {
     const profile = await Profile.getProfileInfo(req.user.id);
     const action = await Action.getByActionSlug(req.params.slug);
+
+    if (action.deleted) {
+      res.redirect(`/action/${req.params.slug}`);
+      return;
+    }
+
     res.render('pledge-form', {user: req.user, profile, action});
   })
   .post(
@@ -132,6 +140,12 @@ router.route('/:slug/pledge')
     async (req, res, next) => {
       const action = await Action.getByActionSlug(req.params.slug);
       const actionOwner = await Profile.getProfileInfo(action.profile_id);
+
+      if (action.deleted) {
+        res.redirect(`/action/${req.params.slug}`);
+        return;
+      }
+
       res.render('pledge-confirmation', {user: req.user, slug: req.params.slug, actionOwner})
     })
 
@@ -230,7 +244,12 @@ router.route('/:slug/edit/funding')
 
 router.route('/:slug/delete')
   .get(ensureLoggedIn, async (req, res) => {
-    res.send('Delete Project Coming Soon');
+    res.render('delete-action');
   })
+  .post(ensureLoggedIn, async (req, res) => {
+    await deleteAction.deleteActionBySlug(req.params.slug, req.user.id);
+    await deleteImage(req.user.id, req.params.slug);
+    res.redirect('/profile');
+  });
 
 module.exports = router;

@@ -23,7 +23,8 @@ module.exports.init = () => {
     together_ambition TEXT,
     participatory_process_ambition TEXT,
     multi_level_engagement_ambition TEXT,
-    transdiciplinary_ambition TEXT
+    transdiciplinary_ambition TEXT,
+    deleted INTEGER DEFAULT 0
   )`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_action_id
@@ -52,7 +53,8 @@ module.exports.updateInfoBySlug = (slug, {profileId, name, address, lat, lon, ov
     name = "${name}", address = "${address}",
       latitude = "${lat}", longitude = "${lon}", overview = "${overview}",
       start_date = "${startDate}", end_date = "${endDate}", category = "${category}"
-    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}
+    AND deleted IS FALSE;"
   `);
 };
 
@@ -64,7 +66,8 @@ module.exports.updateAmbitionsBySlug = (slug, {profileId, beautyAmbition, sustai
       participatory_process_ambition = "${participProcessAmbition}",
       multi_level_engagement_ambition = "${multiLevelEngagementAmbition}",
       transdiciplinary_ambition = "${transdiciplinaryAmbition}"
-    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}
+    AND deleted IS FALSE;"
   `);
 };
 
@@ -72,12 +75,25 @@ module.exports.updateFundingBySlug = (slug, {profileId, total, target, deadline}
   return db.run(`UPDATE actions SET
     fundraising_total = "${total}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}"
-    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}
+    AND deleted IS FALSE;"
   `);
 };
 
+module.exports.deleteActionBySlug = (slug, profileId) => {
+  return db.run(`UPDATE actions SET
+    image_url = "",
+      address = "",
+      latitude = "",
+      longitude = "",
+      overview = "",
+      deleted = 1
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    `);
+};
+
 module.exports.getByProfileId = (pid) => {
-  const query = db.query('SELECT * FROM actions WHERE profile_id = $pid;');
+  const query = db.query('SELECT * FROM actions WHERE profile_id = $pid AND deleted IS FALSE;');
   const results = query.all({ $pid: pid});
   return results;
 }
@@ -86,6 +102,7 @@ module.exports.getPublicByProfileId = (pid) => {
   const query = db.query(`
     SELECT * FROM actions
     WHERE profile_id = $pid
+    AND deleted IS FALSE
     AND fundraising_deadline IS NOT "undefined";
   `);
   const results = query.all({ $pid: pid});
@@ -109,6 +126,7 @@ module.exports.getByActionSlug = (slug) => {
 module.exports.getXMostUrgent = (x) => {
   const query = db.query(`SELECT * FROM actions
     WHERE fundraising_deadline IS NOT "undefined"
+    AND deleted IS FALSE
     ORDER BY fundraising_deadline DESC LIMIT $limit;`);
   const results = query.all({ $limit: x });
   return results;
@@ -118,6 +136,7 @@ module.exports.getAllCoordinatesAndSlugs = () => {
   const query = db.query(`
     SELECT latitude, longitude, slug FROM actions
     WHERE fundraising_deadline IS NOT "undefined"
+    AND deleted IS FALSE;
   `);
   const results = query.all();
   return results;
@@ -126,6 +145,7 @@ module.exports.getAllCoordinatesAndSlugs = () => {
 module.exports.getPage = (offset) => {
   const query = db.query(`SELECT id, name, profile_id, slug, fundraising_deadline, fundraising_target FROM actions
     WHERE fundraising_deadline IS NOT "undefined"
+    AND deleted IS FALSE
     LIMIT 11
     OFFSET "${offset}";
   `);
