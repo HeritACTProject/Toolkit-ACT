@@ -68,8 +68,14 @@ app.use('/resource', resourceRouter);
 app.use('/redirect', redirectRouter);
 app.use('/admin', adminRouter);
 app.use('/login', (req,res) => res.render('login'));
+app.get('/auth/google', passport.authenticate('google', { scope: [ 'email', 'profile' ] }));
 app.use('/auth/simplelogin', passport.authenticate('SimpleLogin'));
-app.use('/simplelogin/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true}),
+app.get( '/auth/google/callback', passport.authenticate( 'google', { failureRedirect: '/login', keepSessionInfo: true }),
+(req, res) => {
+  res.redirect(req.session.returnTo ||'/');
+  delete req.session.returnTo;
+});
+app.use('/simplelogin/callback', passport.authenticate('SimpleLogin', { failureRedirect: '/login', keepSessionInfo: true }),
 (req, res) => {
   res.redirect(req.session.returnTo ||'/');
   delete req.session.returnTo;
