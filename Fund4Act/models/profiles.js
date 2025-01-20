@@ -29,7 +29,7 @@ module.exports.saveProfileInfo = ({id, displayName, slug}) => {
 };
 
 module.exports.getProfileInfo = (id) => {
-  const query = db.query('SELECT display_name, slug, email FROM profiles WHERE id = $id;');
+  const query = db.query('SELECT logo_url, display_name, slug, email FROM profiles WHERE id = $id;');
   return query.get({ $id: id });
 }
 
@@ -69,4 +69,8 @@ module.exports.get = (id) => {
 module.exports.getBySlug = (slug) => {
   const query = db.query('SELECT * FROM profiles WHERE slug = $slug;');
   return query.get({ $slug: slug });
+}
+
+module.exports.setLogoUrl = (id) => {
+  return db.run(`UPDATE profiles SET logo_url = "/images/upload/${id}/profile_image.webp" WHERE id = "${id}"`)
 }

@@ -21,7 +21,20 @@
     <p>{{this.donor_name}}</p>
     <p><b>Pledged €{{this.amount}}</b> {{this.date}}</p>
     <pre>"{{this.comment}}"</pre>
+    {{#if this.received}}
+      <p title="The action owner has confirmed that this pledge has been received">Donation received</p>
+    {{/if}}
   </a>
+  {{#if @root.isActionOwner}}
+  <a href="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/delete">delete</a>
+  <form method="POST">
+    {{#if this.received}}
+      <button formaction="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/notreceived">Undo mark as received</button>
+    {{else}}
+      <button formmethod="POST" formaction="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/received">Mark as received</button>
+    {{/if}}
+  </form>
+  {{/if}}
 {{/each}}
 </div>
 

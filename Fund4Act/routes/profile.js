@@ -3,6 +3,7 @@ const he = require('he');
 const router = express.Router();
 const { param, body, validationResult } = require('express-validator');
 const updateActionCreator = require('../controllers/action-creator-update.js');
+const { convertImage } = require('../controllers/image-upload.js');
 const createProfile = require('../controllers/profile-create.js');
 const Profile = require('../models/profiles.js');
 const Action = require('../models/actions.js');
@@ -36,7 +37,7 @@ router.route('/action-creator-prereq')
 
 router.route('/update-action-creator')
   .get(ensureLoggedIn, async (req, res) => {
-    res.render('action-creator-form');
+    res.render('action-creator-form', {user: req.user});
   })
   .post(
     ensureLoggedIn,
@@ -46,13 +47,30 @@ router.route('/update-action-creator')
     }
   );
 
+router.route('/action-creator-image')
+  .get(ensureLoggedIn, async (req, res) => {
+    res.render('action-creator-image-form', {user: req.user});
+  })
+  .post(
+    ensureLoggedIn,
+    async (req,res, next) => {
+      try {
+        if (!req.body.image) {
+          throw Error('500');
+        }
+        const convertedImage = await convertImage(req.user.id, 'profile_image', req.body['image'])
+        await Profile.setLogoUrl(req.user.id);
+        res.redirect(`/profile`);
+      } catch (e) {
+        next();
+        return;
+      }
+    });
+
 router.route('/verify')
   .get(ensureLoggedIn, async (req, res) => {
     res.render('action-creator-verify', {user: req.user})
   })
-  .post(ensureLoggedIn, async (req, res) => {
-    console.log(req.body);
-  });
 
 router.route('/edit')
   .get(ensureLoggedIn, async (req, res) => {

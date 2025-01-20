@@ -8,8 +8,9 @@ module.exports.init = () => {
     donor_id TEXT NOT NULL,
     amount INTEGER NOT NULL,
     date TEXT NOT NULL,
-    comment TEXT
-  )`);
+    comment TEXT,
+    received INTEGER DEFAULT 0
+  );`);
 
   db.run(`CREATE INDEX IF NOT EXISTS idx_pledge_proj_slug
     ON pledges (proj_slug);
@@ -38,7 +39,7 @@ module.exports.getByActionSlugWithDonorInfo = (slug) => {
   return results;
 }
 
-module.exports.getXMostRecentByActionSlug = (slug, x) => {
+module.exports.getMostRecentByActionSlug = (slug, x) => {
   const query = db.query(`SELECT * FROM pledges WHERE proj_slug = $slug
     ORDER BY date DESC LIMIT $limit;`);
   const results = query.all({ $slug: slug, $limit: x });
@@ -69,7 +70,7 @@ module.exports.getPage = (offset) => {
 
 module.exports.getPageForAction = (offset, actionSlug) => {
   const query = db.query(`SELECT pledges.id AS pledge_id, amount, date, profiles.display_name AS donor_name,
-  donor_id, profiles.slug AS donor_slug, pledges.comment AS comment FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
+  donor_id, profiles.slug AS donor_slug, pledges.comment AS comment, pledges.received AS received FROM pledges INNER JOIN profiles ON pledges.donor_id = profiles.id
     WHERE proj_slug = "${actionSlug}"
     LIMIT 11
     OFFSET ${offset};
@@ -79,4 +80,16 @@ module.exports.getPageForAction = (offset, actionSlug) => {
   const lastValue = results?.at(-1)?.pledge_id
 
   return {results, lastValue};
+}
+
+module.exports.markReceived = (pledgeId) => {
+  return db.run(`UPDATE pledges SET received = 1 WHERE id = ${pledgeId};`);
+}
+
+module.exports.markNotReceived = (pledgeId) => {
+  return db.run(`UPDATE pledges SET received = 0 WHERE id = ${pledgeId};`);
+}
+
+module.exports.delete = (pledgeId) => {
+  return db.run(`DELETE FROM pledges WHERE id = ${pledgeId};`);
 }

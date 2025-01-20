@@ -87,6 +87,7 @@ router.route('/:slug')
   .get(async (req, res) => {
     let actionData = await Action.getByActionSlug(req.params.slug);
     const profile = await Profile.getProfileInfo(actionData.profile_id);
+    actionData.profileImageUrl = profile.logo_url;
     actionData.display_name = he.decode(profile.display_name);
     actionData.profile_slug = profile.slug;
     actionData.name = he.decode(actionData.name);
@@ -96,7 +97,7 @@ router.route('/:slug')
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     actionData.hasCompassData = await hasCompassData(actionData);
-    res.render('action', {user: req.user, actionData, emptyAmbition: [0,0,0]});
+    res.render('action', {user: req.user, actionData, profile, emptyAmbition: [0,0,0]});
   });
 
   router.route('/:slug/pledges')
@@ -106,9 +107,10 @@ router.route('/:slug')
       const pledges = results.slice(0, 9);
       const action = await Action.getByActionSlug(req.params.slug);
 
+      const isActionOwner = action.profile_id === req.user?.id;
       const isLastPage = !results[10];
 
-      res.render('pledge-browse.hbs', {user: req.user, pledges, action, lastValue, isLastPage});
+      res.render('pledge-browse.hbs', {user: req.user, pledges, action, lastValue, isLastPage, isActionOwner});
     })
   .post(
     async (req, res) => {
@@ -149,6 +151,52 @@ router.route('/:slug/pledge')
       res.render('pledge-confirmation', {user: req.user, slug: req.params.slug, actionOwner})
     })
 
+router.route('/:slug/pledge/:pledge_id/received')
+  .get(
+    async (req, res, next) => {
+      res.redirect(`/action/${req.params.slug}/pledges`)
+    }
+  )
+  .post(
+    ensureLoggedIn,
+    async (req, res, next) => {
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      if (action.profile_id !== req.user.id) return;
+
+      await Pledge.markReceived(req.params.pledge_id);
+
+      res.redirect(`/action/${req.params.slug}/pledges`)
+    });
+
+router.route('/:slug/pledge/:pledge_id/notreceived')
+  .get(
+    async (req, res, next) => {
+      res.redirect(`/action/${req.params.slug}/pledges`)
+    }
+  )
+  .post(
+    ensureLoggedIn,
+    async (req, res, next) => {
+      const action = await Action.getByActionSlug(req.params.slug);
+
+      if (action.profile_id !== req.user.id) return;
+
+      await Pledge.markNotReceived(req.params.pledge_id);
+
+      res.redirect(`/action/${req.params.slug}/pledges`);
+    });
+
+router.route('/:slug/pledge/:pledge_id/delete')
+  .get(ensureLoggedIn, async (req, res) => {
+    const actionSlug = req.params.slug;
+    res.render('delete-pledge', {actionSlug});
+  })
+  .post(ensureLoggedIn, async (req, res) => {
+    await Pledge.delete(req.params.pledge_id);
+    res.redirect(`/action/${req.params.slug}/pledges`);
+  });
+
 router.route('/:slug/image-upload')
   .get(
     ensureLoggedIn,
@@ -163,7 +211,6 @@ router.route('/:slug/image-upload')
           throw Error('500');
         }
         const convertedImage = await convertImage(req.user.id, req.params.slug, req.body['image'])
-        console.log(convertedImage);
         res.redirect(`/action/${req.params.slug}/edit/impact`);
       } catch (e) {
         next();

@@ -53,8 +53,8 @@ module.exports.updateInfoBySlug = (slug, {profileId, name, address, lat, lon, ov
     name = "${name}", address = "${address}",
       latitude = "${lat}", longitude = "${lon}", overview = "${overview}",
       start_date = "${startDate}", end_date = "${endDate}", category = "${category}"
-    WHERE slug  = "${slug}" AND profile_id = "${profileId}
-    AND deleted IS FALSE;"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    AND deleted IS FALSE;
   `);
 };
 
@@ -66,8 +66,8 @@ module.exports.updateAmbitionsBySlug = (slug, {profileId, beautyAmbition, sustai
       participatory_process_ambition = "${participProcessAmbition}",
       multi_level_engagement_ambition = "${multiLevelEngagementAmbition}",
       transdiciplinary_ambition = "${transdiciplinaryAmbition}"
-    WHERE slug  = "${slug}" AND profile_id = "${profileId}
-    AND deleted IS FALSE;"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    AND deleted IS FALSE;
   `);
 };
 
@@ -75,8 +75,8 @@ module.exports.updateFundingBySlug = (slug, {profileId, total, target, deadline}
   return db.run(`UPDATE actions SET
     fundraising_total = "${total}", fundraising_target = "${target}",
       fundraising_deadline = "${deadline}"
-    WHERE slug  = "${slug}" AND profile_id = "${profileId}
-    AND deleted IS FALSE;"
+    WHERE slug  = "${slug}" AND profile_id = "${profileId}"
+    AND deleted IS FALSE;
   `);
 };
 
