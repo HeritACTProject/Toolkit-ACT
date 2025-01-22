@@ -1,0 +1,104 @@
+{{> header}}]
+
+<style>
+    #faqs-container {
+        display: flex;
+        flex-direction: column;
+        gap:2rem;
+    }
+
+    details {
+        width: 100%;
+        text-align: left;
+        border-radius: 1.5rem;
+        outline-style: solid;
+        outline-color: lightgray;
+        outline-width: 2px;
+    }
+
+    details summary {
+        font-size: 1.75rem;
+        font-weight: 600;
+        line-height: 125%;
+        display: flex;
+        padding: 2.5rem;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    details[open] summary {padding-bottom: 0;}
+
+    summary .drop-icon {
+        min-width: 1rem;
+        height: 1rem;
+        background: #232323;
+        border-radius: 6.25rem;
+        padding: 0.625rem;
+        color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 1rem;
+        box-sizing: content-box;
+    }
+
+    details p {padding: 0 2.5rem 2.5rem 2.5rem; margin-bottom: 0;}
+    .drop-icon::before{content:'+';bottom:-.05rem;position:relative;}
+    details[open] .drop-icon::before{content:"-";top:-.1rem;position:relative;left:-.05rem;}
+
+    footer { min-height: 15rem; background: #16161d; color: #fdfdfd; padding: 2rem 1rem; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;}
+    footer p, footer h3 {margin:1rem 0;}
+    aside a, aside a:visited, footer a, footer a:visited {color: #fdfdfd;}
+    #text-below-faq{margin-top:1rem};
+
+    @media only screen and (min-width: 1000px) {
+        footer {
+            padding: 2rem 6rem;
+            flex-direction: row;
+            gap: 0;
+        }
+    }
+
+    @media only screen and (min-width: 1000px) {
+        footer a {
+            align-self: flex-end;
+            justify-self: flex-end;
+        }
+    }
+</style>
+
+<main>
+    <section>
+        <h1>FAQs</h1>
+        <div id="faqs-container">
+            <details>
+                <summary>Question 1 <span class="drop-icon"></span></summary>
+                <p>Answer 1</p>
+            </details>
+            <details>
+                <summary>Question 2 <span class="drop-icon"></span></summary>
+                <p>Answer 2</p>
+            </details>
+            <details>
+                <summary>Question 3 <span class="drop-icon"></span></summary>
+                <p>Answer 3</p>
+            </details>
+        </div>
+        <p id="text-below-faq">If you have any other questions about Fund4Act please reach out</p>
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+</main>
+<footer>
+  <div>
+  <h3>Contact</h3>
+  <p>hello@act-studio.com</p>
+  <p>Market Lane, Tone St,<br>Ballina, Co. Mayo,<br>Ireland</p>
+  </div>
+  <a href="/resource/privacy-policy" target="_blank">Privacy Policy</a>
+</footer>

@@ -11,4 +11,9 @@ router.get('/', async (req, res, next) => {
   res.render('index', {user: req.user, data, actions, profile});
 });
 
+router.get('/faqs', async (req, res, next) => {
+  const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;
+  res.render('faqs', {user: req.user, profile});
+});
+
 module.exports = router;

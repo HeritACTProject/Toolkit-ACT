@@ -85,11 +85,12 @@ router.route('/create')
 
 router.route('/:slug')
   .get(async (req, res) => {
+    const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;
     let actionData = await Action.getByActionSlug(req.params.slug);
-    const profile = await Profile.getProfileInfo(actionData.profile_id);
-    actionData.profileImageUrl = profile.logo_url;
-    actionData.display_name = he.decode(profile.display_name);
-    actionData.profile_slug = profile.slug;
+    const actionOwnerProfile = await Profile.getProfileInfo(actionData.profile_id);
+    actionData.profileImageUrl = actionOwnerProfile.logo_url;
+    actionData.display_name = he.decode(actionOwnerProfile.display_name);
+    actionData.profile_slug = actionOwnerProfile.slug;
     actionData.name = he.decode(actionData.name);
     actionData.overview = he.decode(actionData.overview);
     actionData = await transformAmbitions(actionData);

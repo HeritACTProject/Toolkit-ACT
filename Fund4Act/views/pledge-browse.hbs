@@ -11,30 +11,37 @@
   .pledge{margin: .75rem 0;}
   .pledge p{margin: 0;}
   .pledge, .pledge:hover, .pledge:active , .pledge:visited {text-decoration:none;color:#000;}
+  .pledge-row {display: flex; gap: 1; align-items: center; justify-content: space-between}
+  .pledge-owner-actions {display: flex; gap: 1rem; align-items: center;}
+  .pledge-action, .pledge-action:hover, .pledge-action:visited { background: none; color: #232323;border: none;text-decoration: underline; cursor: pointer;font-size: medium;}
 </style>
 <main class="wide">
-<h1>All pledges for <a href="/action/{{action.slug}}">{{action.name}}<a></h1>
+<h1>All pledges for <a href="/action/{{action.slug}}">{{action.name}}</a></h1>
 
 <div class="actions">
 {{#each pledges}}
-  <a class="pledge" href="/profile/{{this.donor_slug}}">
-    <p>{{this.donor_name}}</p>
-    <p><b>Pledged €{{this.amount}}</b> {{this.date}}</p>
-    <pre>"{{this.comment}}"</pre>
-    {{#if this.received}}
-      <p title="The action owner has confirmed that this pledge has been received">Donation received</p>
+  <div class="pledge-row">
+    <a class="pledge" href="/profile/{{this.donor_slug}}">
+      <p>{{this.donor_name}}</p>
+      <p><b>Pledged €{{this.amount}}</b> {{this.date}}</p>
+      <pre>"{{this.comment}}"</pre>
+      {{#if this.received}}
+        <p title="The action owner has confirmed that this pledge has been received">Donation received</p>
+      {{/if}}
+    </a>
+    {{#if @root.isActionOwner}}
+    <div class="pledge-owner-actions">
+      <form method="POST">
+        {{#if this.received}}
+          <button class="pledge-action" formaction="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/notreceived">undo mark as received</button>
+        {{else}}
+          <button class="pledge-action" formmethod="POST" formaction="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/received">mark as received</button>
+        {{/if}}
+      </form>
+      <a class="pledge-action" href="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/delete">delete</a>
+    </div>
     {{/if}}
-  </a>
-  {{#if @root.isActionOwner}}
-  <a href="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/delete">delete</a>
-  <form method="POST">
-    {{#if this.received}}
-      <button formaction="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/notreceived">Undo mark as received</button>
-    {{else}}
-      <button formmethod="POST" formaction="/action/{{@root.action.slug}}/pledge/{{this.pledge_id}}/received">Mark as received</button>
-    {{/if}}
-  </form>
-  {{/if}}
+  </div>
 {{/each}}
 </div>
 

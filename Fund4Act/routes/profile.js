@@ -80,20 +80,22 @@ router.route('/edit')
 router.route('/:slug')
   .get(async (req, res) => {
     try {
-      const profile = await Profile.getBySlug(req.params.slug);
-      const actions = await Action.getPublicByProfileId(profile.id);
-      const pledges = await Pledge.getByDonorId(profile.id);
+      const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;
+      const publicProfile = await Profile.getBySlug(req.params.slug);
+      const actions = await Action.getPublicByProfileId(publicProfile.id);
+      const pledges = await Pledge.getByDonorId(publicProfile.id);
 
-      profile.constitution_url = encodeURIComponent(profile.constitution_url);
-      profile.climate_action_plan_url = encodeURIComponent(profile.climate_action_plan_url);
+      publicProfile.constitution_url = encodeURIComponent(publicProfile.constitution_url);
+      publicProfile.climate_action_plan_url = encodeURIComponent(publicProfile.climate_action_plan_url);
 
-      profile.display_name = he.decode(profile.display_name);
-      profile.mission = he.decode(profile.mission);
-      profile.previous_actions = he.decode(profile.previous_actions);
-      profile.previous_grants = he.decode(profile.previous_grants);
-      profile.partnerships = he.decode(profile.partnerships);
+      publicProfile.display_name = he.decode(publicProfile.display_name);
+      publicProfile.mission = he.decode(publicProfile.mission);
+      publicProfile.previous_actions = he.decode(publicProfile.previous_actions);
+      publicProfile.previous_grants = he.decode(publicProfile.previous_grants);
+      publicProfile.partnerships = he.decode(publicProfile.partnerships);
 
-      res.render('public-profile', {user: req.user, profile, actions, pledges});
+
+      res.render('public-profile', {user: req.user, profile, publicProfile, actions, pledges});
     } catch (err) {
       res.status(404);
       res.render('error', { layout: false, error: { message: 'Sorry we can\'t find that page' } });

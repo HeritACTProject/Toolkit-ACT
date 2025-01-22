@@ -1,6 +1,70 @@
 <script src="https://accounts.google.com/gsi/client" async></script>
 
-{{>header}}
+<style>
+    #login-buttons-container {display: flex; flex-direction: column; gap: 1rem;}
 
-<a href="/auth/google">Log in with Google</a>
-<a href="/auth/simplelogin">Log in with SimpleLogin</a>
+    #login-section{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button{
+    text-decoration: none;
+    color: #232323;
+    border-radius: 5px;
+    padding: .75rem 1rem;
+    text-align: left;
+    font-size: 16px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #30732F;
+    margin: 0.5rem 0;
+    cursor:pointer;
+    max-width: 20rem;
+  }
+   .button:hover, .button:active {
+  text-decoration: none;
+  color: #232323;
+  }
+
+  .button:visited{
+    color: #232323;
+  }
+
+  .login-button {
+    display: flex;gap:.5rem;align-items: center;
+  }
+
+  .login-button svg {
+    height: 1.2rem;
+    width: 1.2rem;
+    color: #232323;
+  }
+  
+  #login-section {margin-top: 2rem;}
+  #logo {width:2rem;height:2rem;}
+  #login-container {background: #f5f5f4;border-radius: 10px;padding:3rem 2rem;display: flex;flex-direction: column;align-items: center;}
+  #login-section h2{margin-top: .5rem;}
+
+  @media only screen and (min-width: 1000px) {
+    #login-section {margin-top: 5rem;}
+  }
+</style>
+
+<main>
+    <section id="login-section">
+        <div id="login-container">
+            <img id="logo" src="/favicon.png">
+            <h2>Log in or sign up</h2>
+            <div id="login-buttons-container">
+                <a class="button login-button" href="/auth/google">
+                  <svg viewBox="0 0 48 48" id="b" xmlns="http://www.w3.org/2000/svg"><defs><style>.c{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round}</style></defs><path class="c" d="M38.66 40.3c4.065-3.752 6.41-9.264 6.41-15.811 0-1.525-.137-2.99-.39-4.398H24.43v8.326H36c-.507 2.678-2.032 4.945-4.319 6.47M5.236 33.656C8.774 40.672 16.026 45.5 24.43 45.5c5.805 0 10.672-1.915 14.23-5.2l-6.979-5.413c-1.915 1.29-4.358 2.072-7.251 2.072-5.59 0-10.34-3.773-12.04-8.854M5.236 14.364C3.77 17.257 2.93 20.521 2.93 24s.84 6.743 2.306 9.636l5.57-4.34 1.584-1.211c-.43-1.29-.684-2.658-.684-4.085s.254-2.795.684-4.085"/><path class="c" d="M24.43 11.06c3.166 0 5.98 1.095 8.229 3.206l6.156-6.156C35.082 4.63 30.235 2.5 24.43 2.5c-8.405 0-15.656 4.828-19.194 11.864l7.154 5.551c1.7-5.082 6.45-8.854 12.04-8.854Z"/></svg>
+                  Log in with Google
+                </a>
+                <a class="button login-button" href="/auth/simplelogin">Log in with SimpleLogin</a>
+            </div>
+        </div>
+    </section>
+</main>
+
