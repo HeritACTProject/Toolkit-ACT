@@ -104,6 +104,7 @@ router.route('/:slug')
   router.route('/:slug/pledges')
   .get(
     async (req, res) => {
+      const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;;
       const { results, lastValue } = Pledge.getPageForAction(0, req.params.slug);
       const pledges = results.slice(0, 9);
       const action = await Action.getByActionSlug(req.params.slug);
@@ -111,7 +112,7 @@ router.route('/:slug')
       const isActionOwner = action.profile_id === req.user?.id;
       const isLastPage = !results[10];
 
-      res.render('pledge-browse.hbs', {user: req.user, pledges, action, lastValue, isLastPage, isActionOwner});
+      res.render('pledge-browse.hbs', {user: req.user, profile, pledges, action, lastValue, isLastPage, isActionOwner});
     })
   .post(
     async (req, res) => {

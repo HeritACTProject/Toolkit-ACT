@@ -72,5 +72,8 @@ module.exports.getBySlug = (slug) => {
 }
 
 module.exports.setLogoUrl = (id) => {
-  return db.run(`UPDATE profiles SET logo_url = "/images/upload/${id}/profile_image.webp" WHERE id = "${id}"`)
-}
+  const timestamp = Date.now();
+  const logoUrl = `/images/upload/${id}/profile_image.webp?v=${timestamp}`; // forces browser to reload new image
+  
+  return db.run(`UPDATE profiles SET logo_url = "${logoUrl}" WHERE id = "${id}"`);
+};

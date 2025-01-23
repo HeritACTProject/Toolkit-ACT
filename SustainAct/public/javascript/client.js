@@ -401,7 +401,7 @@ function drawGoalsPost() {
   canvas.height = height;
 
   // Background
-  context.fillStyle = '#16161d';
+  context.fillStyle = '#191919';
   context.fillRect(0, 0, width, height);
 
   // Text
@@ -479,7 +479,7 @@ function drawGoalPost() {
   canvas.height = height;
 
   // Background
-  context.fillStyle = '#16161d';
+  context.fillStyle = '#191919';
   context.fillRect(0, 0, width, height);
 
   // Text
@@ -542,7 +542,7 @@ function drawWheelPost() {
   canvas.height = height;
 
   // Background
-  context.fillStyle = '#16161d';
+  context.fillStyle = '#191919';
   context.fillRect(0, 0, width, height);
 
   // Text
@@ -671,7 +671,7 @@ function drawTargetPost() {
   canvas.height = height;
 
   // Background
-  context.fillStyle = '#16161d';
+  context.fillStyle = '#191919';
   context.fillRect(0, 0, width, height);
 
   // Text

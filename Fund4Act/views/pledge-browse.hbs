@@ -8,12 +8,18 @@
   progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
   progress { color: #30732F; border-radius: 5px; border-width: 0; width: 15rem;}
   main {margin: 1rem;}
-  .pledge{margin: .75rem 0;}
+  .pledge{margin: .75rem 0; display: flex; gap:1rem;align-items: center;}
+  .pledge-recieved{user-select: none; color:#30732F; border-radius: 5px; padding: .5rem;display: flex;gap:.5rem;align-items: center;}
+  .pledge-recieved svg {width:1rem;height:1rem;}
   .pledge p{margin: 0;}
-  .pledge, .pledge:hover, .pledge:active , .pledge:visited {text-decoration:none;color:#000;}
+  .pledge a, .pledge a:hover, .pledge a:active , .pledge a:visited {text-decoration:none;color:#000;}
   .pledge-row {display: flex; gap: 1; align-items: center; justify-content: space-between}
   .pledge-owner-actions {display: flex; gap: 1rem; align-items: center;}
   .pledge-action, .pledge-action:hover, .pledge-action:visited { background: none; color: #232323;border: none;text-decoration: underline; cursor: pointer;font-size: medium;}
+
+  @media (prefers-color-scheme: dark) {
+    .pledge a, .pledge a:visited { color: #fff; }
+  }
 </style>
 <main class="wide">
 <h1>All pledges for <a href="/action/{{action.slug}}">{{action.name}}</a></h1>
@@ -21,14 +27,16 @@
 <div class="actions">
 {{#each pledges}}
   <div class="pledge-row">
-    <a class="pledge" href="/profile/{{this.donor_slug}}">
-      <p>{{this.donor_name}}</p>
-      <p><b>Pledged €{{this.amount}}</b> {{this.date}}</p>
-      <pre>"{{this.comment}}"</pre>
+    <div class="pledge">
+      <a href="/profile/{{this.donor_slug}}">
+        <p>{{this.donor_name}}</p>
+        <p><b>Pledged €{{this.amount}}</b> {{this.date}}</p>
+        <pre>"{{this.comment}}"</pre>
+      </a>
       {{#if this.received}}
-        <p title="The action owner has confirmed that this pledge has been received">Donation received</p>
+        <p class="pledge-recieved" title="The action owner has confirmed that this pledge has been received"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m7.294 12.958 3.21 3.21L17.674 9" stroke="#30732F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="#30732F" stroke-width="2"/></svg>Donation received</p>
       {{/if}}
-    </a>
+    </div>
     {{#if @root.isActionOwner}}
     <div class="pledge-owner-actions">
       <form method="POST">
