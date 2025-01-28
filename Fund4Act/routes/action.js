@@ -53,7 +53,13 @@ router.route('/')
 
       const isLastPage = !results[10];
 
-      res.render('action-browse.hbs', {user: req.user, actions, lastValue, isLastPage});
+      res.render('action-browse.hbs', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        actions,
+        lastValue,
+        isLastPage
+      });
     })
   .post(
     async (req, res) => {
@@ -69,14 +75,23 @@ router.route('/')
 
       const isLastPage = !results[10];
 
-      res.render('action-browse.hbs', {user: req.user, actions, lastValue, isLastPage});
+      res.render('action-browse.hbs', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        actions,
+        lastValue,
+        isLastPage
+      });
     });
 
 router.route('/create')
   .get(
     ensureLoggedIn,
     async (req, res) => {
-    res.render('action-info-form', {user: req.user});
+    res.render('action-info-form', {
+      profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+      user: req.user
+    });
   })
   .post(
     ensureLoggedIn,
@@ -98,7 +113,11 @@ router.route('/:slug')
     actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
     actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
     actionData.hasCompassData = await hasCompassData(actionData);
-    res.render('action', {user: req.user, actionData, profile, emptyAmbition: [0,0,0]});
+    res.render('action', {
+      user: req.user,
+      actionData,
+      profile,
+      emptyAmbition: [0,0,0]});
   });
 
   router.route('/:slug/pledges')
@@ -112,7 +131,15 @@ router.route('/:slug')
       const isActionOwner = action.profile_id === req.user?.id;
       const isLastPage = !results[10];
 
-      res.render('pledge-browse.hbs', {user: req.user, profile, pledges, action, lastValue, isLastPage, isActionOwner});
+      res.render('pledge-browse.hbs', {
+        user: req.user,
+        profile,
+        pledges,
+        action,
+        lastValue,
+        isLastPage,
+        isActionOwner
+      });
     })
   .post(
     async (req, res) => {
@@ -122,7 +149,13 @@ router.route('/:slug')
 
       const isLastPage = !results[10];
 
-      res.render('pledge-browse.hbs', {user: req.user, pledges, action,  lastValue, isLastPage});
+      res.render('pledge-browse.hbs', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        pledges, action,
+        lastValue,
+        isLastPage
+      });
     });
 
 router.route('/:slug/pledge')
@@ -135,7 +168,10 @@ router.route('/:slug/pledge')
       return;
     }
 
-    res.render('pledge-form', {user: req.user, profile, action});
+    res.render('pledge-form', {
+      user: req.user, profile,
+      action
+    });
   })
   .post(
     ensureLoggedIn,
@@ -150,7 +186,12 @@ router.route('/:slug/pledge')
         return;
       }
 
-      res.render('pledge-confirmation', {user: req.user, slug: req.params.slug, actionOwner})
+      res.render('pledge-confirmation', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        slug: req.params.slug,
+        actionOwner
+      });
     })
 
 router.route('/:slug/pledge/:pledge_id/received')
@@ -174,7 +215,10 @@ router.route('/:slug/pledge/:pledge_id/received')
 router.route('/:slug/pledge/:pledge_id/notreceived')
   .get(
     async (req, res, next) => {
-      res.redirect(`/action/${req.params.slug}/pledges`)
+      res.redirect(`/action/${req.params.slug}/pledges`, {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+      });
     }
   )
   .post(
@@ -192,7 +236,11 @@ router.route('/:slug/pledge/:pledge_id/notreceived')
 router.route('/:slug/pledge/:pledge_id/delete')
   .get(ensureLoggedIn, async (req, res) => {
     const actionSlug = req.params.slug;
-    res.render('delete-pledge', {actionSlug});
+    res.render('delete-pledge', {
+      profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+      user: req.user,
+      actionSlug
+    });
   })
   .post(ensureLoggedIn, async (req, res) => {
     await Pledge.delete(req.params.pledge_id);
@@ -203,7 +251,10 @@ router.route('/:slug/image-upload')
   .get(
     ensureLoggedIn,
     async (req, res, next) => {
-      res.render('image-upload', {user: req.user, action: {slug: req.params.slug}});
+      res.render('image-upload', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        action: {slug: req.params.slug}});
     })
   .post(
     ensureLoggedIn,
@@ -238,7 +289,11 @@ router.route('/:slug/edit/info')
       action.category = action.category.split(',');
       action.category = action.category.reduce((acc,curr)=> (acc[curr.toLowerCase().replace(/\s+/g, '_')]=true,acc),{});
 
-      res.render('action-info-form', {user: req.user, action});
+      res.render('action-info-form', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        action
+      });
     } catch (e) {
       next();
       return;
@@ -258,7 +313,11 @@ router.route('/:slug/edit/impact')
 
       actionData = await transformAmbitions(actionData);
 
-      res.render('action-impact-form', {user: req.user, actionData});
+      res.render('action-impact-form', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        actionData
+      });
     } catch (e) {
       next();
       return;
@@ -280,7 +339,12 @@ router.route('/:slug/edit/funding')
       action.category = action.category.reduce((acc,curr)=> (acc[curr.toLowerCase().replace(/\s+/g, '_')]=true,acc),{});
       action.hasNoCategories = Object.keys(action.category)[0] === "";
 
-      res.render('action-funding-form', {user: req.user, action});
+
+      res.render('action-funding-form', {
+        profile: {logo_url: `/images/upload/${req.user.id}/profile_image.webp`},
+        user: req.user,
+        action
+      });
     } catch (e) {
       next();
       return;
