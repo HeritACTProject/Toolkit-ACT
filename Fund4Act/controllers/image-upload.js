@@ -19,7 +19,10 @@ exports.convertImage = async (userId, filename, image) => {
     const decodedImage = Buffer.from(base64Image, "base64");
     await Bun.write(`${userDir}/${filename}`, decodedImage);
 
-    const {stdout, stderr, error} = await execFile('sh ./tools/convertImage.sh', [`${userDir}/${filename}`], {shell:true}, (error, stdout, stderr) => {
+    const resolution = filename === 'profile_image' ? 160 : 320;
+
+    // convertImage.sh takes file name and resolution in px as input
+    const {stdout, stderr, error} = await execFile('sh ./tools/convertImage.sh', [`${userDir}/${filename}`, resolution], {shell:true}, (error, stdout, stderr) => {
       if (error) {
         throw error;
       }
