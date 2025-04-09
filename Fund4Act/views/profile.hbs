@@ -64,6 +64,11 @@
   #action-creator-button{width: 20rem;}
 
   main{display: flex; flex-direction: column; margin: 1rem; }
+
+  @media (prefers-color-scheme: dark) {
+    .action-row { border-color: #fff; }
+    .button-secondary { background: #000; }
+  }
 </style>
 
 {{#if profile.display_name}}
@@ -72,6 +77,7 @@
       <h1>{{profile.display_name}}{{#unless profile.verified}} (<a href="/profile/verify">Unverified</a>){{/unless}}</h1>
       <div>
         <a class="button" href="/profile/{{profile.slug}}">View Public Profile</a>
+        <a class="button button-secondary" href="/profile/update-action-creator">Edit Public Profile</a>
         <a class="button button-secondary" href="/logout">Log Out</a>
       </div>
     </section>
@@ -110,11 +116,6 @@
           #actions-list{
             margin-top: 2rem;
             margin-bottom: 2rem;
-          }
-
-          @media (prefers-color-scheme: dark) {
-            .action-row { border-color: #fff; }
-            .button-secondary { background: #000; }
           }
         </style>
 

@@ -24,28 +24,28 @@
   <form class="normform" method="post">
     <br>
     <label for="email">Contact Email* (publically viewable)</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email" {{#if profile.email}}value={{profile.email}}{{/if}} required>
 
     <label for="website-url">Website</label>
-    <input type="url" id="website-url" name="wesite-url" placeholder="https://example.com">
+    <input type="url" id="website-url" name="website-url" {{#if profile.website_url}}value={{profile.website_url}}{{/if}} placeholder="https://example.com">
 
     <label for="mission">Organisation Mission* (<a href='/resource/organisation-mission' target="_blank">Writing a good mission statement</a>)</label>
-    <textarea rows="5" id="mission" name="mission" required></textarea>
+    <textarea rows="5" id="mission" name="mission" required>{{#if profile.mission}}{{profile.mission}}{{/if}}</textarea>
 
     <label for="prev-actions">Has your organisation delivered any previous actions?</label>
-    <textarea rows="5" id="prev-actions" name="prev-actions"></textarea>
+    <textarea rows="5" id="prev-actions" name="prev-actions">{{#if profile.previous_actions}}{{profile.previous_actions}}{{/if}}</textarea>
 
     <label for="prev-grants">Has your organisation recieved previous grants?</label>
-    <textarea rows="5" id="prev-grants" name="prev-grants"></textarea>
+    <textarea rows="5" id="prev-grants" name="prev-grants">{{#if profile.previous_grants}}{{profile.previous_grants}}{{/if}}</textarea>
 
     <label for="partnerships">Does your organisation have any existing partnerships or collaborations?</label>
-    <textarea rows="5" id="partnerships" name="partnerships"></textarea>
+    <textarea rows="5" id="partnerships" name="partnerships">{{#if profile.partnerships}}{{profile.partnerships}}{{/if}}</textarea>
 
     <label for="constitution-url">Link to your organisation constitution* e.g. <a href="/resource/upload-to-google-drive" target="_blank">google drive link</a> (<a href='/resource/constitution' target="_blank">Writing an organisation constitution</a>)</label>
-    <input type="url" id="constitution-url" name="constitution-url" placeholder="https://example.com" required>
+    <input type="url" id="constitution-url" name="constitution-url" {{#if profile.constitution_url}}value={{profile.constitution_url}}{{/if}} placeholder="https://example.com" required>
 
     <label for="cap-url">Link to your Climate Action Plan e.g. <a href="/resource/upload-to-google-drive" target="_blank">google drive link</a> (<a href='/resource/climate-action-plan' target="_blank">Writing a climate action plan</a>)</label>
-    <input type="url" id="cap-url" name="cap-url" placeholder="https://example.com">
+    <input type="url" id="cap-url" name="cap-url" {{#if profile.climate_action_plan_url}}value={{profile.climate_action_plan_url}}{{/if}} placeholder="https://example.com">
 
     <input type="checkbox" id="terms-conditions" name="terms-conditions" value="terms-conditions" required>
     <label for="terms-conditions">Do you agree to our <a href="/resource/terms-and-conditions/action-creator-profile" target="_blank">terms and conditions</a>?</label>
