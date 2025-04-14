@@ -78,7 +78,7 @@ router.route('/')
       const isLastPage = !results[10];
 
       res.render('action-browse.hbs', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         actions,
         lastValue,
@@ -91,7 +91,7 @@ router.route('/create')
     ensureLoggedIn,
     async (req, res) => {
     res.render('action-info-form', {
-      profile: {logo_url: profileImage},
+      profile: {logo_url: profileImage(req)},
       user: req.user
     });
   })
@@ -101,47 +101,62 @@ router.route('/create')
   );
 
 router.route('/:slug')
-  .get(async (req, res) => {
-    const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;
-    let actionData = await Action.getByActionSlug(req.params.slug);
-    const actionOwnerProfile = await Profile.getProfileInfo(actionData.profile_id);
-    actionData.profileImageUrl = actionOwnerProfile.logo_url;
-    actionData.display_name = he.decode(actionOwnerProfile.display_name);
-    actionData.profile_slug = actionOwnerProfile.slug;
-    actionData.name = he.decode(actionData.name);
-    actionData.overview = he.decode(actionData.overview);
-    actionData = await transformAmbitions(actionData);
-    actionData.category = await transformCateory(actionData.category);
-    actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
-    actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
-    actionData.hasCompassData = await hasCompassData(actionData);
-    res.render('action', {
-      user: req.user,
-      actionData,
-      profile,
-      emptyAmbition: [0,0,0]});
+  .get(async (req, res, next) => {
+    try {
+      const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;
+      let actionData = await Action.getByActionSlug(req.params.slug);
+
+      if (!actionData) { throw Error('404'); }
+
+      const actionOwnerProfile = await Profile.getProfileInfo(actionData.profile_id);
+      actionData.profileImageUrl = actionOwnerProfile.logo_url;
+      actionData.display_name = he.decode(actionOwnerProfile.display_name);
+      actionData.profile_slug = actionOwnerProfile.slug;
+      actionData.name = he.decode(actionData.name);
+      actionData.overview = he.decode(actionData.overview);
+      actionData = await transformAmbitions(actionData);
+      actionData.category = await transformCateory(actionData.category);
+      actionData.pledges = await Pledge.getByActionSlugWithDonorInfo(req.params.slug);
+      actionData.pledgeTotal = await actionData.pledges.reduce((a, {amount}) => a + amount, 0);
+      actionData.hasCompassData = await hasCompassData(actionData);
+      res.render('action', {
+        user: req.user,
+        actionData,
+        profile,
+        emptyAmbition: [0,0,0]});
+    } catch (e) {
+      next();
+      return;
+    }
   });
 
   router.route('/:slug/pledges')
   .get(
-    async (req, res) => {
-      const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;;
-      const { results, lastValue } = Pledge.getPageForAction(0, req.params.slug);
-      const pledges = results.slice(0, 9);
-      const action = await Action.getByActionSlug(req.params.slug);
+    async (req, res, next) => {
+      try {
+        const profile = req.user ? await Profile.getProfileInfo(req.user.id) : null;;
+        const { results, lastValue } = Pledge.getPageForAction(0, req.params.slug);
+        const pledges = results.slice(0, 9);
+        const action = await Action.getByActionSlug(req.params.slug);
 
-      const isActionOwner = action.profile_id === req.user?.id;
-      const isLastPage = !results[10];
+        if (!action) { throw Error('404'); }
 
-      res.render('pledge-browse.hbs', {
-        user: req.user,
-        profile,
-        pledges,
-        action,
-        lastValue,
-        isLastPage,
-        isActionOwner
-      });
+        const isActionOwner = action.profile_id === req.user?.id;
+        const isLastPage = !results[10];
+
+        res.render('pledge-browse.hbs', {
+          user: req.user,
+          profile,
+          pledges,
+          action,
+          lastValue,
+          isLastPage,
+          isActionOwner
+        });
+    } catch (e) {
+      next();
+      return;
+    }
     })
   .post(
     async (req, res) => {
@@ -152,7 +167,7 @@ router.route('/:slug')
       const isLastPage = !results[10];
 
       res.render('pledge-browse.hbs', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         pledges, action,
         lastValue,
@@ -161,19 +176,25 @@ router.route('/:slug')
     });
 
 router.route('/:slug/pledge')
-  .get(ensureLoggedIn, async (req, res) => {
-    const profile = await Profile.getProfileInfo(req.user.id);
-    const action = await Action.getByActionSlug(req.params.slug);
+  .get(ensureLoggedIn, async (req, res, next) => {
+    try {
+      const profile = await Profile.getProfileInfo(req.user.id);
+      const action = await Action.getByActionSlug(req.params.slug);
 
-    if (action.deleted) {
-      res.redirect(`/action/${req.params.slug}`);
+      if (!action) { throw Error('404'); }
+      if (action.deleted) {
+        res.redirect(`/action/${req.params.slug}`);
+        return;
+      }
+
+      res.render('pledge-form', {
+        user: req.user, profile,
+        action
+      });
+    } catch (e) {
+      next();
       return;
     }
-
-    res.render('pledge-form', {
-      user: req.user, profile,
-      action
-    });
   })
   .post(
     ensureLoggedIn,
@@ -189,7 +210,7 @@ router.route('/:slug/pledge')
       }
 
       res.render('pledge-confirmation', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         slug: req.params.slug,
         actionOwner
@@ -218,7 +239,7 @@ router.route('/:slug/pledge/:pledge_id/notreceived')
   .get(
     async (req, res, next) => {
       res.redirect(`/action/${req.params.slug}/pledges`, {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
       });
     }
@@ -239,7 +260,7 @@ router.route('/:slug/pledge/:pledge_id/delete')
   .get(ensureLoggedIn, async (req, res) => {
     const actionSlug = req.params.slug;
     res.render('delete-pledge', {
-      profile: {logo_url: profileImage},
+      profile: {logo_url: profileImage(req)},
       user: req.user,
       actionSlug
     });
@@ -254,7 +275,7 @@ router.route('/:slug/image-upload')
     ensureLoggedIn,
     async (req, res, next) => {
       res.render('image-upload', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         action: {slug: req.params.slug}});
     })
@@ -292,7 +313,7 @@ router.route('/:slug/edit/info')
       action.category = action.category.reduce((acc,curr)=> (acc[curr.toLowerCase().replace(/\s+/g, '_')]=true,acc),{});
 
       res.render('action-info-form', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         action
       });
@@ -316,7 +337,7 @@ router.route('/:slug/edit/impact')
       actionData = await transformAmbitions(actionData);
 
       res.render('action-impact-form', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         actionData
       });
@@ -343,7 +364,7 @@ router.route('/:slug/edit/funding')
 
 
       res.render('action-funding-form', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         action
       });
