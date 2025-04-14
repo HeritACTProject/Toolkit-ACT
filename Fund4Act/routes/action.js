@@ -56,7 +56,7 @@ router.route('/')
       const isLastPage = !results[10];
 
       res.render('action-browse.hbs', {
-        profile: {logo_url: profileImage},
+        profile: {logo_url: profileImage(req)},
         user: req.user,
         actions,
         lastValue,
