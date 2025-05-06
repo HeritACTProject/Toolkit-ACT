@@ -37,7 +37,19 @@ router.route('/action-creator-prereq')
 
 router.route('/update-action-creator')
   .get(ensureLoggedIn, async (req, res) => {
-    res.render('action-creator-form', {user: req.user});
+    const user = req.user;
+    const profile = await Profile.get(user.id);
+    if (profile.website_url) profile.website_url = decodeURIComponent(profile.website_url);
+    if (profile.constitution_url) profile.constitution_url = decodeURIComponent(profile.constitution_url);
+    if (profile.climate_action_plan_url) profile.climate_action_plan_url = decodeURIComponent(profile.climate_action_plan_url);
+
+    if (profile.display_name) profile.display_name = he.decode(profile?.display_name);
+    if (profile.mission) profile.mission = he.decode(profile?.mission);
+    if (profile.previous_actions) profile.previous_actions = he.decode(profile?.previous_actions);
+    if (profile.previous_grants) profile.previous_grants = he.decode(profile?.previous_grants);
+    if (profile.partnerships) profile.partnerships = he.decode(profile?.partnerships);
+
+    res.render('action-creator-form', {user: req.user, profile});
   })
   .post(
     ensureLoggedIn,
@@ -85,8 +97,8 @@ router.route('/:slug')
       const actions = await Action.getPublicByProfileId(publicProfile.id);
       const pledges = await Pledge.getByDonorId(publicProfile.id);
 
-      publicProfile.constitution_url = encodeURIComponent(publicProfile.constitution_url);
-      publicProfile.climate_action_plan_url = encodeURIComponent(publicProfile.climate_action_plan_url);
+      publicProfile.constitution_url = publicProfile.constitution_url;
+      publicProfile.climate_action_plan_url = publicProfile.climate_action_plan_url;
 
       publicProfile.display_name = he.decode(publicProfile.display_name);
       publicProfile.mission = he.decode(publicProfile.mission);

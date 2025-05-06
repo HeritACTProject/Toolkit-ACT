@@ -1,6 +1,9 @@
 {
   "name": "fund4act",
   "module": "index.js",
+  "scripts": {
+     "dev": "bun --watch run ./index.js"
+  },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
