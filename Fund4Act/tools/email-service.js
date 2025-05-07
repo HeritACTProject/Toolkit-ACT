@@ -14,7 +14,6 @@ async function sendMail(reciever, sender, subject, text, html) {
       },
       body: form
     });
-    console.log(response)
   } catch (error) {
     console.log(error); //logs any error
   }
