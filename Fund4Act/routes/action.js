@@ -202,7 +202,7 @@ router.route('/:slug/pledge')
     createPledge.post,
     async (req, res, next) => {
       const action = await Action.getByActionSlug(req.params.slug);
-      const actionOwner = await Profile.getProfileInfo(action.profile_id);
+      const donorInfo = await Profile.getProfileInfo(req.user.id);
 
       if (action.deleted) {
         res.redirect(`/action/${req.params.slug}`);
@@ -213,7 +213,7 @@ router.route('/:slug/pledge')
         profile: {logo_url: profileImage(req)},
         user: req.user,
         slug: req.params.slug,
-        actionOwner
+        donorEmail: donorInfo.email
       });
     })
 

@@ -35,6 +35,14 @@ module.exports.init = () => {
   `);
 };
 
+module.exports.getByActionWithOwnerInfo = (slug) => {
+  const query = db.query(`SELECT name, profiles.display_name AS owner_name, profiles.email AS owner_email FROM actions
+    INNER JOIN profiles ON actions.profile_id = profiles.id
+    WHERE actions.slug = $slug;`);
+  const results = query.all({ $slug: slug });
+  return results;
+}
+
 module.exports.create = ({profileId, name, total, target, deadline, imageUrl, address, lat, lon, overview, startDate, endDate,
                         category, slug, beautyAmbition, sustainAmbition, togetherAmbition, participProcessAmbition,
                         multiLevelEngagementAmbition, transdiciplinaryAmbition}) => {

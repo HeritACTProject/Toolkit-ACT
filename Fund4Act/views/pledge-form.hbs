@@ -16,8 +16,13 @@
   <form id="pledge-form" class="normform" method="post">
 
     {{#unless profile.display_name}}
-      <label for="name">Enter your display name</label>
+      <label for="name">Enter your display name*</label>
       <input type="text" id="name" name="name" required>
+    {{/unless}}
+
+    {{#unless profile.email}}
+      <label for="email">Enter your prefered email address for discussing payment*</label>
+      <input type="email" id="email" name="email" required>
     {{/unless}}
 
     <label for="pledge-amount">Pledge Amount* (€)</label>
@@ -27,5 +32,8 @@
     <textarea type="text" id="pledge-comment" name="comment"></textarea>
 
     <input type="submit" value="Pledge">
+    <br>
+    <br>
+    <label>By clicking pledge you consent to share your email with the action owner</label>
   </form>
 </main>

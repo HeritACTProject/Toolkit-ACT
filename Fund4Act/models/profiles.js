@@ -19,12 +19,13 @@ module.exports.init = () => {
   )`);
 };
 
-module.exports.saveProfileInfo = ({id, displayName, slug}) => {
+module.exports.saveProfileInfo = ({id, displayName, email, slug}) => {
   return db.run(`INSERT INTO profiles
-      (id, display_name, slug)
-    VALUES ("${id}", "${displayName}", "${slug}")
+      (id, display_name, email, slug)
+    VALUES ("${id}", "${displayName}", "${email}", "${slug}")
     ON CONFLICT(id) DO UPDATE SET
-      display_name = excluded.display_name;
+      display_name = excluded.display_name,
+      email = excluded.email;
   `);
 };
 
