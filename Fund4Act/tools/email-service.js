@@ -1,26 +1,24 @@
-const FormData = require("form-data"); // form-data v4.0.1
-const Mailgun = require("mailgun.js"); // mailgun.js v11.1.0
-
 async function sendMail(reciever, sender, subject, text, html) {
-  const mailgun = new Mailgun(FormData);
-  const mg = mailgun.client({
-    username: "api",
-    key: process.env.MAILGUN_KEY,
-    url: "https://api.eu.mailgun.net"
-  });
   try {
-    const data = await mg.messages.create("fund4act.com", {
-      from: sender,
-      to: [reciever],
-      subject,
-      text,
-      html,
-    });
+    const form = new FormData();
+    form.append('from', `Fund4Act <${sender}>`);
+    form.append('to', reciever);
+    form.append('subject', subject);
+    form.append('text', text);
+    form.append('html', html);
 
-    console.log(data); // logs response data
+    const response = await fetch('https://api.eu.mailgun.net/v3/fund4act.com/messages', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Basic ' + btoa(`api:${process.env.MAILGUN_KEY}`)
+      },
+      body: form
+    });
+    console.log(response)
   } catch (error) {
     console.log(error); //logs any error
   }
 }
 
+sendMail();
 module.exports = { sendMail };
