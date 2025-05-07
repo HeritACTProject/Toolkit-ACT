@@ -26,10 +26,10 @@ exports.post = [
       await pledge.create(data);
       const actionInfo = await action.getByActionWithOwnerInfo(data.proj_slug)[0];
       const donorInfo = await profile.getProfileInfo(req.user.id);
-      const subject = `${actionInfo.name} has recieved a new pledge`;
-      const text = `A new pledge of €${data.amount} was recieved from ${donorInfo.display_name}. `
+      const subject = `${actionInfo.name} has received a new pledge`;
+      const text = `A new pledge of €${data.amount} was received from ${donorInfo.display_name}. `
         + `Contact ${donorInfo.email} to arrange payment.`;
-      let html = `<p>A new pledge of €${data.amount} was recieved from ${donorInfo.display_name}.`;
+      let html = `<p>A new pledge of €${data.amount} was received from ${donorInfo.display_name}.`;
       if (data.comment) html += `<p>They said: "${data.comment}"`;
       html += `<p>Contact ${donorInfo.email} to arrange payment.`;
       sendMail(actionInfo.owner_email, 'pledges@fund4act.com', subject, text, html);
