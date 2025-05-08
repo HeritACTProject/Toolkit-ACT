@@ -19,7 +19,7 @@
 
   <h1>Register as an Action Creator</h1>
 
-  <label>Watch our video explainer of registering as an action creator <a>here</a></label>
+  {{!-- <label>Watch our video explainer of registering as an action creator <a>here</a></label> --}}
 
   <form class="normform" method="post">
     <br>
@@ -44,7 +44,7 @@
     <label for="constitution-url">Link to your organisation constitution* e.g. <a href="/resource/upload-to-google-drive" target="_blank">google drive link</a> (<a href='/resource/constitution' target="_blank">Writing an organisation constitution</a>)</label>
     <input type="url" id="constitution-url" name="constitution-url" {{#if profile.constitution_url}}value={{profile.constitution_url}}{{/if}} placeholder="https://example.com" required>
 
-    <label for="cap-url">Link to your Climate Action Plan e.g. <a href="/resource/upload-to-google-drive" target="_blank">google drive link</a> (<a href='/resource/climate-action-plan' target="_blank">Writing a climate action plan</a>)</label>
+    <label for="cap-url">Add another relevant link (<a href='/resource/relevant-links' target="_blank">example of other relevant links</a>)</label>
     <input type="url" id="cap-url" name="cap-url" {{#if profile.climate_action_plan_url}}value={{profile.climate_action_plan_url}}{{/if}} placeholder="https://example.com">
 
     <input type="checkbox" id="terms-conditions" name="terms-conditions" value="terms-conditions" required>

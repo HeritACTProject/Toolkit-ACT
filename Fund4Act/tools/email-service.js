@@ -1,7 +1,7 @@
 async function sendMail(reciever, sender, subject, text, html) {
   try {
     const form = new FormData();
-    form.append('from', `Fund4Act <${sender}>`);
+    form.append('from', `Fund4Action <${sender}>`);
     form.append('to', reciever);
     form.append('subject', subject);
     form.append('text', text);

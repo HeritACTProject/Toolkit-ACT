@@ -4,12 +4,12 @@
   .action, .action:visited, .action:hover{text-decoration: none; color: var(--text-color);;display: flex;flex-direction: column;}
   .action h3, .action p, .action label {margin: .5rem 0;}
   .actions{display: flex;flex-direction:column;gap:2rem;}
-  progress::-moz-progress-bar { background: #30732F; }
-  progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
-  progress { color: #30732F; border-radius: 5px; border-width: 0; width: 15rem;}
+  progress::-moz-progress-bar { background: #008F8F; }
+  progress::-webkit-progress-value { background: #008F8F; border-radius: 5px;}
+  progress { color: #008F8F; border-radius: 5px; border-width: 0; width: 15rem;}
   main {margin: 1rem;}
   .pledge{margin: .75rem 0; display: flex; gap:1rem;align-items: center;}
-  .pledge-received{user-select: none; color:#30732F; border-radius: 5px; padding: .5rem;display: flex;gap:.5rem;align-items: center;}
+  .pledge-received{user-select: none; color:#008F8F; border-radius: 5px; padding: .5rem;display: flex;gap:.5rem;align-items: center;}
   .pledge-received svg {width:1rem;height:1rem;}
   .pledge p{margin: 0;}
   .pledge a, .pledge a:hover, .pledge a:active , .pledge a:visited {text-decoration:none;color:#000;}
@@ -34,7 +34,7 @@
         <pre>"{{this.comment}}"</pre>
       </a>
       {{#if this.received}}
-        <p class="pledge-received" title="The action owner has confirmed that this pledge has been received"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m7.294 12.958 3.21 3.21L17.674 9" stroke="#30732F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="#30732F" stroke-width="2"/></svg>Donation received</p>
+        <p class="pledge-received" title="The action owner has confirmed that this pledge has been received"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m7.294 12.958 3.21 3.21L17.674 9" stroke="#008F8F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke="#008F8F" stroke-width="2"/></svg>Donation received</p>
       {{/if}}
     </div>
     {{#if @root.isActionOwner}}

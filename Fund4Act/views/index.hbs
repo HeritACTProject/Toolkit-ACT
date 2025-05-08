@@ -19,7 +19,7 @@
   aside {background: #191919; color: #fdfdfd; display: flex; justify-content: center; align-items: center;}
   aside a, aside a:visited, footer a, footer a:visited {color: #fdfdfd;}
   header a, header a:visited {text-decoration: none; color: #000}
-  .accent {color: #30732F;}
+  .accent {color: #008F8F;}
   #title-link { text-decoration: none; color: inherit; }
   section:not(#map-section) { padding: 3rem 0; }
   #actions {  display: flex; flex-direction: column; gap: 2rem; }
@@ -31,7 +31,7 @@
   pre { white-space: pre-wrap; line-height: 1.5rem;}
   #heritact img { max-width: 15rem; margin: 0 .5rem;}
   .button{
-    background: #30732F;
+    background: #008F8F;
     text-decoration: none;
     color: #fff;
     border-radius: 5px;
@@ -39,7 +39,7 @@
     text-align: center;
     font-size: 16px;
     border-width: 2px;
-    border-color: #30732F;
+    border-color: #008F8F;
     margin: 0.5rem 0;
     cursor:pointer;
     max-width: 10rem;
@@ -53,10 +53,10 @@
     color: #fff;
   }
   #view-all{align-self: center;}
-  progress::-moz-progress-bar { background: #30732F; }
+  progress::-moz-progress-bar { background: #008F8F; }
   progress::-webkit-progress-bar { background: #d3d3d3; border-radius: 5px; border-width: 0;}
-  progress::-webkit-progress-value { background: #30732F; border-radius: 5px;}
-  progress { color: #30732F; border-radius: 5px; border-width: 0; width:100%;}
+  progress::-webkit-progress-value { background: #008F8F; border-radius: 5px;}
+  progress { color: #008F8F; border-radius: 5px; border-width: 0; width:100%;}
   #most-urgent p, #most-urgent h3, #most-urgent label { margin: .5rem 0;}
   #faqs a { margin:1rem;}
 
@@ -83,7 +83,7 @@
 
   <div class="right">
     {{#unless user}}
-    <a href="/login">Login</a>
+    <a href="/login">Get Started</a>
     {{else}}
     <a id="start-action" href="/profile">Start an action</a>
     <a id="profile-image" href="/profile">
@@ -100,8 +100,7 @@
 
 <main class="wide">
   <section id="map-section" aria-label="actions map view">
-    <h2>Donate to local heritage actions</h2>
-    <p>Showcase your businesses commitment to your local community</p>
+    <h2>Pledge to support your local heritage actions</h2>
     <div id="map"></div>
     <script type='text/javascript'>
       // center of the map
@@ -136,22 +135,20 @@
       </a>
     {{/each}}
     </div>
-    <a id="view-all" class="button" href="/action">view all actions</a>
+    <a id="view-all" class="button" href="/action">View All Actions</a>
   </section>
 
   <hr>
 
   <section id="about-us">
-    <h2>About Fund4ACT</h2>
-    <pre>Welcome to Fund4ACT! Please explore our map of cultural heritage actions who require crowdfunding!
+    <h2>Welcome to Fund4Action</h2>
+    <pre>Fund4Action is a new low-carbon community crowdfunding platform that connects heritage action creators with potential pledgers. It is part of the <a href="https://heritact-toolkit.eu/" target="_blank">HeritACT Digital Toolkit</a>, designed to enable active citizen participation in the reactivation of cultural heritage.
+      
+Are you a community group or NGO seeking financial support for a local heritage initiative?
+👉 Sign up and add your heritage action to Fund4Action — just click ‘Get Started’ to begin.
 
-Fund4ACT is part of the innovative HeritACT digital toolkit which enables active citizen participation in reactivating their cultural heritage.
-
-Fund4ACT is a crowdfunding platform that supports the reactivating of cultural heritage through enabling social groups and organisations to demonstrate their heritage action's impacts as well as their group's organisational competence.
-
-Fund4ACT helps groups map their heritage action's impacts to the New European Bauhaus Compass as well allowing groups to digitally demonstrate their organisation's competence through their constitution, past delivered actions and any additional climate action plans they may have.
-
-Fund4ACT aims to create "bankable" heritage actions which will encourage funding pledges from local individuals and SMEs keen to invest in their local cultural heritage.</pre>
+Are you an individual, local business or organisation interested in supporting local heritage?
+👉 Sign up, choose a heritage action near you and start pledging today.</pre>
   </section>
   <hr>
   <section id="heritact">
@@ -170,7 +167,6 @@ Fund4ACT aims to create "bankable" heritage actions which will encourage funding
   <div>
   <h3>Contact</h3>
   <p>hello@act-studio.com</p>
-  <p>Market Lane, Tone St,<br>Ballina, Co. Mayo,<br>Ireland</p>
   </div>
   <a href="/resource/privacy-policy" target="_blank">Privacy Policy</a>
 </footer>

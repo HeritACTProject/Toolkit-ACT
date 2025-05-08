@@ -7,15 +7,15 @@
   .right { display: flex; }
   header h2,header p { margin: 1rem; }
   hr { margin: 0; background: #ddd; }
-  .accent {color: #30732F;}
+  .accent {color: #008F8F;}
 </style>
 
 <header>
-  <a id="title-link" href="/"><h1>Fund<span class="accent">4</span>Act</h1></a>
+  <a id="title-link" href="/"><h1>Fund<span class="accent">4</span>Action</h1></a>
 
   <div class="right">
     {{#unless user}}
-    <a href="/login">Login</a>
+    <a href="/login">Get Started</a>
     {{else}}
     <a id="profile-image" href="/profile">
       {{#if profile.logo_url}}

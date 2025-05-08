@@ -5,7 +5,7 @@ const profileImage = (req) => req.user?.id ? `/images/upload/${req.user.id}/prof
 
 router.get('/constitution', async (req, res, next) => {
   res.render('constitution-resource', {
-    profile: {logo_url: profilemage},
+    profile: {logo_url: profileImage(req)},
     user: req.user});
 });
 
@@ -23,6 +23,12 @@ router.get('/organisation-mission', async (req, res, next) => {
 
 router.get('/climate-action-plan', async (req, res, next) => {
   res.render('organisation-mission-resource', {
+    profile: {logo_url: profileImage(req)},
+    user: req.user});
+});
+
+router.get('/relevant-links', async (req, res, next) => {
+  res.render('relevant-links-resource', {
     profile: {logo_url: profileImage(req)},
     user: req.user});
 });
