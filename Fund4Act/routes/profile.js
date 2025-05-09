@@ -12,6 +12,8 @@ const ensureLogIn = require('connect-ensure-login').ensureLoggedIn;
 
 const ensureLoggedIn = ensureLogIn();
 
+const profileImage = (req) => req.user?.id ? `/images/upload/${req.user.id}/profile_image.webp?v=${Date.now()}` : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDc0NzQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jaXJjbGUtdXNlci1yb3VuZC1pY29uIGx1Y2lkZS1jaXJjbGUtdXNlci1yb3VuZCI+PHBhdGggZD0iTTE4IDIwYTYgNiAwIDAgMC0xMiAwIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMCIgcj0iNCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PC9zdmc+';
+
 router.route('/')
   .get(ensureLoggedIn, async (req, res) => {
     const user = req.user;
@@ -61,7 +63,11 @@ router.route('/update-action-creator')
 
 router.route('/action-creator-image')
   .get(ensureLoggedIn, async (req, res) => {
-    res.render('action-creator-image-form', {user: req.user});
+    res.render('action-creator-image-form', {
+      user: req.user, 
+      timestamp: Date.now(),
+      profile: {logo_url: profileImage(req)},
+    });
   })
   .post(
     ensureLoggedIn,
@@ -81,7 +87,10 @@ router.route('/action-creator-image')
 
 router.route('/verify')
   .get(ensureLoggedIn, async (req, res) => {
-    res.render('action-creator-verify', {user: req.user})
+    res.render('action-creator-verify', {
+      user: req.user,
+      profile: {logo_url: profileImage(req)},
+    })
   })
 
 router.route('/edit')
