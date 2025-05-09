@@ -123,6 +123,7 @@ router.route('/:slug')
         user: req.user,
         actionData,
         profile,
+        timestamp: Date.now(),
         emptyAmbition: [0,0,0]});
     } catch (e) {
       next();
