@@ -106,7 +106,17 @@
       var start = [51.165691, 10.451526];
 
       // Create the map
-      var map = L.map('map').setView(start, 3);
+      var map = L.map('map', {
+        scrollWheelZoom: false
+      }).setView(start, 3);
+
+      map.on('focus', function() {
+          map.scrollWheelZoom.enable();
+      });
+
+      map.on('blur', function() {
+          map.scrollWheelZoom.disable();
+      });
 
       // Set up the OSM layer
       L.tileLayer(
